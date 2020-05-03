@@ -1,0 +1,13 @@
+# backend: Ignore the virtual environments, database, migrations
+/backend/**/venv*/
+/backend/**/db.sqlite3
+/backend/**/migrations
+/backend/**/manage.py
+#*__pycache__/
+
+# brontend:Ignore the node libraries
+#**/node_modules/
+#frontend/package*
+#frontend/README*
+#frontend/babel*
+#**/dist/
