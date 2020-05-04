@@ -11,7 +11,7 @@ and how the backend and fronend can be installed
 
 ## Download repository
 To download this repository to a folder folder/Klaverjassen do the following.
-Start from the folder and do
+Clone this repository to the folder. This will create the subfolder Klaverjassen (repository name)
 ```console
 git clone https://github.com/otonkar/Klaverjassen.git
 ```
