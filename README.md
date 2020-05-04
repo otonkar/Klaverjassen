@@ -1,7 +1,7 @@
 # Klaverjassen
 
 This repository contains the code for the klaverjassen game.
-It contains two parts
+It contains two parts:
 
 * Backend: Django Restframework with Channels
 * Frontend: Vue
