@@ -1,32 +1,71 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <app-header></app-header>
+    <!-- <router-view/> -->
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
 
-#nav {
-  padding: 30px;
+<script>
+// import the components
+import Appheader from './components/registration/Header.vue'
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+export default {
+  name: 'app',
+  components: {
+    'app-header'    : Appheader
+  },
+  data () {
+    return {
+      title: 'Header'
+    }
+  },
+  created() {
+    this.getWindowSize()
+    window.addEventListener("resize", this.getWindowSize);
+  },
+  methods: {
+    getWindowSize: function () {
+      this.window_size.width = window.innerWidth
+      || document.documentElement.clientWidth
+      || document.body.clientWidth;
 
-    &.router-link-exact-active {
-      color: #42b983;
+      this.window_size.height = window.innerHeight
+      || document.documentElement.clientHeight
+      || document.body.clientHeight;
+
+      // // console.log(this.window_size)
+
+      this.$store.dispatch('updateWindow_size', this.window_size)
+
+    },  //END GetWindowSize
+  },
+  // mounted: function () {
+  //   // Force a full screen
+  //   var elem = document.getElementById("app")
+  //   if (elem.requestFullscreen) {
+  //     elem.requestFullscreen();
+  //   } else if (elem.mozRequestFullScreen) { /* Firefox */
+  //     elem.mozRequestFullScreen();
+  //   } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari & Opera */
+  //     elem.webkitRequestFullscreen();
+  //   } else if (elem.msRequestFullscreen) { /* IE/Edge */
+  //     elem.msRequestFullscreen();
+  //   }
+  // }
+  computed: {
+    window_size () {
+      return this.$store.state.window_size
     }
   }
+}
+</script>
+
+<style lang="scss">
+body {
+  background-color: rgb(173, 212, 183);
 }
 </style>
