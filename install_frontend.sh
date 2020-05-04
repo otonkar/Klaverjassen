@@ -18,7 +18,7 @@ vue create frontend
 echo " "
 echo "*** Install bootstrap-vue, reconnecting websocket and axios"
 cd frontend
-vue add bootstrap-vue                       # use babel/polyfil
+vue add bootstrap-vue                       # use babel/polyfil Y
 npm install --save reconnecting-websocket
 npm install --save axios
 npm i jquery@1.9.1 --save
@@ -27,20 +27,12 @@ npm audit fix --force
 
 ## Go back the Klaverjassen folder copy back the files from tmp
 cd ..
-cp -R tmp/* /frontend
-
-## setup Django
-cd back1
-chmod 777 setup.sh
-./setup.sh
+cp -R tmp/* frontend
+rm -R tmp
 
 
 
 
 
-cd frontend
-vue add bootstrap-vue                       # use babel/polyfil
-npm install --save reconnecting-websocket
-npm install --save axios
-npm i jquery@1.9.1 --save
-npm audit fix --force 
+
+

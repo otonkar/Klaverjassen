@@ -19,6 +19,7 @@ git clone https://github.com/otonkar/Klaverjassen.git
 Next set the respository to the branch you want to install.
 For example: work from branch dev_001
 ```console
+cd Klaverjassen
 git checkout dev_001
 ```
 
@@ -62,6 +63,7 @@ Use the following settings to be provided manually
 After the Vue project is installed start the Vue development server using
 
 ```console
+cd frontend
 npm run serve
 ```
 
