@@ -2,19 +2,45 @@
 #
 # script to setup the Vue frontend
 # This script is in the main folder Klaverjassen
-# First do chmod 777 install_frontend
-# Start this script in terminal from the /frontend folder, ./install_frontend
+# First make this script executable
+#     chmod 777 install_frontend
+
+# Start this script in terminal from the /Klaverjassen folder and do:  ./install_frontend
 
 # First move the frontend file to a tmp folder
 mv frontend tmp
 
 # Next create the Vue frontend
+echo "*** Create vue project 'frontend'"
+vue create frontend
+
+# and do the other installs
+echo " "
+echo "*** Install bootstrap-vue, reconnecting websocket and axios"
+cd frontend
+vue add bootstrap-vue                       # use babel/polyfil
+npm install --save reconnecting-websocket
+npm install --save axios
+npm i jquery@1.9.1 --save
+npm audit fix --force 
 
 
-## copy all filesfrom tmp folder to klaverjas 
-cp -R tmp/* back1/
+## Go back the Klaverjassen folder copy back the files from tmp
+cd ..
+cp -R tmp/* /frontend
 
 ## setup Django
 cd back1
 chmod 777 setup.sh
 ./setup.sh
+
+
+
+
+
+cd frontend
+vue add bootstrap-vue                       # use babel/polyfil
+npm install --save reconnecting-websocket
+npm install --save axios
+npm i jquery@1.9.1 --save
+npm audit fix --force 
