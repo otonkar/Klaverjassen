@@ -7,9 +7,8 @@ It contains two parts
 * Frontend: Vue
 
 ## Django backend
-The django and libraries can be installed using the 'install_backend.sh' script.
-First make this script executable and run the scipt.
-This will create a virtual environment venv1 and install the Django libraries
+The django and libraries can be installed using the 'install_backend.sh' script which is in the backend folder. First make this script executable and run the scipt.
+This will create a virtual environment venv1, install the Django libraries, do the migrations and set some data in the tables.
 
 ```console
 chmod 755 install_backend.sh
