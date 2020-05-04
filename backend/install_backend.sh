@@ -2,7 +2,7 @@
 #
 # script to setup the Django backend
 # First do chmod 777 install_backend
-# Start this script in terminal from the /backend folder, ./install_backend.
+# Start this script in terminal from the /backend folder, ./install_backend
 
 # When all django files are downloaded from the Github respository then 
 # first copy all these files to a temporary folder
