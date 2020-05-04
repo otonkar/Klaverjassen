@@ -31,9 +31,7 @@ To build a frontend on another system do the following
     * run git init
     * git remote add origin https://github.com/otonkar/Klaverjassen.git
     * git push -u origin master
-* Next copy the Klaverjas/frontend/src folder to a temporary location
-* Remove the /Klaverjas/frontend folder (rm -R frontend)
-* Now create the Vue project 
+* Now create the Vue project (overwrite modus)
 
 
 ```console
@@ -50,9 +48,8 @@ npm install --save axios
 npm i jquery@1.9.1 --save
 npm audit fix --force 
 
-# Next remove newly create src
-cd frontend
-rm -R src
+# Next run the service
+npm run serve
 ```
 
 * Next copy back the ./src folder
