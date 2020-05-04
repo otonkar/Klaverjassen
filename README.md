@@ -18,7 +18,7 @@ source venv1/bin/activate
 ```
 
 The backend consists of Django Restframework and a Redis server.
-For developemnt these can be started using
+For development these can be started using
 
 ```console
 python manage.py run server 0.0.0.0:8000
