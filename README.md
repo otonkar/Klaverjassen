@@ -6,6 +6,16 @@ It contains two parts
 * Backend: Django Restframework with Channels
 * Frontend: Vue
 
+The procedure below describes how this repository can be downloaded to a local machine 
+and how the backend and fronend can be installed
+
+## Download repository
+To download this repository to a folder folder/Klaverjassen do the following.
+Start from the folder and do
+```console
+git clone https://github.com/otonkar/Klaverjassen.git
+```
+
 ## Django backend
 The django and libraries can be installed using the 'install_backend.sh' script which is in the backend folder. First make this script executable and run the scipt.
 This will create a virtual environment venv1, install the Django libraries, do the migrations and set some data in the tables.
