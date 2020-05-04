@@ -60,7 +60,7 @@ Use the following settings to be provided manually
 * Choose, Babel, Router, Vuex, CSS preprocesor, Linter
 * Use history mode, dart SASS, ESlint with prevention only, in dedicated config files, npm
 
-After the Vue project is installed start the Vue development server using
+After the Vue project is installed start the Vue development server using:
 
 ```console
 cd frontend
