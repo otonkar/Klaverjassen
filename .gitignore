@@ -7,7 +7,11 @@
 
 # frontend:Ignore the node libraries
 /frontend/node_modules/
+/frontend/public/
 /frontend/package*
 #frontend/README*
 /frontend/babel*
 /frontend/dist/
+/frontend/.brows*
+/frontend/.eslint*
+
