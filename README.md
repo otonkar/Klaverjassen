@@ -73,5 +73,3 @@ npm install --save reconnecting-websocket
 npm install --save axios
 npm i jquery@1.9.1 --save
 npm audit fix --force 
-
-# Next run the service
