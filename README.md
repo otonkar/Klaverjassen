@@ -20,7 +20,7 @@ The backend consists of Django Restframework and a Redis server.
 For development these can be started using
 
 ```console
-python manage.py run server 0.0.0.0:8000
+python manage.py runserver 0.0.0.0:8000
 docker run -p 6379:6379 -d redis:5
 ```
 
