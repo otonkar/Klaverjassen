@@ -52,5 +52,3 @@ npm audit fix --force
 npm run serve
 ```
 
-* Next copy back the ./src folder
-
