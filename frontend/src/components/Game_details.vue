@@ -250,15 +250,15 @@ export default {
         const currentdate = new Date() 
         const match_stop = new Date(this.game.matchID.date_match_stop)
         var allow = currentdate < match_stop
-        console.log(currentdate, match_stop, allow)
-        console.log(this.game)
+        // console.log(currentdate, match_stop, allow)
+        // console.log(this.game)
 
         // Check that game has already started
         var allow1 = this.game.gameStatus === 'wordt gespeeld'
         
         this.allow_start_game = this.allow_start_game && (allow || allow1)
 
-        console.log('allow1 ',this.game.gameID, this.game.gameStatus, allow1, this.allow_start_game)
+        // console.log('allow1 ',this.game.gameID, this.game.gameStatus, allow1, this.allow_start_game)
 
 
 

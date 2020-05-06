@@ -365,8 +365,8 @@ export default {
         // receive the gameID from the game details page
         this.game = this.$route.params.game
         this.players = this.$route.params.players
-        console.log('Players from params ', this.$route.params.players)
-        console.log('Players on CREATE ', this.players)
+        // console.log('Players from params ', this.$route.params.players)
+        // console.log('Players on CREATE ', this.players)
         
         // await this.doGetPlayers()
         // // console.log('gameID and players :', this.game.gameID, this.players[0].player.username)
@@ -382,7 +382,7 @@ export default {
         // this.rotated_players = this.players
         // this.rotated_players = this.rotate(this.players, -this.my_position)
         this.rotated_players = this.rotateArray(this.players, -this.my_position)
-        console.log('Players on CREATE1 ', this.players)
+        // console.log('Players on CREATE1 ', this.players)
         
         // // console.log('rotated players :', this.rotated_players[0].player.username)
 
@@ -479,9 +479,9 @@ export default {
             .then(response => {
                 // // console.log('Status get game overview: ',response.status)
                 if (response.status === 200) {
-                    console.log('Response ', response.data)
+                    // console.log('Response ', response.data)
                     this.players = response.data
-                    console.log('game on ACTIVATED ', this.game)
+                    // console.log('game on ACTIVATED ', this.game)
                     // console.log('Players fetched on ACTIVATED ', this.players)
                 }
             })
@@ -501,9 +501,9 @@ export default {
 
             // // console.log('my_position : ', this.my_position)
 
-            console.log('Before rotate ', this.players)
+            // console.log('Before rotate ', this.players)
             this.rotated_players = this.rotateArray(this.players, -this.my_position)
-            console.log('After rotate ', this.players)
+            // console.log('After rotate ', this.players)
             // this.rotated_players = this.players
             // // console.log('rotated players :', this.rotated_players[0].player.username)
 
@@ -1212,7 +1212,7 @@ export default {
 
             //  Show the name of the player that 'heeft aangenomen' in the leg result.
             // doing the statement directly in {{ .. }} does not work
-            console.log('Players before aangenomen ',this.state_data.player_aangenomen, this.players)
+            // console.log('Players before aangenomen ',this.state_data.player_aangenomen, this.players)
             this.name_player_leg =  this.players[this.state_data.player_aangenomen].player.username
 
           }

@@ -109,7 +109,7 @@ export default {
                     // console.log('DUMMY4')
                     
                     this.user.user_is_logged_in = false
-                    this.$router.push({ name: 'Login' }) 
+                    this.$router.push({ name: 'Home' }) 
                 })
                 .catch(() => {
                     // console.log('DUMMY5')

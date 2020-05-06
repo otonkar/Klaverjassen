@@ -18,6 +18,7 @@ vue create frontend
 echo " "
 echo "*** Install bootstrap-vue, reconnecting websocket and axios"
 cd frontend
+npm install
 vue add bootstrap-vue                       # use babel/polyfil Y
 npm install --save reconnecting-websocket
 npm install --save axios
