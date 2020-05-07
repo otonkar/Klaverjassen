@@ -19,3 +19,6 @@ python manage.py runscript setup_create_users.py
 echo "*** Set the GameStatus tabel"
 python manage.py runscript setup_gameStatus.py
 
+echo "*** Set the Troef tabel"
+python manage.py runscript setup_troef.py
+

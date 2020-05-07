@@ -1,6 +1,6 @@
 from my_auth.models import User
 
-Create a superuser
+# Create a superuser
 User.objects.create_superuser(
     username='Admin',
     email='ole.karlsen@gmail.com',
