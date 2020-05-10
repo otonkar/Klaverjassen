@@ -23,6 +23,9 @@ python manage.py makemigrations channels
 python manage.py migrate channels
 python manage.py makemigrations appwebsocket
 python manage.py migrate appwebsocket
+python manage.py makemigrations
+python manage.py migrate
+
 
 echo "*** Create superuser and test users"
 python manage.py runscript setup_create_users.py
