@@ -7,7 +7,7 @@ export SECRET_KEY='j5!38#d%j38j(9=7wo%e5!@!##g%ti$%^7qgu)cuu+j*lh*ei2'
 
 cd back1
 rm settings.py
-ln -s settings_dev.py settings.py
+ln -s settings_prod.py settings.py
 # cp settings_dev.py settings.py
 
 echo "*** Setup of backend: back1"

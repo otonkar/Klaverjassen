@@ -18,11 +18,11 @@ export default new Vuex.Store({
       
     },
     appSettings: {
-      url_api_base            : 'http://192.168.2.80:7000/',
-      // url_api_base            : 'https://klaverjasfun.nl/api/',
+      // url_api_base            : 'http://192.168.2.80:7000/',
+      url_api_base            : 'https://klaverjasfun.nl/api/',
       // url_api_base            : 'http://145.53.40.4:8000/',
-      url_Websocket           : 'ws:192.168.2.80:7000/ws/game/',
-      // url_Websocket           : 'wss:klaverjasfun.nl/ws/game/',
+      // url_Websocket           : 'ws:192.168.2.80:7000/ws/game/',
+      url_Websocket           : 'wss:klaverjasfun.nl/ws/game/',
       // url_Websocket           : 'ws:145.53.40.4:8000/ws/game/',
       url_get_token           : 'registration/token/',
       url_refresh_token       : 'registration/token/refresh/',

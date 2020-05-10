@@ -26,6 +26,7 @@ django-admin startproject back1
 
 ## copy all filesfrom tmp folder to klaverjas 
 cp -R tmp/* back1/
+rm -R tmp
 
 ## setup Django
 cd back1
