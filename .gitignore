@@ -15,3 +15,5 @@
 /frontend/.brows*
 /frontend/.eslint*
 
+.git/
+
