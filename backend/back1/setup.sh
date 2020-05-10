@@ -15,7 +15,7 @@ echo " "
 
 echo "First make sure the sqlite database is not present"
 cd ..
-3rm db.sqlite3
+rm db.sqlite3
 
 echo "*** Do the database migrations"
 python3 manage.py makemigrations my_auth

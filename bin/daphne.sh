@@ -2,7 +2,7 @@
 # Script to start daphne service
 
 # Start virtual environment
-cd /apps/backend
+cd /apps//Klaverjassen/backend
 source venv1/bin/activate
 
 cd back1
