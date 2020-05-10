@@ -8,16 +8,16 @@
 # Start this script in terminal from the /Klaverjassen folder and do:  ./install_frontend
 
 # First move the frontend file to a tmp folder
-mv frontend tmp
+mv project tmp
 
 # Next create the Vue frontend
-echo "*** Create vue project 'frontend'"
-vue create frontend
+echo "*** Create vue project
+vue create project
 
 # and do the other installs
 echo " "
 echo "*** Install bootstrap-vue, reconnecting websocket and axios"
-cd frontend
+cd project
 npm install
 vue add bootstrap-vue                       # use babel/polyfil Y
 npm install --save reconnecting-websocket
@@ -28,7 +28,7 @@ npm audit fix --force
 
 ## Go back the Klaverjassen folder copy back the files from tmp
 cd ..
-cp -R tmp/* frontend
+cp -R tmp/* project
 rm -R tmp
 
 
