@@ -11,14 +11,14 @@
 mv project tmp
 
 # Next create the Vue frontend
-echo "*** Create vue project
+echo "*** Create vue project "
 vue create project
 
 # and do the other installs
 echo " "
 echo "*** Install bootstrap-vue, reconnecting websocket and axios"
 cd project
-npm install
+#npm install
 vue add bootstrap-vue                       # use babel/polyfil Y
 npm install --save reconnecting-websocket
 npm install --save axios

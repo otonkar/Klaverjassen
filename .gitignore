@@ -3,6 +3,7 @@
 /backend/**/db.sqlite3
 /backend/**/migrations
 /backend/**/manage.py
+/backend/tmp/
 /backend/**/__pycache__
 
 # frontend:Ignore the node libraries
@@ -12,6 +13,7 @@
 #frontend/README*
 /frontend/project/babel*
 /frontend/project/dist/
+/frontend/tmp/
 /frontend/project/.brows*
 /frontend/project/.eslint*
 

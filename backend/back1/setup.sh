@@ -6,33 +6,36 @@
 export SECRET_KEY='j5!38#d%j38j(9=7wo%e5!@!##g%ti$%^7qgu)cuu+j*lh*ei2'
 
 cd back1
-cp settings_dev.py settings.py
+rm settings.py
+ln -s settings_dev.py settings.py
+# cp settings_dev.py settings.py
 
 echo "*** Setup of backend: back1"
 echo " "
 
 echo "First make sure the sqlite database is not present"
-rm db.sqlite3
+cd ..
+3rm db.sqlite3
 
 echo "*** Do the database migrations"
-python manage.py makemigrations my_auth
-python manage.py migrate my_auth
-python manage.py makemigrations klaverjas
-python manage.py migrate klaverjas
-python manage.py makemigrations channels
-python manage.py migrate channels
-python manage.py makemigrations appwebsocket
-python manage.py migrate appwebsocket
-python manage.py makemigrations
-python manage.py migrate
+python3 manage.py makemigrations my_auth
+python3 manage.py migrate my_auth
+python3 manage.py makemigrations klaverjas
+python3 manage.py migrate klaverjas
+python3 manage.py makemigrations channels
+python3 manage.py migrate channels
+python3 manage.py makemigrations appwebsocket
+python3 manage.py migrate appwebsocket
+python3 manage.py makemigrations
+python3 manage.py migrate
 
 
 echo "*** Create superuser and test users"
-python manage.py runscript setup_create_users.py
+python3 manage.py runscript setup_create_users.py
 
 echo "*** Set the GameStatus tabel"
-python manage.py runscript setup_gameStatus.py
+python3 manage.py runscript setup_gameStatus.py
 
 echo "*** Set the Troef tabel"
-python manage.py runscript setup_troef.py
+python3 manage.py runscript setup_troef.py
 

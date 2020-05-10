@@ -19,7 +19,7 @@ source $VENV_NAME/bin/activate
 
 # Install the libraries
 pip install -r requirements.txt
-python3 -m pip install daphne
+pip install daphne
 
 ### Create a django project back1
 django-admin startproject back1
