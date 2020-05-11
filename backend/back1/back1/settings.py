@@ -32,7 +32,7 @@ SECRET_KEY = 'j5!38#d%j38j(9=7wo%e5!@!##g%ti$%^7qgu)cuu+j*lh*ei2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'channels-backend', 'klaverjasfun.nl', 'www.klaverjasfun.nl']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.2.80', 'channels-backend', 'klaverjasfun.nl', 'www.klaverjasfun.nl']
 
 
 # Application definition

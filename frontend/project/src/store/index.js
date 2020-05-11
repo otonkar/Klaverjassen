@@ -25,7 +25,7 @@ export default new Vuex.Store({
       // url_api_base            : 'http://145.53.40.4:8000/',
       url_Websocket           : 'ws:192.168.2.80:8000/ws/game/',
       // url_Websocket           : 'wss:klaverjasfun.nl/ws/game/',
-      url_Websocket           : 'ws:klaverjasfun.nl:5000/ws/game/',
+      // url_Websocket           : 'ws:klaverjasfun.nl:5000/ws/game/',
       // url_Websocket           : 'ws:145.53.40.4:8000/ws/game/',
       url_get_token           : 'registration/token/',
       url_refresh_token       : 'registration/token/refresh/',
