@@ -8,9 +8,16 @@ https://docs.djangoproject.com/en/3.0/howto/deployment/asgi/
 """
 
 import os
+import django
 
-from django.core.asgi import get_asgi_application
+#from django.core.asgi import get_asgi_application
+from channels.routing import get_default_application
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'back1.settings')
 
-application = get_asgi_application()
+## Added extra
+django.setup()
+
+## https://stackoverflow.com/questions/59908273/django-daphne-asgi-django-can-only-handle-asgi-http-connections-not-websocket
+#application = get_asgi_application()
+application = get_default_application()
