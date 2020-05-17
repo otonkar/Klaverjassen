@@ -171,10 +171,12 @@ export default {
 
         // Determine the troef and show it on the screen
         // use the info from the first round (slag)
-        var troef = this.game_slagen[0].troef
-
-        var tmp = {'clubs': 'Klaver','hearts': 'Harten','spades': 'Schoppen', 'diamonds': 'Ruiten'}
-        this.troef_name = tmp[troef]
+        if (this.game_slagen.length !== 0 ) {
+            var troef = this.game_slagen[0].troef
+            var tmp = {'clubs': 'Klaver','hearts': 'Harten','spades': 'Schoppen', 'diamonds': 'Ruiten'}
+            this.troef_name = tmp[troef]
+            this.show_game_slagen = true
+        }
 
 
         for (var item in this.game_slagen) {
