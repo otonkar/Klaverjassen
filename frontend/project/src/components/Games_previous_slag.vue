@@ -157,7 +157,6 @@ export default {
         // use the info from the first round (slag)
         var troef = this.game_slagen[0].troef
 
-        console.log('#######################',this.round, this.game_slagen)
         var tmp = {'clubs': 'Klaver','hearts': 'Harten','spades': 'Schoppen', 'diamonds': 'Ruiten'}
         this.troef_name = tmp[troef]
 

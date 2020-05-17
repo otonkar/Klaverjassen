@@ -217,10 +217,6 @@ export default {
             
         // Do  use 'api_request' or axios, so that this call WILL use the interceptors
         const api_request = require('axios')
-        console.log('*** getGames')
-
-  
-
 
         await api_request({
             method: 'get',
