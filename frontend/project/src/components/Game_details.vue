@@ -36,7 +36,7 @@
         <b-row>
             <!-- <b-col ><b-button block class="btn btn-warning"> Accepteer partner </b-button> </b-col>  -->
             <b-col ><b-button @click="doUnRegister()" v-bind:disabled="allow_register" block class="btn btn-danger"> Afmelden bij potje  </b-button> </b-col> 
-            <b-col> <b-col><b-button block v-on:click="doRefresh()"  class="btn btn-warning"> Refresh  </b-button></b-col> </b-col> 
+            <!-- <b-col> <b-col><b-button block v-on:click="doRefresh()"  class="btn btn-warning"> Refresh  </b-button></b-col> </b-col>  -->
         </b-row>
 
 

@@ -10,7 +10,8 @@
 
         <b-row>
             <b-col><b-button block v-on:click="gotoMatchesList()"  class="btn btn-secondary"> Terug  </b-button></b-col>
-            <b-col><b-button block v-on:click="doLoad()"  class="btn btn-warning"> Refresh  </b-button></b-col>
+            <b-col></b-col>
+            <!-- <b-col><b-button block v-on:click="doLoad()"  class="btn btn-warning"> Refresh  </b-button></b-col> -->
             <!-- <b-col><b-button block v-on:click="gotoMatchesList()" class="btn btn-success"> Naar potjes  </b-button></b-col> -->
         </b-row>
         <br>
