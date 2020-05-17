@@ -57,24 +57,18 @@
         </div>
 
         <keep-alive>
-              <app-gameslagen
-                  v-if="variables.show_slagen"
-                  v-bind:gameID="gameID_to_show"
-                  v-bind:leg="leg_to_show"
-              ></app-gameslagen>
-            </keep-alive>
+          <app-gameslagen
+              v-if="variables.show_slagen"
+              v-bind:gameID="gameID_to_show"
+              v-bind:leg="leg_to_show"
+          ></app-gameslagen>
+        </keep-alive>
 
             <!-- v-bind:leg="this.leg_to_show" -->
-
-
-
-
 
             <!-- <b-td variant="success"> <img src="./clubs.png" width="17px"> A  </b-td> -->
 
     </b-container >
-
-    
 
   </div>
 </template>
@@ -180,7 +174,6 @@ export default {
 
       // // Create an event to another component so that slagen will be updated
     
-
       this.gameID_to_show = gameID
       this.leg_to_show = leg
 

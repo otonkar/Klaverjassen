@@ -261,11 +261,11 @@ class GameScore(APIView):
 class SlagList(generics.ListAPIView):  
     ''' 
     Get the slagen.
-    Can filter on gameID and leg to get all slagen for a leg
+    Can filter on gameID, leg and n_slag to get all slagen for a leg
 
         url(r'^games/slagen/search/$', views.SlagList.as_view(), name='slag_list'),
 
-        use as:  http://145.53.40.4:8000/klaverjas/games/slagen/search/?gameID=26&leg=2 
+        use as:  http://145.53.40.4:8000/klaverjas/games/slagen/search/?gameID=26&leg=2&n_slag=2
 
 
     '''
@@ -278,8 +278,9 @@ class SlagList(generics.ListAPIView):
         queryset = Slag.objects.all()
 
         # Get the filtersettings 
-        value_gameID = self.request.query_params.get('gameID', None)
-        value_leg = self.request.query_params.get('leg', None)
+        value_gameID    = self.request.query_params.get('gameID', None)
+        value_leg       = self.request.query_params.get('leg', None)
+        value_n_slag    = self.request.query_params.get('n_slag', None)
 
         # Exact search on gameID
         if value_gameID is not None:
@@ -288,6 +289,10 @@ class SlagList(generics.ListAPIView):
         # Exact search on leg
         if value_leg is not None:
             queryset = queryset.filter(leg=value_leg)
+        
+        # Exact search on n_slag
+        if value_n_slag is not None:
+            queryset = queryset.filter(n_slag=value_n_slag)
 
         return queryset.order_by('id')
 

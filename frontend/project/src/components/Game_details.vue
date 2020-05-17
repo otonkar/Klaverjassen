@@ -18,13 +18,13 @@
         <br>
         <b-card  class="bg-secondary text-center">
         <b-row>
-            <b-col ><b-button @click="doRegister(0)" v-bind:disabled="!allow_register" block class="btn btn-light"> A: {{  sorted_players[0].player.username }} </b-button> </b-col> 
-            <b-col ><b-button @click="doRegister(1)" v-bind:disabled="!allow_register" block class="btn btn-dark"> B: {{  sorted_players[1].player.username }} </b-button> </b-col> 
+            <b-col ><b-button @click="doRegister(0)" v-bind:disabled="!allow_register" block class="btn btn-light"> A1: {{  sorted_players[0].player.username }} </b-button> </b-col> 
+            <b-col ><b-button @click="doRegister(1)" v-bind:disabled="!allow_register" block class="btn btn-dark"> B2: {{  sorted_players[1].player.username }} </b-button> </b-col> 
         </b-row>
         <br>
         <b-row>
-            <b-col ><b-button @click="doRegister(3)" v-bind:disabled="!allow_register" block class="btn btn-dark"> B: {{  sorted_players[3].player.username }} </b-button> </b-col> 
-            <b-col ><b-button @click="doRegister(2)" v-bind:disabled="!allow_register" block class="btn btn-light"> A: {{  sorted_players[2].player.username }} </b-button> </b-col> 
+            <b-col ><b-button @click="doRegister(3)" v-bind:disabled="!allow_register" block class="btn btn-dark"> B4: {{  sorted_players[3].player.username }} </b-button> </b-col> 
+            <b-col ><b-button @click="doRegister(2)" v-bind:disabled="!allow_register" block class="btn btn-light"> A3: {{  sorted_players[2].player.username }} </b-button> </b-col> 
         </b-row>
         </b-card>
 

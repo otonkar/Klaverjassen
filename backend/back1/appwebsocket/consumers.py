@@ -1077,6 +1077,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 roem = await get_roem(message['gameID'], leg)
                 print('---- ',roem)
                 totRoem = roem[0]['roem__sum'] + roem[1]['roem__sum']
+                print('---- ',totRoem)
                 succeeded = False
                 pit = False
 

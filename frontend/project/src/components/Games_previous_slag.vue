@@ -1,24 +1,7 @@
 <template>
   <div class="Appgames_slagen" v-if="isLoaded">
 
-
-
-        <!-- <br>
-        <h4>Slagen game: {{ gameID }}, ronde: {{ leg.leg + 1 }} </h4>
-        <hr>
-        <p>De speler die uitkwam is aangegeven met groene kleur</p>
-        <p>
-            Gegevens deze rounde:
-            <ul>
-                <li>speler aangenomen: {{ leg.player_aangenomen }}</li>
-                <li>Gespeelde troef: {{ game_slagen[0].troef }}</li>
-            </ul>
-
-        </p>
-        <p></p> -->
-
-
-        <h5>Slagen potje: {{ gameID }}, ronde: {{ leg + 1 }} </h5>
+        <h5>Slag potje: {{ gameID }}, ronde: {{ leg + 1 }} </h5>
         <p>Troef : {{ troef_name }} </p>
         <div class="Table">
             <b-table-simple small responsive>
@@ -44,15 +27,16 @@
                     <b-th colspan="1" class="text-center" >roem</b-th>
                 </b-tr>
                 </b-thead>
+                <!-- game_slagen should contain 0 or 1 slag -->
                 <b-tbody >
-                    <b-tr v-for="slag in game_slagen" v-bind:key="slag.id">
-                    <b-th class="success"> {{ slag.n_slag + 1 }} </b-th>
-                    <b-th v-bind:variant="[slag.position_start===0 ? 'success': 'light']"> <img v-bind:src="slag.cards_slag[0]['color']" width="15px">  {{ slag.cards_slag[0]['rank'] }}    </b-th>
-                    <b-th v-bind:variant="[slag.position_start===1 ? 'success': 'light']"> <img v-bind:src="slag.cards_slag[1]['color']" width="15px">  {{ slag.cards_slag[1]['rank'] }}    </b-th>
-                    <b-td v-bind:variant="[slag.position_start===2 ? 'success': 'light']"> <img v-bind:src="slag.cards_slag[2]['color']" width="15px">  {{ slag.cards_slag[2]['rank'] }}   </b-td>
-                    <b-td v-bind:variant="[slag.position_start===3 ? 'success': 'light']"> <img v-bind:src="slag.cards_slag[3]['color']" width="15px">  {{ slag.cards_slag[3]['rank'] }}  </b-td>
-                    <b-td variant="light"> {{ slag.player_won + 1 }}  </b-td>
-                    <b-td variant="light"> {{ slag.roem }}  </b-td>
+                    <b-tr >
+                    <b-th class="success"> {{ game_slagen[0].n_slag + 1 }} </b-th>
+                    <b-th v-bind:variant="[game_slagen[0].position_start===0 ? 'success': 'light']"> <img v-bind:src="game_slagen[0].cards_slag[0]['color']" width="15px">  {{ game_slagen[0].cards_slag[0]['rank'] }}    </b-th>
+                    <b-th v-bind:variant="[game_slagen[0].position_start===1 ? 'success': 'light']"> <img v-bind:src="game_slagen[0].cards_slag[1]['color']" width="15px">  {{ game_slagen[0].cards_slag[1]['rank'] }}    </b-th>
+                    <b-td v-bind:variant="[game_slagen[0].position_start===2 ? 'success': 'light']"> <img v-bind:src="game_slagen[0].cards_slag[2]['color']" width="15px">  {{ game_slagen[0].cards_slag[2]['rank'] }}   </b-td>
+                    <b-td v-bind:variant="[game_slagen[0].position_start===3 ? 'success': 'light']"> <img v-bind:src="game_slagen[0].cards_slag[3]['color']" width="15px">  {{ game_slagen[0].cards_slag[3]['rank'] }}  </b-td>
+                    <b-td variant="light"> {{ game_slagen[0].player_won + 1 }}  </b-td>
+                    <b-td variant="light"> {{ game_slagen[0].roem }}  </b-td>
                     </b-tr>
                 </b-tbody>
                 <b-tfoot>
@@ -82,19 +66,19 @@
 
 
 export default {
-  name: 'Appgameslagen',
+  name: 'Appgamepreviousslag',
   props: {
     gameID: Number,
     leg: Number,
+    round: Number,
   },
 
   data () {
     return {
-        title: 'Game details page',
+        title: 'Game previous slag',
         isLoaded: false,            // to rerender the page when data is loaded
         errors: {},
         game_slagen: [], 
-        my_image: require('@/assets/clubs.png'),                      // Variable to store the image name
         test: false,
         // leg: 0,
         // gameID: 0,
@@ -103,10 +87,10 @@ export default {
   },
 
   mounted: function () {
-        // On event changeLeg do the method doGetSlagen
+        // On event changeLeg do the method doGetSlag
 
         // console.log('mounted : ', this.gameID, this.leg)
-        this.$root.$on('changeLeg', lega => this.doGetSlagen(this.gameID, lega) )
+        this.$root.$on('changeLeg', lega => this.doGetSlag(this.gameID, lega, this.round) )
   },
 
 
@@ -123,7 +107,7 @@ export default {
 
             // console.log('activated', this.gameID, this.leg)
             // Get the match details
-            await this.doGetSlagen(this.gameID, this.leg)
+            await this.doGetSlag(this.gameID, this.leg, this.round)
 
         }//END if
   },//END activated
@@ -145,7 +129,7 @@ export default {
 
     // }, //END getImage
 
-    doGetSlagen: async function (gameID, lega) {
+    doGetSlag: async function (gameID, lega, round) {
         // Show the current score of the game
 
        // Do  use 'api_request' or axios, so that this call WILL use the interceptors
@@ -155,7 +139,7 @@ export default {
         // Get all the players of a match
         await api_request({
             method: 'get',
-            url: this.appSettings.url_game_slagen + 'gameID=' + gameID + '&leg=' + lega
+            url: this.appSettings.url_game_slagen + 'gameID=' + gameID + '&leg=' + lega + '&n_slag=' + round
             // data: this.input
         })
         .then(response => {
@@ -173,10 +157,12 @@ export default {
         // use the info from the first round (slag)
         var troef = this.game_slagen[0].troef
 
+        console.log('#######################',this.round, this.game_slagen)
         var tmp = {'clubs': 'Klaver','hearts': 'Harten','spades': 'Schoppen', 'diamonds': 'Ruiten'}
         this.troef_name = tmp[troef]
 
 
+        // Should only be 0 or 1 slag
         for (var item in this.game_slagen) {
             // // console.log(this.game_slagen[item].cards_slag)
             var slag = JSON.parse(this.game_slagen[item].cards_slag)

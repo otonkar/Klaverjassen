@@ -50,7 +50,7 @@
             {nametag:true}, {tag_p0 :true}, 
             {text_active: false },
             {text_inactive: true }]"  
-            > {{ rotated_players[0].player.username }} (Team {{ my_team }})
+            > {{ rotated_players[0].player.username }} (Team {{ my_team }} / {{ (0 + my_position) % 4 + 1}})
         </div>
 
         <div v-bind:class="[
@@ -217,11 +217,11 @@
       <b-jumbotron class="jumbotron slagen" v-bind="{hidden: !variables.show_slagen}">
 
         <keep-alive>
-          <app-gameslagen
+          <app-gamepreviousslag
               v-bind:gameID="game.gameID"
               v-bind:leg="current_leg"
-              v-bind:troef="troef_selected"
-          ></app-gameslagen>
+              v-bind:round="current_round-1"
+          ></app-gamepreviousslag>
         </keep-alive>
 
       </b-jumbotron>
@@ -314,12 +314,13 @@
 
 <script>
 import ReconnectingWebSocket from 'reconnecting-websocket'
-import Appgameslagen from '../components/Games_slagen.vue'
+// import Appgameslagen from '../components/Games_slagen.vue'
+import Appgamepreviousslag from '../components/Games_previous_slag.vue'
 
 export default {
     name: 'Appgameplay',
     components: {
-    'app-gameslagen': Appgameslagen
+    'app-gamepreviousslag': Appgamepreviousslag
     },
     data () {
         return {
