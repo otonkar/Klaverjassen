@@ -46,7 +46,8 @@ export default new Vuex.Store({
       url_test                : 'test/',
     },
     variables: {                                                        // To store variables like show block on screen
-      show_slagen             : false                                   // To show the slagen component
+      show_slagen             : false,                                  // To show the slagen component
+      show_slag               : false,                                  // To show a single slag: Games_previous_slag
     },
     window_size: {
       width: 0,

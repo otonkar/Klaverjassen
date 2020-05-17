@@ -52,7 +52,7 @@
             </b-table-simple>
         </div>
 
-         <b-button variant="primary" @click="doCloseSlagen()" >Sluiten</b-button>
+         <b-button variant="primary" @click="doCloseSlag()" >Sluiten</b-button>
 
   </div>
 </template>
@@ -191,8 +191,8 @@ export default {
 
     }, //END doGetScores
 
-    doCloseSlagen: function () {
-        this.variables.show_slagen = false
+    doCloseSlag: function () {
+        this.variables.show_slag = false
         this.show_game_slagen = false
         this.$store.dispatch('updateVariables', this.variables)
 

@@ -18,7 +18,7 @@
           <b-dropdown variant="primary" text="acties" class="m-md-2">
             <b-dropdown-item @click="doStartRound(true)" >Reset Slag</b-dropdown-item>
             <b-dropdown-item @click="doGetScores()">Bekijk Score</b-dropdown-item>
-            <b-dropdown-item @click="doShowSlagen()">Vorige slag</b-dropdown-item>
+            <b-dropdown-item @click="doShowSlag()">Vorige slag</b-dropdown-item>
             <b-dropdown-divider></b-dropdown-divider>
             <b-dropdown-item @click="show_melden_verzaken = !show_melden_verzaken" >Melden verzaken</b-dropdown-item>
           </b-dropdown>
@@ -213,8 +213,8 @@
       </b-jumbotron>
 
 
-      <!-- Show Slagen  -->
-      <b-jumbotron class="jumbotron slagen" v-bind="{hidden: !variables.show_slagen}">
+      <!-- Show Slag  -->
+      <b-jumbotron class="jumbotron slagen" v-bind="{hidden: !variables.show_slag}">
 
         <keep-alive>
           <app-gamepreviousslag
@@ -222,6 +222,18 @@
               v-bind:leg="current_leg"
               v-bind:round="current_round-1"
           ></app-gamepreviousslag>
+        </keep-alive>
+
+      </b-jumbotron>
+
+      <!-- Show Slagen  -->
+      <b-jumbotron class="jumbotron slagen" v-bind="{hidden: !variables.show_slagen}">
+
+        <keep-alive>
+          <app-gameslagen
+              v-bind:gameID="game.gameID"
+              v-bind:leg="current_leg"
+          ></app-gameslagen>
         </keep-alive>
 
       </b-jumbotron>
@@ -314,13 +326,14 @@
 
 <script>
 import ReconnectingWebSocket from 'reconnecting-websocket'
-// import Appgameslagen from '../components/Games_slagen.vue'
+import Appgameslagen from '../components/Games_slagen.vue'
 import Appgamepreviousslag from '../components/Games_previous_slag.vue'
 
 export default {
     name: 'Appgameplay',
     components: {
-    'app-gamepreviousslag': Appgamepreviousslag
+      'app-gameslagen'       : Appgameslagen,
+      'app-gamepreviousslag' : Appgamepreviousslag,
     },
     data () {
         return {
@@ -1425,11 +1438,24 @@ export default {
         }, //END doShowScores
 
         doShowSlagen: function () {
+          // Show slagen when evaluating verzaken
 
           // console.log('Before emit', this.current_leg)
           this.$root.$emit('changeLeg', this.current_leg);
 
           this.variables.show_slagen = true
+          this.$store.dispatch('updateVariables', this.variables)
+          
+
+        }, //END doShowSlagen
+
+        doShowSlag: function () {
+          // Show the previous round (slag) in a leg
+
+          // console.log('Before emit', this.current_leg)
+          this.$root.$emit('changeLeg', this.current_leg);
+
+          this.variables.show_slag = true
           this.$store.dispatch('updateVariables', this.variables)
           
 
