@@ -47,12 +47,12 @@
                 <b-tbody >
                     <b-tr v-for="slag in game_slagen" v-bind:key="slag.id">
                     <b-th class="success"> {{ slag.n_slag + 1 }} </b-th>
-                    <b-th v-bind:variant="[slag.position_start===0 ? 'success': 'light']"> <img v-bind:src="slag.cards_slag[0]['color']" width="15px">  {{ slag.cards_slag[0]['rank'] }}    </b-th>
-                    <b-th v-bind:variant="[slag.position_start===1 ? 'success': 'light']"> <img v-bind:src="slag.cards_slag[1]['color']" width="15px">  {{ slag.cards_slag[1]['rank'] }}    </b-th>
-                    <b-td v-bind:variant="[slag.position_start===2 ? 'success': 'light']"> <img v-bind:src="slag.cards_slag[2]['color']" width="15px">  {{ slag.cards_slag[2]['rank'] }}   </b-td>
-                    <b-td v-bind:variant="[slag.position_start===3 ? 'success': 'light']"> <img v-bind:src="slag.cards_slag[3]['color']" width="15px">  {{ slag.cards_slag[3]['rank'] }}  </b-td>
-                    <b-td variant="light"> {{ slag.player_won + 1 }}  </b-td>
-                    <b-td variant="light"> {{ slag.roem }}  </b-td>
+                    <b-th v-bind:variant="[slag.position_start===0 ? 'success': 'light']" class="text-center"> <img v-bind:src="slag.cards_slag[0]['color']" width="15px">  {{ slag.cards_slag[0]['rank'] }}    </b-th>
+                    <b-th v-bind:variant="[slag.position_start===1 ? 'success': 'light']" class="text-center"> <img v-bind:src="slag.cards_slag[1]['color']" width="15px">  {{ slag.cards_slag[1]['rank'] }}    </b-th>
+                    <b-td v-bind:variant="[slag.position_start===2 ? 'success': 'light']" class="text-center"> <img v-bind:src="slag.cards_slag[2]['color']" width="15px">  {{ slag.cards_slag[2]['rank'] }}   </b-td>
+                    <b-td v-bind:variant="[slag.position_start===3 ? 'success': 'light']" class="text-center"> <img v-bind:src="slag.cards_slag[3]['color']" width="15px">  {{ slag.cards_slag[3]['rank'] }}  </b-td>
+                    <b-td variant="light" class="text-center"> {{ slag.player_won + 1 }}  </b-td>
+                    <b-td variant="light" class="text-center"> {{ slag.roem }}  </b-td>
                     </b-tr>
                 </b-tbody>
                 <b-tfoot>
