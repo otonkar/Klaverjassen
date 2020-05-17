@@ -3,7 +3,7 @@
 
         <h5>Slag potje: {{ gameID }}, ronde: {{ leg + 1 }} </h5>
         <p>Troef : {{ troef_name }} </p>
-        <div class="Table">
+        <div class="Table" v-if="show_game_slagen">
             <b-table-simple small responsive>
                 
                 <!-- <colgroup><col></colgroup>
@@ -83,6 +83,8 @@ export default {
         // leg: 0,
         // gameID: 0,
         troef_name: '----',
+        show_game_slagen: false
+        
     }
   },
 
@@ -155,12 +157,13 @@ export default {
 
         // Determine the troef and show it on the screen
         // use the info from the first round (slag)
-        var troef = this.game_slagen[0].troef
-
-        var tmp = {'clubs': 'Klaver','hearts': 'Harten','spades': 'Schoppen', 'diamonds': 'Ruiten'}
-        this.troef_name = tmp[troef]
-
-
+        if (this.game_slagen.length !== 0 ) {
+            var troef = this.game_slagen[0].troef
+            var tmp = {'clubs': 'Klaver','hearts': 'Harten','spades': 'Schoppen', 'diamonds': 'Ruiten'}
+            this.troef_name = tmp[troef]
+            this.show_game_slagen = true
+        }
+        
         // Should only be 0 or 1 slag
         for (var item in this.game_slagen) {
             // // console.log(this.game_slagen[item].cards_slag)
@@ -190,6 +193,7 @@ export default {
 
     doCloseSlagen: function () {
         this.variables.show_slagen = false
+        this.show_game_slagen = false
         this.$store.dispatch('updateVariables', this.variables)
 
     }, //END doCloseSlagen
