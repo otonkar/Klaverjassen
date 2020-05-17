@@ -168,7 +168,6 @@ export default {
     },
     doRefresh: function () {
         this.getPlayers()
-        console.log('*** doRefresh')
     }, //END doRefresh
 
     gotoHome: function () {
