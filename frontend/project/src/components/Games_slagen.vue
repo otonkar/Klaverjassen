@@ -18,7 +18,8 @@
         <p></p> -->
 
 
-        <h5>Slagen game: {{ gameID }}, ronde: {{ leg + 1 }} </h5>
+        <h5>Slagen potje: {{ gameID }}, ronde: {{ leg + 1 }} </h5>
+        <p>Troef : {{ troef_name }}  {{ troef_tmp }} </p>
         <div class="Table">
             <b-table-simple small responsive>
                 
@@ -85,6 +86,7 @@ export default {
   props: {
     gameID: Number,
     leg: Number,
+    troef: Number,
   },
 
   data () {
@@ -97,6 +99,8 @@ export default {
         test: false,
         // leg: 0,
         // gameID: 0,
+        troef_name: '',
+        troef_tmp: '',
     }
   },
 
@@ -123,10 +127,6 @@ export default {
             // Get the match details
             await this.doGetSlagen(this.gameID, this.leg)
 
-            
-        
-
-
         }//END if
   },//END activated
 
@@ -149,6 +149,9 @@ export default {
 
     doGetSlagen: async function (gameID, lega) {
         // Show the current score of the game
+
+        var tmp = ['Klaver', 'Harten', 'Schoppen', 'Ruiten']
+        this.troef_name = tmp[this.troef]
 
         // this.leg = lega
         // console.log('doGetSlagen ', gameID, lega)
@@ -179,6 +182,7 @@ export default {
         for (var item in this.game_slagen) {
             // // console.log(this.game_slagen[item].cards_slag)
             var slag = JSON.parse(this.game_slagen[item].cards_slag)
+            this.troef_tmp = this.game_slagen[item].troef
             // // console.log(slag[0]['color'])
 
             var converted_cards = []

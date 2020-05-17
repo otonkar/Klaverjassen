@@ -243,7 +243,7 @@ def save_slag(slag):
     # print('save_slag succeeded')
 
 @database_sync_to_async
-def get_roem(gameID, leg, round):
+def get_roem(gameID, leg):
     '''
     Get the total roem for both parties in a current leg
     '''
@@ -343,9 +343,10 @@ def delete_leg(gameID, leg):
 @database_sync_to_async
 def evaluate_leg(gameID, leg):
     '''
-    Dertermine the winner and scores for a completed leg
+    Determine the winner and scores for a completed leg
     '''
     qs = Slag.objects.filter(gameID=gameID, leg=leg)
+    
 
     if len(qs) != 8:
         print('WARNING: Leg not properly completed')
@@ -481,10 +482,23 @@ class ChatConsumer(AsyncWebsocketConsumer):
         ## register this player as connected and send all connection statusses of that game to all players
         if message['type'] == 'connected_update':
             print('@@@ CONNECTED_UPDATE')
-            await self.connected_update (message)
+            await self.connected_update(message)
 
+        #####################################################################################################
+        #### TYPE: handle_verzaken
+        ## Show to all players that a player has noted verzaakt
+        if message['type'] == 'notify_verzaken':
+            print('@@@ HANDLE_VERZAKEN')
+            await self.notify_verzaken(message)
 
+        #####################################################################################################
+        #### TYPE: process_verzaken
+        ## Show to all players that a player has noted verzaakt
+        # if message['type'] == 'process_verzaken':
+        #     print('@@@ PROCESS_VERZAKEN')
+        #     await self.process_verzaken(message)
 
+        
         #####################################################################################################
         #### TYPE: get_players   !NOT USED ANYMORE !!!
         elif message['type'] == 'get_players':
@@ -597,7 +611,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 ## Determine the total roem thusfar in the leg for both parties 
                 ## roem is a list of two values for team A and teamB
                 ## Note: roem for teamA is : roem[0]['roem__sum']
-                roem = await get_roem(gameID, current_leg, current_round)
+                roem = await get_roem(gameID, current_leg)     # do not need current_round
 
                 ### Send the information to only the player that requested this new round.
                 # Only send to the client (not to the group)
@@ -729,6 +743,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         #####################################################################################################
         #### TYPE: log_round
         #### the played round is send from player with my_position = 0 to the websocket.
+        #### Or verzaakt is reported by a player.
+        ####
         #### The following needs to be done
         ####  - store the result of this round in the database
         ####  - Update this game with the correct leg and round numbers
@@ -747,240 +763,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
         elif message['type'] == 'log_round':
             message = json.loads(text_data)     # converts the data to Python
             print('@@@ LOG_ROUND')
-            print(message)
-
-            #First delete any slag for the same game/leg/round, if it exists
-            await delete_slag(message['gameID'], message['leg'], message['round'])
-
-            # NEXT: get the game information
-            # We need the info from some fields and at the end some game fields needs to be updated
-            game = await get_game(message['gameID'])
-
-            ### If this is the first round of the first leg then
-            ### - set the startdate of this game
-            ### - register the troef of this leg. this will  be registered in the slag of the first round / leg
-            ###   This is automatically done on saving the first leg
-
-            if (message['leg'] == 0) and (message['round']) == 0:
-                # Set the date_game_start and save the game
-                game.date_game_start = datetime.now()
-                game.gameStatus_id = await get_gameStatus('wordt gespeeld')
-                await save_game(game)
-
-
-
-            # NEXT:  determine the troef played
-            troef_choices = ['clubs', 'hearts', 'spades', 'diamonds']
-            troef = troef_choices[message['troef']]
-
-            # NEXT: Determine which position started this round.
-            # if the round = 0 then determine based on current leg
-            # if round > 0 then look at the winner of the previous round
-            if message['round'] == 0:
-                position_start = (game.legs_completed ) % 4
-                # print('Position that started this round: ', position_start)
-            else:
-                # Get the winner of the previous round (slag)
-                slag = await get_slag(message['gameID'], message['leg'], message['round']-1  )
-                position_start = slag.player_won
+            print('***', message)
+            await self.process_log_round(message)
+           
                 
-
-            # Determine which player and team won the round
-            # team A =  players 0/2    B= players 1/3
-            print('BBBB', message['cards'], troef, position_start)
-            winner = evaluateSlag(message['cards'], troef, position_start)
-            print('winner: ', winner)
-            if (winner == 0) or (winner == 2):
-                teamA_won = True
-            else:
-                teamA_won = False
-
-            # print('troef, winner : ', troef, winner)
-
-            print('Team A won: ', teamA_won)
-
-            # Determine the score.
-            cards = message['cards']
-            # print('cards : ', cards)
-            score = countRound(cards, troef)
-
-            # For last round add 10 mounts to score
-            if message['round'] == 7:
-                score = score + 10
-
-            # print('Score: ', score)
-
-            # get the roem
-            roem = message['roem']
-
-            # Later add validation on 'verzaakt.
-            verzaakt = None
-
-            troef_obj = await get_troef(troef)
-
-            # Store the slag in the database
-            slag = Slag()  
-            slag.gameID             = game
-            slag.leg                = message['leg']
-            slag.n_slag             = message['round']
-            slag.cards_slag         = json.dumps(cards)     # store as json item in a textfield
-            slag.troef              = troef_obj
-            slag.position_start     = position_start
-            slag.player_won         = winner
-            slag.teamA_won          = teamA_won
-            slag.score              = score
-            slag.roem               = roem
-            verzaakt                = verzaakt
-
-            # store in the database
-            await save_slag(slag)
-
-            ### NEXT increase the rounds played in the game, or when the leg is completed 
-            ### then increase the leg and set rounds to 0
-            ### when the maximum number of legs have been realized then send signal potje completed
-
-            # First get the match info to get the maximum number of legs
-            match = await get_match(game.matchID_id)
-
-
-            ## After registering the played round signal three possibilies
-            ## 1) play next round
-            ## 2) signal end of leg: communicate the result of the leg to be shown in the screen.
-            ## 3) signal the end of game: show both the result of the latest leg and result of total game
-            ##
-            ## Use  'state'=  'next_round', 'end_of_leg', 'end_of_game'
-            ##
-            ## and update the round in the game parameters
-            state = ''
-            if message['round'] < 7:
-                game.rounds_completed = game.rounds_completed + 1
-                state = 'next_round'
-
-            else:
-                game.rounds_completed = 0
-                # Update the legs_completed
-                if message['leg'] < match.n_legs - 1:
-                    game.legs_completed = game.legs_completed + 1
-                    state = 'end_of_leg'
-                    print('LEG is COMPLETED')
-                else: 
-                    # Game is finished
-                    state = 'end_of_game'
-                    game.legs_completed = game.legs_completed + 1
-                    game.date_game_end = datetime.now()
-                    game.gameStatus_id = await get_gameStatus('uitgespeeld')
-                    
-                    print('GAME is COMPLETED')
-
-            await save_game(game)
-
-        
-            #### STATE : next_round
-            if state == 'next_round':
-                
-                message = {
-                'type'          : 'state_of_game',
-                'state'         : state,
-            # 'data_completed'        : datetime.now(),
-                # 'player_aangenomen'     : player_aangenomen, 
-                'scoreA'                : 0, 
-                'roemA'                 : 0,
-                'scoreB'                : 0,
-                'roemB'                 : 0,
-                # 'succeeded'             : succeeded, 
-                # 'pit'                   : pit,
-                # 'team'                  : team          # team A or team B
-            }
-
-            #### STATE : end_of_leg
-            if state == 'end_of_leg' or state == 'end_of_game':
-                ## Store the result of the leg: score, roem, who won, door/nat.
-                ## and show it to the players
-
-                leg = game.legs_completed - 1   # Note this was already increaed by 1
-
-                # Get the scores of the leg
-                [player_aangenomen, succeeded, pit, team,  score_A, roem_A, score_B, roem_B] = await evaluate_leg(message['gameID'], leg)
-                
-                # register the leg using a serializer
-                input_data={
-                    'gameID'                : message['gameID'], 
-                    'leg'                   : leg, 
-                    'data_completed'        : datetime.now(),
-                    'player_aangenomen'     : player_aangenomen, 
-                    'scoreA'                : score_A, 
-                    'roemA'                 : roem_A,
-                    'scoreB'                : score_B,
-                    'roemB'                 : roem_B,
-                    'succeeded'             : succeeded, 
-                    'pit'                   : pit
-                    }
-
-                #First delete any leg for the same game , if it exists.
-                await delete_leg(message['gameID'], message['leg'])
-
-                # save the Leg to the database
-                await save_leg(input_data)
-
-                ### Create the message based on state
-                message = {
-                    'type'                  : 'state_of_game',
-                    'state'                 : state,
-                    # 'data_completed'        : datetime.now(),
-                    'player_aangenomen'     : player_aangenomen, 
-                    'scoreA'                : score_A, 
-                    'roemA'                 : roem_A,
-                    'scoreB'                : score_B,
-                    'roemB'                 : roem_B,
-                    'succeeded'             : succeeded, 
-                    'pit'                   : pit,
-                    'team'                  : team          # team A or team B
-                }
-
-
-
-            #### STATE : end_of_game
-            #### change the game status to 'uitgespeeld' set the date of game end
-            if state == 'end_of_game':
-
-                print('State: end of game')
-
-                message = {
-                    'type'                  : 'state_of_game',
-                    'state'                 : state,
-                    # 'data_completed'        : datetime.now(),
-                    'player_aangenomen'     : player_aangenomen, 
-                    'scoreA'                : score_A, 
-                    'roemA'                 : roem_A,
-                    'scoreB'                : score_B,
-                    'roemB'                 : roem_B,
-                    'succeeded'             : succeeded, 
-                    'pit'                   : pit,
-                    'team'                  : team          # team A or team B
-                }
-
-
-                # # Get the date
-                # new_date = datetime.now()
-                
-                # #define the game data to be updated
-                # game_data = {
-                #     'date_game_end'         : datetime.now(),
-                #     'gameStatus'            : 'uitgespeeld'
-                # }
-
-                # await update_game(message['gameID', game_data])
-
-
-            # Send message to room group
-            await self.channel_layer.group_send(
-                self.group_name, 
-                {
-                    'type': 'send_to_group',        ## Based on this name a function to handle is created
-                    'message': message
-                }
-            )
-
         #####################################################################################################
         #### TYPE: request_scores
         #### For a game get all the leg scores and total score for the game
@@ -1069,6 +855,333 @@ class ChatConsumer(AsyncWebsocketConsumer):
         )
 
         # print('CONNECTION_UPDATE')
+
+
+    async def notify_verzaken(self, message):
+        '''
+        Notify to all players that a player has started the verzaken procedure
+        '''
+
+        # send this info to all players in the group.
+        message = {
+            'type'          : 'activate_verzaken',
+            'player_name'   :  message['player_name']
+        }
+
+        # Send message to room group
+        await self.channel_layer.group_send(
+            self.group_name, 
+            {
+                'type': 'send_to_group',        ## Based on this name a function to handle is created
+                'message': message
+            }
+        )
+
+
+    # async def process_verzaken(self, message):
+    #     '''
+    #     Once the team is selected that should receice all points 
+    #     this must be processed into the database 
+    #     Further the current Round must be closed.
+    #     '''
+
+    #     print('Team that gets all points: ', message['team'])
+
+
+    async def process_log_round(self, message):
+        print('*****', message)
+        # Cover also the case 'verzaakt'
+
+        #First delete any slag for the same game/leg/round, if it exists
+        await delete_slag(message['gameID'], message['leg'], message['round'])
+
+        # NEXT: get the game information
+        # We need the info from some fields and at the end some game fields needs to be updated
+        game = await get_game(message['gameID'])
+
+        ### If this is the first round of the first leg then
+        ### - set the startdate of this game
+        ### - register the troef of this leg. this will  be registered in the slag of the first round / leg
+        ###   This is automatically done on saving the first leg
+
+        if (message['leg'] == 0) and (message['round']) == 0:
+            # Set the date_game_start and save the game
+            game.date_game_start = datetime.now()
+            game.gameStatus_id = await get_gameStatus('wordt gespeeld')
+            await save_game(game)
+
+        #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+        if message['verzaakt'] == False:
+            ### Handle the regular processing of a leg
+
+            # NEXT:  determine the troef played
+            troef_choices = ['clubs', 'hearts', 'spades', 'diamonds']
+            troef = troef_choices[message['troef']]
+
+            # NEXT: Determine which position started this round.
+            # if the round = 0 then determine based on current leg
+            # if round > 0 then look at the winner of the previous round
+            if message['round'] == 0:
+                position_start = (game.legs_completed ) % 4
+                # print('Position that started this round: ', position_start)
+            else:
+                # Get the winner of the previous round (slag)
+                slag = await get_slag(message['gameID'], message['leg'], message['round']-1  )
+                position_start = slag.player_won
+                
+
+            # Determine which player and team won the round
+            # team A =  players 0/2    B= players 1/3
+            print('BBBB', message['cards'], troef, position_start)
+            winner = evaluateSlag(message['cards'], troef, position_start)
+            print('winner: ', winner)
+            if (winner == 0) or (winner == 2):
+                teamA_won = True
+            else:
+                teamA_won = False
+
+            # print('troef, winner : ', troef, winner)
+
+            print('Team A won: ', teamA_won)
+
+            # Determine the score.
+            cards = message['cards']
+            # print('cards : ', cards)
+            score = countRound(cards, troef)
+
+            # For last round add 10 mounts to score
+            if message['round'] == 7:
+                score = score + 10
+
+            # print('Score: ', score)
+
+            # get the roem
+            roem = message['roem']
+
+            # Later add validation on 'verzaakt.
+            # !! NO, verzaakt will be related to a leg and not a single slag
+            verzaakt = None
+
+            troef_obj = await get_troef(troef)
+
+            # Store the slag in the database
+            slag = Slag()  
+            slag.gameID             = game
+            slag.leg                = message['leg']
+            slag.n_slag             = message['round']
+            slag.cards_slag         = json.dumps(cards)     # store as json item in a textfield
+            slag.troef              = troef_obj
+            slag.position_start     = position_start
+            slag.player_won         = winner
+            slag.teamA_won          = teamA_won
+            slag.score              = score
+            slag.roem               = roem
+            verzaakt                = verzaakt
+
+            # store in the database
+            await save_slag(slag)
+
+        else: 
+            ## handle the verzaakt situation
+            pass
+            ## Set round to 7 so that leg will be closed
+            ## and can be registered.
+            message['round'] = 7
+        #@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    
+
+        ### NEXT increase the rounds played in the game, or when the leg is completed 
+        ### then increase the leg and set rounds to 0
+        ### when the maximum number of legs have been realized then send signal potje completed
+
+        # First get the match info to get the maximum number of legs
+        match = await get_match(game.matchID_id)
+
+
+        ## After registering the played round signal three possibilies
+        ## 1) play next round
+        ## 2) signal end of leg: communicate the result of the leg to be shown in the screen.
+        ## 3) signal the end of game: show both the result of the latest leg and result of total game
+        ##
+        ## Use  'state'=  'next_round', 'end_of_leg', 'end_of_game'
+        ##
+        ## and update the round in the game parameters
+        state = ''
+        if message['round'] < 7:
+            game.rounds_completed = game.rounds_completed + 1
+            state = 'next_round'
+
+        else:
+            game.rounds_completed = 0
+            # Update the legs_completed
+            if message['leg'] < match.n_legs - 1:
+                game.legs_completed = game.legs_completed + 1
+                state = 'end_of_leg'
+                print('LEG is COMPLETED')
+            else: 
+                # Game is finished
+                state = 'end_of_game'
+                game.legs_completed = game.legs_completed + 1
+                game.date_game_end = datetime.now()
+                game.gameStatus_id = await get_gameStatus('uitgespeeld')
+                
+                print('GAME is COMPLETED')
+
+        await save_game(game)
+
+    
+        #### STATE : next_round
+        if state == 'next_round':
+            
+            message = {
+            'type'          : 'state_of_game',
+            'state'         : state,
+        # 'data_completed'        : datetime.now(),
+            # 'player_aangenomen'     : player_aangenomen, 
+            'scoreA'                : 0, 
+            'roemA'                 : 0,
+            'scoreB'                : 0,
+            'roemB'                 : 0,
+            # 'succeeded'             : succeeded, 
+            # 'pit'                   : pit,
+            # 'team'                  : team          # team A or team B
+        }
+
+        #### STATE : end_of_leg
+        if state == 'end_of_leg' or state == 'end_of_game':
+            ## Store the result of the leg: score, roem, who won, door/nat.
+            ## and show it to the players
+
+            leg = game.legs_completed - 1   # Note this was already increaed by 1
+
+            if message['verzaakt'] == False:
+                # Get the scores of the leg
+                [player_aangenomen, succeeded, pit, team,  score_A, roem_A, score_B, roem_B] = await evaluate_leg(message['gameID'], leg)
+                
+                # register the leg using a serializer
+                input_data={
+                    'gameID'                : message['gameID'], 
+                    'leg'                   : leg, 
+                    'data_completed'        : datetime.now(),
+                    'player_aangenomen'     : player_aangenomen, 
+                    'scoreA'                : score_A, 
+                    'roemA'                 : roem_A,
+                    'scoreB'                : score_B,
+                    'roemB'                 : roem_B,
+                    'succeeded'             : succeeded, 
+                    'pit'                   : pit
+                    }
+
+            else:
+                # In case of verzaakt assign all 262 + all roem to the other party
+                roem = await get_roem(message['gameID'], leg)
+                print('---- ',roem)
+                totRoem = roem[0]['roem__sum'] + roem[1]['roem__sum']
+                succeeded = False
+                pit = False
+
+                player_aangenomen = leg % 4  # In the game variant 'verplicht aannemen'
+
+                if message['team_get_points'] == 'A':
+                    #Get all reported roem of this leg
+                    score_A     = 162
+                    roem_A      = totRoem + 100
+                    score_B     = 0
+                    roem_B      = 0
+                    team = 'team A'
+
+                else: 
+                    score_B     = 162
+                    roem_B      = totRoem + 100
+                    score_A     = 0
+                    roem_A      = 0
+                    team = 'team B'
+
+                # register the leg using a serializer
+                input_data={
+                    'gameID'                : message['gameID'], 
+                    'leg'                   : leg, 
+                    'data_completed'        : datetime.now(),
+                    'player_aangenomen'     : player_aangenomen, 
+                    'scoreA'                : score_A, 
+                    'roemA'                 : roem_A,
+                    'scoreB'                : score_B,
+                    'roemB'                 : roem_B,
+                    'succeeded'             : succeeded, 
+                    'pit'                   : pit
+                    }
+
+
+            #First delete any leg for the same game , if it exists.
+            await delete_leg(message['gameID'], message['leg'])
+
+            # save the Leg to the database
+            await save_leg(input_data)
+
+            ### Create the message based on state
+            message = {
+                'type'                  : 'state_of_game',
+                'state'                 : state,
+                # 'data_completed'        : datetime.now(),
+                'player_aangenomen'     : player_aangenomen, 
+                'scoreA'                : score_A, 
+                'roemA'                 : roem_A,
+                'scoreB'                : score_B,
+                'roemB'                 : roem_B,
+                'succeeded'             : succeeded, 
+                'pit'                   : pit,
+                'team'                  : team          # team A or team B
+            }
+
+
+
+        #### STATE : end_of_game
+        #### change the game status to 'uitgespeeld' set the date of game end
+        if state == 'end_of_game':
+
+            print('State: end of game')
+
+            message = {
+                'type'                  : 'state_of_game',
+                'state'                 : state,
+                # 'data_completed'        : datetime.now(),
+                'player_aangenomen'     : player_aangenomen, 
+                'scoreA'                : score_A, 
+                'roemA'                 : roem_A,
+                'scoreB'                : score_B,
+                'roemB'                 : roem_B,
+                'succeeded'             : succeeded, 
+                'pit'                   : pit,
+                'team'                  : team          # team A or team B
+            }
+
+
+            # # Get the date
+            # new_date = datetime.now()
+            
+            # #define the game data to be updated
+            # game_data = {
+            #     'date_game_end'         : datetime.now(),
+            #     'gameStatus'            : 'uitgespeeld'
+            # }
+
+            # await update_game(message['gameID', game_data])
+
+
+        # Send message to room group
+        await self.channel_layer.group_send(
+            self.group_name, 
+            {
+                'type': 'send_to_group',        ## Based on this name a function to handle is created
+                'message': message
+            }
+        )
+
+  
+
+    
+
+
 
 
 

@@ -20,7 +20,7 @@ const routes = [
   { path: '/', name: 'Home', component: Apphome },
   { path: '/Login', name: 'Login', component: Applogin },
   { path: '/Registration', name: 'Registration', component: Appregistration },
-  { path: '/Matches', name: 'Matches', component: Appmatches },
+  { path: '/Matches', name: 'Matches', component: Appmatches, meta:{title: 'Wedstrijden'} },
   { path: '/Matches/Create', name: 'Match_create', component: Appmatchcreate },
   { path: '/Matches/List', name: 'Match_list', component: Appmatchlist },
   { path: '/Matches/Details/:id', name: 'Match_details', component: Appmatchdetails },

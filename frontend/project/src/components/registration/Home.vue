@@ -54,10 +54,8 @@ export default {
       result_test: {}
     }
   },
-  created() {
-    // window.addEventListener("resize", this.getWindowSize);
-  },
   activated: function () {
+    document.title = 'Klaverjasfun'
     // console.log(this.$route.name)
 
     if (this.user.user_is_logged_in === false) {

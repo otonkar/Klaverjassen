@@ -65,12 +65,13 @@
     export default {
         name: 'Applogin',
         data () {
-        return {
-            title: 'Login page',
-            data: {}
-        }
+            return {
+                title: 'Login page',
+                data: {}
+            }
         },
         activated: function () {
+            document.title = 'Klaverjasfun - Login'
             // console.log(this.$route.name)
             // Do not show full screen on login page
             // document.exitFullscreen();

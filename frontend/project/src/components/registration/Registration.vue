@@ -151,6 +151,9 @@
             data: {}
         }
         },
+        activated: function () {
+            document.title = 'Klaverjasfun - Registration'
+        },
         mounted: function () {
             // console.log(this.$route.name)
             // Do not show full screen on login page

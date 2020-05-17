@@ -57,6 +57,7 @@ export default {
   data () {
     return {
         title: 'Game details page',
+        polling: null,            // Needed to auto refresh this page
         isLoaded: false,
         players: [ 
             {
@@ -133,11 +134,14 @@ export default {
         } 
 
   },
-  beforeMount: function () {
-    //   this.sorted_players.position = ''
-    //   this.sorted_players.player.username = ''
+  deactivated () {
+    // To stop refreshing the data when the page is left
+    clearInterval(this.polling)
   },
+
   activated: function () {
+      // Refresh this component every x seconds
+      this.pollData()
       // console.log(this.$route.name)
       // Do not show full screen on login page
       // document.exitFullscreen();
@@ -154,8 +158,16 @@ export default {
       }//END if
   },//END mounted
   methods: {
+    pollData () {
+      // To refresh the data every x seconds
+      // https://renatello.com/vue-js-polling-using-setinterval/
+      this.polling = setInterval(() => {
+        this.doRefresh()
+      }, 5000)
+    },
     doRefresh: function () {
         this.getPlayers()
+        console.log('*** doRefresh')
     }, //END doRefresh
 
     gotoHome: function () {

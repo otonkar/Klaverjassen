@@ -82,6 +82,7 @@ export default {
   data () {
     return {
         title: 'Game details page',
+        polling: null,            // Needed to auto refresh this page
         isLoaded: false,          // to rerender the page when data is loaded
         matchID: '',              // Contains the matchID as received from the match list
         match_details: '',        // Contains the details of the match
@@ -97,9 +98,17 @@ export default {
         gameID_to_show: 0,        // 
     }
   },
+  deactivated () {
+    // To stop refreshing the data when the page is left
+    clearInterval(this.polling)
+  },
 
   // Do not use mounted, otherwise no new game will be loaded
   activated: async function () {
+      // To refresh the page every x seconds
+      this.pollData()
+
+      document.title = 'Klaverjasfun'
       // console.log(this.$route.name)
       // Do not show full screen on login page
       // document.exitFullscreen();
@@ -145,6 +154,13 @@ export default {
       }//END if
   },//END mounted
   methods: {
+    pollData () {
+      // To refresh the data every x seconds
+      // https://renatello.com/vue-js-polling-using-setinterval/
+      this.polling = setInterval(() => {
+        this.getGames()
+      }, 5000)
+    },
     doLoad: function () {
       this.getGames()
     },
@@ -200,6 +216,7 @@ export default {
             
         // Do  use 'api_request' or axios, so that this call WILL use the interceptors
         const api_request = require('axios')
+        console.log('*** getGames')
 
   
 

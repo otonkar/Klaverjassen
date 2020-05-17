@@ -10,11 +10,19 @@
         </div>
 
         <b-button class="goback" @click="doGoBack()" size="sm">Ga terug</b-button>
-        <b-button class="btn-primary reset_slag" variant="primary" @click="doStartRound(true)" size="sm">reset slag</b-button>
+        <!-- <b-button class="btn-primary reset_slag" variant="primary" @click="doStartRound(true)" size="sm">reset slag</b-button>
         <b-button class="btn-primary show_scores" variant="primary" @click="doGetScores()" size="sm">Stand</b-button>
-        <b-button class="btn-primary show_slagen" variant="primary" @click="doShowSlagen()" size="sm">Slagen</b-button>
+        <b-button class="btn-primary show_slagen" variant="primary" @click="doShowSlagen()" size="sm">Slagen</b-button> -->
 
-
+        <div class="action_menu">
+          <b-dropdown variant="primary" text="acties" class="m-md-2">
+            <b-dropdown-item @click="doStartRound(true)" >Reset Slag</b-dropdown-item>
+            <b-dropdown-item @click="doGetScores()">Bekijk Score</b-dropdown-item>
+            <b-dropdown-item @click="doShowSlagen()">Vorige slag</b-dropdown-item>
+            <b-dropdown-divider></b-dropdown-divider>
+            <b-dropdown-item @click="show_melden_verzaken = !show_melden_verzaken" >Melden verzaken</b-dropdown-item>
+          </b-dropdown>
+        </div>
 
         <!-- Empty placeholders to put the card played -->
         <div v-bind:class="{'card-holder  play_p0': rotated_next_to_play !== 0, 'card-holder  play_p0 place_turn': rotated_next_to_play === 0 }"></div>
@@ -42,7 +50,7 @@
             {nametag:true}, {tag_p0 :true}, 
             {text_active: false },
             {text_inactive: true }]"  
-            > {{ rotated_players[0].player.username }} 
+            > {{ rotated_players[0].player.username }} (Team {{ my_team }})
         </div>
 
         <div v-bind:class="[
@@ -104,12 +112,14 @@
         <!-- Create a dropUp for roem -->
         <div v-bind="{hidden: !show_register_roem}" class="roem_select">
           <b-dropdown id="roem" size="sm" dropup v-bind:text="'selecteer roem (' + roem_value + ')'" variant="primary" class="m-2">
+            <b-dropdown-item @click="roem_value = -200">-200</b-dropdown-item>
             <b-dropdown-item @click="roem_value = -100">-100</b-dropdown-item>
             <b-dropdown-item @click="roem_value = -70">-70</b-dropdown-item>
             <b-dropdown-item @click="roem_value = -50">-50</b-dropdown-item>
             <b-dropdown-item @click="roem_value = -40">-40</b-dropdown-item>
             <b-dropdown-item @click="roem_value = -20">-20</b-dropdown-item>
             <b-dropdown-item >--------</b-dropdown-item>
+            <b-dropdown-item @click="roem_value = 200">200</b-dropdown-item>
             <b-dropdown-item @click="roem_value = 100">100</b-dropdown-item>
             <b-dropdown-item @click="roem_value = 70">70</b-dropdown-item>
             <b-dropdown-item @click="roem_value = 50">50</b-dropdown-item>
@@ -128,7 +138,7 @@
       <div class="roem_teamB">team B: {{ total_roem[1]['roem__sum'] }}</div>
 
       <!-- Show the result of a leg  -->
-      <b-jumbotron class="leg_result" v-bind="{hidden: !show_leg_result}">
+      <b-jumbotron class="jumbotron" v-bind="{hidden: !show_leg_result}">
         <h5>Resultaat ronde {{ current_leg + 1 }} </h5>
         <p>Aangenomen door: {{ state_data.team}},  {{ name_player_leg }} </p>
        <h5>Team A</h5>
@@ -141,7 +151,7 @@
       </b-jumbotron>
 
       <!-- Corrigeer roem -->
-      <b-jumbotron class="leg_result" v-bind="{hidden: !show_correct_roem}">
+      <b-jumbotron class="jumbotron" v-bind="{hidden: !show_correct_roem}">
         <h5>Corrigeer roem ronde {{ current_leg + 1 }} </h5>
         <p>Team A huidige roem: {{ state_data.roemA }} <br>
           nieuwe roem: <input type="text" v-model="corrected_roemA">
@@ -154,7 +164,7 @@
       </b-jumbotron>
 
       <!-- Show the result current score  -->
-      <b-jumbotron class="leg_result" v-bind="{hidden: !show_score_of_game}">
+      <b-jumbotron class="jumbotron" v-bind="{hidden: !show_score_of_game}">
         <h5>Score game {{ game.gameID}} </h5>
 
         <div>
@@ -199,19 +209,18 @@
           </b-table-simple>
         </div>
 
-
-
         <b-button variant="primary" @click="show_score_of_game = !show_score_of_game" >Sluiten</b-button>
       </b-jumbotron>
 
 
       <!-- Show Slagen  -->
-      <b-jumbotron class="leg_result" v-bind="{hidden: !variables.show_slagen}">
+      <b-jumbotron class="jumbotron slagen" v-bind="{hidden: !variables.show_slagen}">
 
         <keep-alive>
           <app-gameslagen
               v-bind:gameID="game.gameID"
               v-bind:leg="current_leg"
+              v-bind:troef="troef_selected"
           ></app-gameslagen>
         </keep-alive>
 
@@ -221,11 +230,83 @@
       <div>
         <b-modal hide-footer v-model="modalShow">
           Troef mag alleen aangepast worden door de speler die aan de beurt is. 
-          Ook als het spel begonnen is mag de troef niet aangepast worden. <br>
+          Ook als de ronde begonnen is mag de troef niet aangepast worden. <br>
           <b-button class="mt-3" block @click="doCloseTroefAlert()" variant="primary">Sluiten</b-button>
         </b-modal>
         
       </div>
+
+      <!-- Show Melden Verzaken  -->
+      <b-jumbotron class="jumbotron" v-bind="{hidden: !show_melden_verzaken}">
+        <h5>Melden verzaken </h5>
+        <p> Weet je zeker dat je verzaken wilt melden?</p>
+        <p> 
+          Als je doorgaat MOET worden gekozen naar welke partij alle punten, gemaakte roem + 100 roem extra gaat <br>
+          Dit wordt definitief toegekend en kan niet meer gewijzigd worden.
+        </p>
+        <b-row>
+            <b-col><b-button block @click="show_melden_verzaken = !show_melden_verzaken"  class="btn btn-danger"> Stoppen  </b-button></b-col>
+            <b-col><b-button block v-on:click="doHandleVerzaken()"  class="btn btn-success"> Melden  </b-button></b-col>
+        </b-row>
+      </b-jumbotron>
+
+      <!-- Show Afhandelen verzaken  -->
+      <b-jumbotron class="jumbotron" v-bind="{hidden: !show_handle_verzaken}">
+        <h5>Afhandelen verzaken </h5>
+        <p> 
+          Bepaal welk team ALLE punten krijgt.
+        </p>
+        <b-row>
+            <b-col><b-button block @click="doShowSlagen()"  class="btn btn-info"> Bekijk slagen  </b-button></b-col>
+        </b-row>
+        <br>
+        <p>
+          Kies welk team krijgt: <br>
+          162 punten + gespeelde roem + 100 roem
+        </p>
+        <br>
+
+        <div>
+          <b-form-group >
+            <b-form-radio-group
+              id="radio-slots"
+              v-model="radio_selected_team"
+            >
+              <b-form-radio value="A" size="lg">Team A</b-form-radio>
+              <b-form-radio value="B" size="lg">Team B</b-form-radio>
+            </b-form-radio-group>
+          </b-form-group>
+
+        </div>
+        <br>
+        <hr> 
+        <br>
+        <b-row>
+            <b-col><b-button block @click="doProcessVerzaken()"  class="btn btn-warning"> Kies definief Team {{ radio_selected_team }} </b-button></b-col>
+        </b-row>
+
+      </b-jumbotron>
+
+      <!-- Show Activate Verzaken: reduced screen   -->
+      <b-jumbotron class="jumbotron" v-bind="{hidden: !show_verzaken_activated}">
+        <h5>Melding Verzaakt !!! </h5>
+        <p> 
+          Gemeld door: <strong>{{ player_notified_verzaken }}</strong>
+        </p>
+        <p>
+          Bepaal met elkaar welk team (A of B) alle punten, gemaakte roem en 100 extra roem krijgt toegewezen.
+        </p>
+        <p>De melder ({{ player_notified_verzaken }}) moet de definieve keuze verwerken.</p>
+        <b-row>
+            <b-col><b-button block @click="doShowSlagen()"  class="btn btn-info"> Bekijk slagen  </b-button></b-col>
+        </b-row>
+        <br>
+        <br>
+        <b-row>
+            <b-col><b-button block @click="show_verzaken_activated = !show_verzaken_activated"  class="btn btn-primary"> Sluiten </b-button></b-col>
+        </b-row>
+
+      </b-jumbotron>
 
     </div>
 </template>
@@ -252,6 +333,13 @@ export default {
             show_score_of_game: false, // Show the total score of all legs played in the game. Toggle using button
             show_close_game: false,   // When the game is played show a text to close the game
             show_correct_roem: false,  // Show the possibility to correct the roem at the end of the game
+            show_melden_verzaken: false, // Show the option to report 'verzaken'
+            show_handle_verzaken: false, // jumbotron to handle vezaken
+            show_verzaken_activated: false,  // show to players a reduced verzaken screen
+            player_notified_verzaken: '',  // Show the name of the player that notified verzaken
+            verzaakt: false,          // To indicate that the leg was verzaakt
+            radio_selected_team: 'A',        // Value used for the radio button to select which team should get all the pointe in case of verzaakt
+            my_team: '',              // Contains A or B for the team of the rotated players at position 0 
             corrected_roemA: 0,       // New value for the total roem team A
             corrected_roemB: 0,
             name_player_leg: '',      // To show the name in the leg result of the player that played the leg
@@ -392,6 +480,7 @@ export default {
         
     },
     activated: async function () {
+        document.title = 'Klaverjasfun - Spelen'
         // // console.log('ACTIVATED')
 
         // console.log(this.$route.name)
@@ -459,12 +548,13 @@ export default {
             this.current_leg = 0
             this.show_close_game = false
             this.show_correct_roem = false
-            
-            // this.players = []
-            
-
-            // receive the gameID from the game details page
-            // this.players = this.$route.params.players
+            this.show_melden_verzaken = false
+            this.show_handle_verzaken = false
+            this.radio_selected_team = 'A'
+            this.my_team = ''
+            this.show_verzaken_activated = false
+            this.player_notified_verzaken = ''
+            this.verzaakt = false
 
 
             const api_request = require('axios')
@@ -503,11 +593,20 @@ export default {
 
             // console.log('Before rotate ', this.players)
             this.rotated_players = this.rotateArray(this.players, -this.my_position)
+            // console.log('***', this.rotated_players)
             // console.log('After rotate ', this.players)
             // this.rotated_players = this.players
             // // console.log('rotated players :', this.rotated_players[0].player.username)
 
-            // Connnect to the socket  
+            // Connnect to the socket 
+            
+            // Determine the team to which the player of this screen belongs
+            if (this.my_position % 2 === 0) {
+              this.my_team = 'A'
+            } else {
+              this.my_team = 'B'
+            }
+            
             this.connect()
 
             // console.log('troef in activated : ', this.troef_selected)
@@ -604,6 +703,11 @@ export default {
                     this.doShowScores(this.data_received) 
                     break; 
 
+                  case 'activate_verzaken':
+                    // console.log('@@@@@@@@@ SEND SCORES')
+                    this.doActivateVerzaken(this.data_received) 
+                    break; 
+
                 } //END Switch
 
                 // if (this.data_received.type === 'confirm_connected') {
@@ -611,36 +715,6 @@ export default {
                 //     // // console.log('Confirm connected', this.data_received.channel)
                 //     // console.log('@@@@@@@@@ CONFIRM CONNECTED')
                 //     this.doConfirmConnected(this.data_received.channel)
-                // }
-
-                // if (this.data_received.type === 'statusUpdate') {
-                //     // // console.log('Status update', this.data_received.status)
-                //     // console.log('@@@@@@@@@ STATUS UPDATE')
-                //     this.doStatusUpdate(this.data_received.status)
-                // } 
-
-                // if (this.data_received.type === 'update_troef') {
-                //     // // console.log('recieved troef: ', this.data_received.troef)
-                //     // console.log('@@@@@@@@@ UPDATE TROEF')
-                //     this.doUpdateTroef(this.data_received.troef) 
-                // }
-
-                // if (this.data_received.type === 'play_card') {
-                //     // // console.log('played card: ', this.data_received)
-                //     // console.log('@@@@@@@@@ PLAY CARD')
-                //     this.doUpdatePlayedCard(this.data_received) 
-                // }
-
-                // if (this.data_received.type === 'send_players') {
-                //     // // console.log('played card: ', this.data_received)
-                //     // console.log('@@@@@@@@@ SEND PLAYERS')
-                //     this.doUpdatePlayers(this.data_received) 
-                // }
-
-                // if (this.data_received.type === 'send_player_cards') {
-                //     // // console.log('played card: ', this.data_received)
-                //     // console.log('@@@@@@@@@ SEND PLAYER CARDS')
-                //     this.doLoadPlayerCards(this.data_received)
                 // }
 
             }
@@ -706,8 +780,62 @@ export default {
            this.sendToGroup(message)
 
         },
+
+        doHandleVerzaken: function () {
+          // Display the screen to handle verzaken
+          this.show_melden_verzaken = false
+          this.show_handle_verzaken = true
+          this.verzaakt = true
+
+          // Also make sure this screen is shown to all other players
+          // Other player should be able to view the played slagen, but not be able to select the team that verzaakt 
+          var message = {
+                'type'        : 'notify_verzaken',
+                'player_name' : this.players[this.my_position].player.username
+            }
+            // Send over the Websocket to the group
+           this.sendToGroup(message)
+        },
+
+        doActivateVerzaken: function (data) {
+          // When a player has started the verzaken procdure all player will receive
+          // a activate_verzaken message that will display the verzaken jumbotron
+          // A reduced jumbotron will be shown that offers the possibility to view the slagen.
+          // But it is not possible to select the team that receives all points
+
+
+          // The player that initiated verzaken will not see the reduced screen
+          if (data.player_name !== this.rotated_players[0].player.username) {
+            this.show_verzaken_activated = true
+            this.player_notified_verzaken = data.player_name
+          }
+
+        },
+
+        doProcessVerzaken: function () {
+          // Once the player has defined to which team the points should be assiged, this needs to 
+          // be proccessed in the Django backend
+
+          // var message = {
+          //       'type'        : 'process_verzaken',
+          //       'team'        : this.radio_selected_team    // value is A or B
+          //   }
+          //   // Send over the Websocket to the group
+          //  this.sendToGroup(message)
+
+            // The jumbotron must be closed
+           this.show_handle_verzaken = false
+
+            // Start a new Round and force this also to all other users
+           this.doTakeRound()
+
+           // @@ show the score of the round
+           this.show_leg_result = true
+          
+        },
+
         doStatusUpdate: function (status) {
-            // When a player gets connected of disconnected, the other players need to be informed.
+            // When a player gets connected or disconnected, the other players need to be informed.
             // Channels will send a statusUpdate message.
             // This message contains a list with (position of player, connected status)
             // When a position is not in the list, this implies that connected is false
@@ -1167,20 +1295,22 @@ export default {
         }, //END doShowTakeRound
 
         doTakeRound: function () {
-          // Take the round, and send the info to be processed to the backend (oog_round)
-          // Only the winner can send this info to the backend
+          // Take the round, and send the info to be processed to the backend (log_round)
+          // Only the winner, or person that reports 'verzaken'can send this info to the backend
           // django will send info back that will be processed by doHandleState
           // console.log('AAAA', this.cards.slag)
 
           // Send the played card to the group
           var message = {
-              'type'      : 'log_round',
-              'gameID'    : this.game.gameID,
-              'leg'       : this.current_leg,           // starts with 0
-              'round'     : this.current_round,         // starts with 0
-              'cards'     : this.cards_slag,
-              'troef'     : this.troef_selected,        // this is a number 0..3 representing clubs, hearts, spades, diamonds
-              'roem'      : this.roem_value
+              'type'            : 'log_round',
+              'gameID'          : this.game.gameID,
+              'leg'             : this.current_leg,           // starts with 0
+              'round'           : this.current_round,         // starts with 0
+              'cards'           : this.cards_slag,
+              'troef'           : this.troef_selected,        // this is a number 0..3 representing clubs, hearts, spades, diamonds
+              'roem'            : this.roem_value,
+              'verzaakt'        : this.verzaakt,              // If true then it will handle the verzaakt process
+              'team_get_points' : this.radio_selected_team     // value is A or B
           }
 
           // Send over the Websocket to the group
@@ -1214,6 +1344,9 @@ export default {
             // doing the statement directly in {{ .. }} does not work
             // console.log('Players before aangenomen ',this.state_data.player_aangenomen, this.players)
             this.name_player_leg =  this.players[this.state_data.player_aangenomen].player.username
+
+            // reset verzaakt
+            this.verzaakt = false
 
           }
           
@@ -1470,6 +1603,21 @@ $v_offset: 10px;                   // Vertical offset
   width: 30vw;
 }
 
+.action_menu {
+  display: block;
+  position: fixed;
+  right: 5px;
+  top: 45px + $v_offset;
+  z-index: 10;
+  // transform:translate(-50%,0%);
+  // font-size: 1.0em;
+  // color:white;
+  // font-family: sans-serif;
+  // font-weight: bold;
+  // width: 30vw;
+  
+}
+
 .reset_slag {
   display: block;
   position: fixed;
@@ -1509,6 +1657,7 @@ $v_offset: 10px;                   // Vertical offset
   font-family: sans-serif;
   font-weight: bold;
   width: 30vw;
+  z-index:20;
 }
 
 // general colors for nametag
@@ -1610,8 +1759,9 @@ $v_offset: 10px;                   // Vertical offset
 .roem_select {
   display: block;
   position: fixed;
-  left: 20px;
-  bottom: 10px - $v_offset
+  left: 2px;
+  top: calc( #{$v_offset} + (100vh - #{$height_header}) / 2  + #{$height_header} + 2.0*#{$height_card} );
+  transform:translate(0%,-95%);
 }
 
 .roem {
@@ -1642,19 +1792,24 @@ $v_offset: 10px;                   // Vertical offset
 .take_round {
   display: block;
   position: fixed;
-  right: calc( 100vw/4 );
-  top: calc( #{$v_offset} + (100vh - #{$height_header}) / 2  + #{$height_header} + 3.0*#{$height_card} + 5px );
-  transform:translate(50%,0%);
+  // right: calc( 100vw/4 );
+  right: 2px;
+  top: calc( #{$v_offset} + (100vh - #{$height_header}) / 2  + #{$height_header} + 2.0*#{$height_card} );
+  transform:translate(0%,-100%);
 }
 
-.leg_result {
+.jumbotron {
   display: block;
   position: fixed;
   left: calc( 100vw/2 );
   top: calc( #{$v_offset} + 100vh/2 );
-  z-index: 100;
+  z-index: 20;
   transform:translate(-50%,-70%);
   width: 90vw;
+}
+
+.slagen {
+  z-index:30
 }
 
 // Player card bottom
