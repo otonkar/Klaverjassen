@@ -3,10 +3,47 @@
 
     <!-- Only show button when user is not logged in -->
      <div v-if="user.user_is_logged_in === false">
-      <br><br>
-      <div class="container col-xl-4 col-lg-6" >
-          <button  v-on:click="gotoLogin()" class="btn btn-primary"> Ga naar Login pagina  </button>
-      </div>
+        <b-container>
+          <br><br>
+          <div class="container col-xl-4 col-lg-6" >
+              <button  v-on:click="gotoLogin()" class="btn btn-primary"> Ga naar Login pagina  </button>
+          </div>
+          <br><br>
+          <h3>Opmerking</h3>
+          <p>
+            Deze site betreft een persoonlijk project om bekend te raken met verschillende web ontwikkel technologien.
+            Het is een site die in ontwikkeling is en alleen bedoeld om te testen door personen die de maker kent
+          </p>
+          <p>
+            Het betreft een site om op afstand met elkaar te kunnen klaverjassen. Er kan een wedstrijd worden aangemaakt. 
+            Binnen een wedstrijd kunnen 1 of meerdere tafels/potjes worden aangemaakt. Spelers kunnen zich bij een potje aanmelden. 
+            Pas als 4 spelers zijn aangemeld bij het potje kan het spel beginnen.
+          </p>
+          <p>
+            Dit spel is in een beginstadium van ontwikkeling, hetgeen inhoudt dat 'gewenste' functionaliteiten nog ontbreken of niet goed functioneren.
+            Bekend is dat de huidige versie niet goed samenwerkt met Apple apparatuur en Internet Explorer. Gebruik bij voorkeur Chrome of Firefox.
+          </p>
+          <h3>Releases</h3>
+          <p>
+            Hieronder volgt een kort overzicht van de toegevoegde functionaliteiten per release
+          </p>
+          <h5>Release 002</h5>
+          <ul>
+            <li>Support melden verzaken</li>
+            <li>Change app title to be shown in the browser tab</li> 
+            <li>Auto refresh in 3 seconds the game overview and game details</li> 
+            <li>Move the button for 'selecteer troef' and 'neem slag' to a higher position above the player cards</li> 
+            <li>In game play screen create a single dropdown button for multiple type of actions</li> 
+            <li>In game play screen show to which team (A/B) a player belongs</li> 
+            <li>When showing the played 'slagen', show the troef that was active</li> 
+            <li>Improve the Redis image</li> 
+            <li>Show only the previous slag during the game</li> 
+            <li>Show original position of player on screen, so that player knows which player they are when looking back to the slagen</li> 
+            <li>Show original player number in the games details (overview)</li> 
+            <li>Make the code independent of dev / prod environment</li>
+          </ul>
+
+        </b-container>
      </div>
 
     <!-- When user is logged in show the contents of the home page.

@@ -138,7 +138,7 @@ class PlayerList(generics.ListAPIView):
         Add in urls.py:   
             url(r'^players/search/$', views.PlayerList.as_view(), name='players_list'),
         filtering on options
-           http://145.53.40.4:8000/klaverjas/players/search/?matchID=Match1&gameID=1&playerName=Test1
+           http://klaverjasfun.nl:5000/klaverjas/players/search/?matchID=Match1&gameID=1&playerName=Test1
 
         The search parameters will be received as a dictionary like,
             <QueryDict: {'matchID': ['Match1'], 'gameID': ['1'], 'playerName': ['Test1']}>
@@ -265,7 +265,7 @@ class SlagList(generics.ListAPIView):
 
         url(r'^games/slagen/search/$', views.SlagList.as_view(), name='slag_list'),
 
-        use as:  http://145.53.40.4:8000/klaverjas/games/slagen/search/?gameID=26&leg=2&n_slag=2
+        use as:  https://klaverjasfun.nl:5000/klaverjas/games/slagen/search/?gameID=26&leg=2&n_slag=2
 
 
     '''
