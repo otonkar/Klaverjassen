@@ -239,10 +239,22 @@ class MatchRetreiveUpdateSerializer(serializers.ModelSerializer):
     def validate_n_legs(self, value):
         """
         Validate that n_legs is greater than 0 and less than 100
-        """
+        And validate that within the match no round (slag) has been registered
+        """ 
+
+        data = self.initial_data
+        # print('****', data['matchID'])
+        
         
         if value < 1 or value > 100:
             raise serializers.ValidationError('het aantal rondes per potje moet liggen tussen [1,2,...100]')
+
+        # Determine that there are no rounds played in this match
+        qs = Slag.objects.filter(gameID__matchID__matchID=data['matchID'])
+        print(len(qs))
+
+        if len(qs) != 0:
+            raise serializers.ValidationError('Kan niet aangepast worden als een potje al is gestart')
 
         return value
 

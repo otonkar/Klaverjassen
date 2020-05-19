@@ -146,7 +146,7 @@
                         De bedoeling is dat de komende periode 
                         kleine verbetering worden doorgevoerd. Mocht je suggesties of feedback hebben, 
                         stuur die dan naar <br> <br>
-                        mail: otonkar@gmail.com
+                        mail: klaverjasfun@gmail.com
                     </p>
 
 
