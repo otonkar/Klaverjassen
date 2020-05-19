@@ -171,7 +171,7 @@ REST_FRAMEWORK = {
 # Settings for simple_jwt:  https://github.com/davesque/django-rest-framework-simplejwt/blob/master/README.rst
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(hours=12),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': True,
 
@@ -198,7 +198,7 @@ SIMPLE_JWT = {
 # @ole: Add the ASGI application for channels 
 ASGI_APPLICATION = 'back1.routing.application'
 
-# @oleand add redis server address/port
+# @ole add redis server address/port
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
@@ -208,3 +208,12 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+# @ole Mail
+## Mail settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'klaverjasfun@gmail.com'
+EMAIL_HOST_PASSWORD = 'Ole4klaverjasfun01!'

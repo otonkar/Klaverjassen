@@ -3,6 +3,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from datetime import datetime, date
+
 class User(AbstractUser):
     
     # add additional fields in here
@@ -15,6 +17,20 @@ class User(AbstractUser):
         return self.username
 
 
+class LogUser(models.Model):
+    '''
+    Model to log the login of users.
+    '''
+
+    logID               = models.AutoField(primary_key=True)
+    user                = models.ForeignKey(User, related_name="log_user", on_delete=models.CASCADE)
+    timestamp           = models.DateTimeField(default=datetime.now(), blank=False, null=False)
+
+    def __str__(self):
+        return self.logID + '-' + str(self.user)
+
+
+
 class BlackListedToken(models.Model):
     '''
     Model to store tokens/user combinations when a user has been logged out.
@@ -22,9 +38,9 @@ class BlackListedToken(models.Model):
     not be used anymore.
     '''
 
-    token = models.CharField(max_length=500)
-    user = models.ForeignKey(User, related_name="token_user", on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now=True)
+    token               = models.CharField(max_length=500)
+    user                = models.ForeignKey(User, related_name="token_user", on_delete=models.CASCADE)
+    timestamp           = models.DateTimeField(auto_now=True)
 
     class Meta:
         unique_together = ("token", "user")

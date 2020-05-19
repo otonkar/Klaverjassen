@@ -7,12 +7,24 @@ from rest_framework import authentication, permissions, status
 
 from rest_framework_simplejwt.tokens import AccessToken
 from rest_framework_simplejwt.exceptions import AuthenticationFailed
+from rest_framework_simplejwt import views as jwt_views
 
 from my_auth.models import User, BlackListedToken
 from my_auth.authentication import JWTAuthenticationBlacklist
 
+
+
 from my_auth import serializers
 from my_auth.models import User
+
+
+class OleTokenObtainPairView(jwt_views.TokenObtainPairView):
+    '''
+    Change the standaard TokeObtainPairView so that it is logged
+    when a user logs in
+    '''
+    serializer_class = serializers.OleTokenObtainPairSerializer
+
 
 
 class UserSignUp(generics.CreateAPIView):    # Post API View to create new users
