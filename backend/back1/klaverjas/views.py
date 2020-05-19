@@ -116,10 +116,21 @@ class MatchRetrieveUpdate(generics.RetrieveUpdateAPIView):
     def perform_update(self, serializer):
 
         # Create the cards with the new n_legs coming from the PUT (update)
+        # print('***self ', self.__dict__)
+        # print('***validated_data ',serializer.validated_data)
 
-        # print(serializer.__dict__)
-        cards = klaverjas.CreateMatchDecks(serializer.validated_data['n_legs'])
-        serializer.save(cards=cards)
+        matchID = self.kwargs.get('matchID')
+
+        # First get the current value of n_legs
+        qs = Match.objects.get(matchID=matchID)
+
+        # Only update the cards when n_legs has been changed.
+        if qs.n_legs != serializer.validated_data['n_legs']:
+            cards = klaverjas.CreateMatchDecks(serializer.validated_data['n_legs'])
+            # store the cards as a json format
+            cards = json.dumps(cards)
+            serializer.save(cards=cards)
+            print('*********** CARDS UPDATED')
 
 
 class PlayerList(generics.ListAPIView):  
