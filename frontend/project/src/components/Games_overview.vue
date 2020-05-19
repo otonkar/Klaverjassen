@@ -5,7 +5,7 @@
 
         <br>
         <h2> Overzicht potjes </h2>
-        Voor de wedstrijd: <span style="color:blue;font-weight:bold;font-size:1.3em"> {{ matchID }} </span>
+        Voor de wedstrijd: <span style="color:purple;font-weight:bold;font-size:1.4em"> {{ matchID }} </span>
         <hr>
 
         <b-row>
@@ -30,8 +30,8 @@
         <br>
         <p> 
           Er kan een nieuw potje worden aangemaakt. <br> 
-          Bij een bestaand potje, kan op een spelers positie worden geklikt. Je meldt je daarmee aan op die positie. <br>
-          Druk op de rode knop bij het potje om je weer af te melden. <br>
+          Bij een bestaand potje, kan op een spelerpositie worden geklikt. Je meldt je daarmee aan op die positie. 
+          Druk op de rode knop bij het potje om je weer af te melden.
           Pas als 4 spelers bij een potje zijn aangemeld dan kan het potje gestart worden.
         </p>
 
@@ -42,18 +42,18 @@
             <b-button @click="gotoGameScore(game.gameID)" block class="btn btn-info"> Potje met ID = {{ game.gameID }}  </b-button>
 
             <b-row>
-                <b-col>status: {{  game.gameStatus }} </b-col> 
-                <b-col>Totaal rondes: {{ game.matchID.n_legs }} </b-col>
+                <b-col><strong>Rondes: </strong> {{ game.legs_completed }} / {{ game.matchID.n_legs }}</b-col>
+                <b-col> <span style="color:blue;font-weight:bold;font-size:1.0em"> {{  game.gameStatus }} </span></b-col> 
+            </b-row>
+            <!-- <b-row>
+                <b-col> <strong>Afgeronde rondes: </strong> {{ game.legs_completed }} / {{ game.matchID.n_legs }}</b-col> 
+                <b-col> , slag: {{ game.rounds_completed }} /8  </b-col>
+            </b-row> -->
+            <b-row>
+                <b-col><strong>Datum potje gestart: </strong> {{  game.date_game_start }} </b-col> 
             </b-row>
             <b-row>
-                <b-col>Spellen gespeeld: </b-col> 
-                <b-col>ronde: {{ game.legs_completed }} / {{ game.matchID.n_legs }}, slag: {{ game.rounds_completed }} /8  </b-col>
-            </b-row>
-            <b-row>
-                <b-col>Datum game gestart: {{  game.date_game_start }} </b-col> 
-            </b-row>
-            <b-row>
-                <b-col>Datum game gestopt: {{ game.date_game_stop }} </b-col>
+                <b-col><strong>Datum potje gestopt: </strong> {{ game.date_game_stop }} </b-col>
             </b-row>
 
             <keep-alive>

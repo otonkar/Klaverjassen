@@ -22,11 +22,16 @@ cd back1
 python3 manage.py makemigrations
 python3 manage.py migrate
 
+deactivate
+
 # Set the Django settings.py
 cd /apps/Klaverjassen/backend/back1/back1
 touch settings.py
 rm settings.py
 ln -s settings_prod.py settings.py
+
+# Create folders if not exist
+mkdir -p /apps/Klaverjassen/log/
 
 # Set the environment variables for PRODUCTION
 export VUE_APP_URL_API_BASE='https://klaverjasfun.nl:5000/'

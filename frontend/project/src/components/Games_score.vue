@@ -23,33 +23,33 @@
                 <b-thead head-variant="light">
                 <b-tr >
                     <b-th colspan="1" ></b-th>
-                    <b-th colspan="2" variant="">Team A</b-th>
-                    <b-th colspan="2">Team B</b-th>
+                    <b-th class="text-center" colspan="2" variant="">Team A</b-th>
+                    <b-th class="text-center" colspan="2">Team B</b-th>
                 </b-tr>
                 <b-tr >
-                    <b-th>Ronde</b-th>
-                    <b-th variant="">Score</b-th>
-                    <b-th variant="">Roem</b-th>
-                    <b-th>Score</b-th>
-                    <b-th>Roem</b-th>
+                    <b-th class="text-right">Ronde</b-th>
+                    <b-th class="text-right" variant="">Score</b-th>
+                    <b-th class="text-right" variant="">Roem</b-th>
+                    <b-th class="text-right">Score</b-th>
+                    <b-th class="text-right">Roem</b-th>
                 </b-tr>
                 </b-thead>
                 <b-tbody >
                     <b-tr @click="showSlagen(gameID, leg.leg)" v-for="leg in game_score[0]" v-bind:key="leg.leg">
-                    <b-th variant="light"> {{ leg.leg + 1  }} </b-th>
-                    <b-th variant="light"> {{ leg.scoreA }} </b-th>
-                    <b-th variant="light"> {{ leg.roemA }} </b-th>
-                    <b-td variant="light"> {{ leg.scoreB }} </b-td>
-                    <b-td variant="light"> {{ leg.roemB }} </b-td>
+                    <b-th variant="light" class="text-right"> {{ leg.leg + 1  }} </b-th>
+                    <b-th variant="light" class="text-right"> {{ leg.scoreA }} </b-th>
+                    <b-th variant="light" class="text-right"> {{ leg.roemA }} </b-th>
+                    <b-td variant="light" class="text-right"> {{ leg.scoreB }} </b-td>
+                    <b-td variant="light" class="text-right"> {{ leg.roemB }} </b-td>
                     </b-tr>
                 </b-tbody>
                 <b-tfoot>
                 <b-tr>
                     <b-th>Totaal</b-th>
-                    <b-th variant="warning"> {{ game_score[1][0] }} </b-th>
-                    <b-th variant="warning"> {{ game_score[1][1] }} </b-th>
-                    <b-td variant="warning"> {{ game_score[1][2] }} </b-td>
-                    <b-td variant="warning"> {{ game_score[1][3] }} </b-td>
+                    <b-th variant="warning" class="text-right"> {{ game_score[1][0] }} </b-th>
+                    <b-th variant="warning" class="text-right"> {{ game_score[1][1] }} </b-th>
+                    <b-td variant="warning" class="text-right"> {{ game_score[1][2] }} </b-td>
+                    <b-td variant="warning" class="text-right"> {{ game_score[1][3] }} </b-td>
                     
                 </b-tr>
                 </b-tfoot>
