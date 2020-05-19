@@ -143,7 +143,7 @@ class MatchCreateSerializer(serializers.ModelSerializer):
 
         match_start = self.initial_data['date_match_start']
         match_stop  =  self.initial_data['date_match_stop']
-        print(match_stop <= match_start)
+        # print(match_stop <= match_start)
         if match_stop <= match_start:
             raise serializers.ValidationError('De wedstrijd stop datum moet later zijn dan de start datum')
 
@@ -245,7 +245,6 @@ class MatchRetreiveUpdateSerializer(serializers.ModelSerializer):
         data = self.initial_data
         # print('****', data['matchID'])
         
-        
         if value < 1 or value > 100:
             raise serializers.ValidationError('het aantal rondes per potje moet liggen tussen [1,2,...100]')
 
@@ -259,7 +258,7 @@ class MatchRetreiveUpdateSerializer(serializers.ModelSerializer):
         # Determine that there are no rounds played in this match
         # Changing n_legs is not allowed
         qs = Slag.objects.filter(gameID__matchID__matchID=data['matchID'])
-        print(len(qs))
+        # print(len(qs))
 
 
         if len(qs) != 0 and changed:
@@ -275,7 +274,7 @@ class MatchRetreiveUpdateSerializer(serializers.ModelSerializer):
 
         match_start = self.initial_data['date_match_start']
         match_stop  =  self.initial_data['date_match_stop']
-        print(match_stop <= match_start)
+        # print(match_stop <= match_start)
         if match_stop <= match_start:
             raise serializers.ValidationError('De wedstrijd stop datum moet later zijn dan de start datum')
 
