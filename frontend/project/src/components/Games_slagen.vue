@@ -31,8 +31,9 @@
                 <b-tr >
                     <b-th colspan="1" class="text-center" ></b-th>
                     <b-th colspan="4" class="text-center" >player</b-th>
+                    <!-- <b-th colspan="1" class="text-center" ></b-th>
                     <b-th colspan="1" class="text-center" ></b-th>
-                    <b-th colspan="1" class="text-center" ></b-th>
+                    <b-th colspan="1" class="text-center" ></b-th> -->
                 </b-tr>
                 <b-tr >
                     <b-th colspan="1" >#</b-th>
@@ -41,6 +42,7 @@
                     <b-th colspan="1" class="text-center" >3</b-th>
                     <b-th colspan="1" class="text-center" >4</b-th>
                     <b-th colspan="1" class="text-center" >win</b-th>
+                    <b-th colspan="1" class="text-center" >sc.</b-th>
                     <b-th colspan="1" class="text-center" >roem</b-th>
                 </b-tr>
                 </b-thead>
@@ -52,6 +54,7 @@
                     <b-td v-bind:variant="[slag.position_start===2 ? 'success': 'light']" class="text-center"> <img v-bind:src="slag.cards_slag[2]['color']" width="15px">  {{ slag.cards_slag[2]['rank'] }}   </b-td>
                     <b-td v-bind:variant="[slag.position_start===3 ? 'success': 'light']" class="text-center"> <img v-bind:src="slag.cards_slag[3]['color']" width="15px">  {{ slag.cards_slag[3]['rank'] }}  </b-td>
                     <b-td variant="light" class="text-center"> {{ slag.player_won + 1 }}  </b-td>
+                    <b-td variant="light" class="text-center"> {{ slag.score }}  </b-td>
                     <b-td variant="light" class="text-center"> {{ slag.roem }}  </b-td>
                     </b-tr>
                 </b-tbody>

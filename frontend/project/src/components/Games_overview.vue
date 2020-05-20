@@ -55,6 +55,12 @@
             <b-row>
                 <b-col><strong>Datum potje gestopt: </strong> {{ game.date_game_stop }} </b-col>
             </b-row>
+            <b-row>
+                <b-col><strong>Score team A:</strong> {{ game.scoreA }} + {{ game.roemA }} = {{ game.scoreA  + game.roemA}} </b-col>
+            </b-row>
+            <b-row>
+                <b-col><strong>Score team B:</strong> {{ game.scoreB }} + {{ game.roemB }} = {{ game.scoreB  + game.roemB}} </b-col>
+            </b-row>
 
             <keep-alive>
               <app-gamedetails

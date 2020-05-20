@@ -8,8 +8,7 @@ from django.db.models import Sum
 from asgiref.sync import async_to_sync, sync_to_async
 from channels.db import database_sync_to_async
 
-from django.core import serializers
-from klaverjas.serializers import MatchSerializer, GameSerializer, PlayerSerializer, PlayerListSerializer, LegSerializer
+# from klaverjas.serializers import MatchSerializer, GameSerializer, PlayerSerializer, PlayerListSerializer, LegSerializer
 from klaverjas.klaverjas_lib.klaverjas import sortCards, evaluateSlag, countRound
 
 from my_auth.models import User
@@ -93,7 +92,7 @@ def get_players(gameID):
     '''
     qs = GamePlayer.objects.filter(gameID=gameID).order_by('position')
 
-    serializer = PlayerListSerializer(qs, many=True)
+    serializer = serializers.PlayerListSerializer(qs, many=True)
     # print(serializer.data)
 
     return serializer.data
@@ -186,15 +185,15 @@ def save_game(game):
     # print('save_game succeeded')
 
 @database_sync_to_async
-def update_game(gameID, data):
+def update_game(input_data):
     '''
     update the data of game with gameID
     '''
-    game = Game.objects.get(gameID=gameID)
 
-    serializer = serializers.GameSerializer(game, data) 
+    serializer = serializers.GameSerializer(data=input_data) 
+    print('****', input_data)
 
-    if serializer.is_valid:
+    if serializer.is_valid():
         serializer.save()
     
 
@@ -293,7 +292,7 @@ def get_current_scores(gameID):
     if len(qs) != 0:
         for item in qs:
             # store the leg info as regular data object
-            data = LegSerializer(item).data
+            data = serializers.LegSerializer(item).data
             leginfo.append(data)
             
             totalscoreA = totalscoreA + item.scoreA
@@ -1033,7 +1032,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         #### STATE : next_round
         if state == 'next_round':
             
-            message = {
+            message_out = {
             'type'          : 'state_of_game',
             'state'         : state,
         # 'data_completed'        : datetime.now(),
@@ -1120,7 +1119,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await save_leg(input_data)
 
             ### Create the message based on state
-            message = {
+            message_out = {
                 'type'                  : 'state_of_game',
                 'state'                 : state,
                 # 'data_completed'        : datetime.now(),
@@ -1142,7 +1141,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
             print('State: end of game')
 
-            message = {
+            message_out = {
                 'type'                  : 'state_of_game',
                 'state'                 : state,
                 # 'data_completed'        : datetime.now(),
@@ -1157,16 +1156,36 @@ class ChatConsumer(AsyncWebsocketConsumer):
             }
 
 
-            # # Get the date
+            # Update the score to the game
+            scores_per_leg , totalscores = await get_current_scores(message['gameID'])
+
+            game.scoreA                = totalscores[0] 
+            game.roemA                 = totalscores[1]                 
+            game.scoreB                = totalscores[2] 
+            game.roemB                 = totalscores[3]
+
+            await save_game(game)
+
             # new_date = datetime.now()
+
+            # print('****', message['gameID'])
+            
+
+            # scores_per_leg , totalscores = await get_current_scores(message['gameID'])
+            # print('****', totalscores)
             
             # #define the game data to be updated
             # game_data = {
+            #     'gameID'                : message['gameID'],
             #     'date_game_end'         : datetime.now(),
-            #     'gameStatus'            : 'uitgespeeld'
+            #     'gameStatus'            : 'uitgespeeld',
+            #     'scoreA'                : totalscores[0], 
+            #     'roemA'                 : totalscores[1],                 
+            #     'scoreB'                : totalscores[2], 
+            #     'roemB'                 : totalscores[3], 
             # }
 
-            # await update_game(message['gameID', game_data])
+            # await update_game(game_data)
 
 
         # Send message to room group
@@ -1174,7 +1193,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.group_name, 
             {
                 'type': 'send_to_group',        ## Based on this name a function to handle is created
-                'message': message
+                'message': message_out
             }
         )
 
