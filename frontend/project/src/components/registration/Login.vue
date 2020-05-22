@@ -67,7 +67,8 @@
         data () {
             return {
                 title: 'Login page',
-                data: {}
+                data: {},
+                login_success: false
             }
         },
         activated: function () {
@@ -106,7 +107,10 @@
                     localStorage.setItem('refresh-token', response.data.refresh)
 
                     // After successful login go to home page
-                    this.$router.push({ name: 'Home' }) 
+                    // this.$router.push({ name: 'Home' }) 
+                    this.login_success = true
+                    
+
                 })
                 .catch(error => {
                     // console.log(error.response)
@@ -117,9 +121,28 @@
                        alert("inlog poging is niet gelukt. Vul zowel de gebruikersnaam als wachtwoord in") 
                     }
 
-
                 })
+
+                if (this.login_success) {
+                    await this.gotoHome()
+                    // await this.doReloadPage()
+                    
+                }
+                
+
             },  //END doLogin
+
+            gotoHome: async function () {
+                // After successful login go to home page
+                this.$router.push({ name: 'Home' }) 
+
+            },
+
+            doReloadPage: async function () {
+                // reload page from server
+                window.location.reload(true)
+            },
+
             gotoRegistration: function () {
                 this.$router.push({ name: 'Registration' })
             },  //END gotoRegistration

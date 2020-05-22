@@ -15,6 +15,12 @@
 #
 # Redis, Daphne and Postgress must be started separately
 
+# Set the Django settings.py
+cd /apps/Klaverjassen/backend/back1/back1
+touch settings.py
+rm settings.py
+ln -s settings_prod.py settings.py
+
 # Go to Django folder and do the migrations
 cd /apps/Klaverjassen/backend
 source venv1/bin/activate
@@ -24,11 +30,7 @@ python3 manage.py migrate
 
 deactivate
 
-# Set the Django settings.py
-cd /apps/Klaverjassen/backend/back1/back1
-touch settings.py
-rm settings.py
-ln -s settings_prod.py settings.py
+
 
 # Create folders if not exist
 mkdir -p /apps/Klaverjassen/log/

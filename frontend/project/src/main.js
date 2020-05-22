@@ -144,6 +144,7 @@ api_request.interceptors.response.use(
     // Any status code that lie within the range of 2xx cause this function to trigger
     // Do something with response data
     // // console.log('Interceptor response OK')
+
     return response
   },
   async function (error) {
@@ -161,7 +162,7 @@ api_request.interceptors.response.use(
     // console.log('Interceptor response Not OK')
     // error.response
     // error.message   (like Network Error)
-    // error.
+    
     if (error.message) {
       // console.log('Message: ', error.message)
     }

@@ -39,7 +39,8 @@
         <!-- <button  v-on:click="gotoMatchesList()" class="btn btn-secondary"> Terug  </button> -->
 
         <div v-for="game in games" v-bind:key="game.gameID" >
-            <b-button @click="gotoGameScore(game.gameID)" block class="btn btn-info"> Potje met ID = {{ game.gameID }}  </b-button>
+            <b-button v-if="game.gameStatus === 'uitgespeeld'"  @click="gotoGameScore(game.gameID)" block class="btn btn-danger"> Potje met ID = {{ game.gameID }}  </b-button>
+            <b-button v-else @click="gotoGameScore(game.gameID)" block class="btn btn-info"> Potje met ID = {{ game.gameID }}  </b-button>
 
             <b-row>
                 <b-col><strong>Rondes: </strong> {{ game.legs_completed }} / {{ game.matchID.n_legs }}</b-col>
@@ -55,12 +56,14 @@
             <b-row>
                 <b-col><strong>Datum potje gestopt: </strong> {{ game.date_game_stop }} </b-col>
             </b-row>
-            <b-row>
-                <b-col><strong>Score team A:</strong> {{ game.scoreA }} + {{ game.roemA }} = {{ game.scoreA  + game.roemA}} </b-col>
-            </b-row>
-            <b-row>
-                <b-col><strong>Score team B:</strong> {{ game.scoreB }} + {{ game.roemB }} = {{ game.scoreB  + game.roemB}} </b-col>
-            </b-row>
+            <div v-if="game.gameStatus === 'uitgespeeld'">
+              <b-row>
+                  <b-col><strong>Score team A:</strong> {{ game.scoreA }} + {{ game.roemA }} = {{ game.scoreA  + game.roemA}} </b-col>
+              </b-row>
+              <b-row>
+                  <b-col><strong>Score team B:</strong> {{ game.scoreB }} + {{ game.roemB }} = {{ game.scoreB  + game.roemB}} </b-col>
+              </b-row>
+            </div>
 
             <keep-alive>
               <app-gamedetails

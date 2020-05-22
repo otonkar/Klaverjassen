@@ -18,6 +18,7 @@ export default new Vuex.Store({
       
     },
     appSettings: {
+      x_version               : 'v003',
       url_api_base            : process.env.VUE_APP_URL_API_BASE,
       url_Websocket           : process.env.VUE_APP_URL_WEBSOCKET,
       // url_api_base            : 'http://192.168.2.80:5000/',

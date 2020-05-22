@@ -70,8 +70,12 @@
       <!-- <button  v-on:click="getWindowSize()" class="btn btn-primary"> Get window size  </button> -->
       <!-- <p>Current windowsize is {{ window_size.width }}, {{ window_size.height }} </p> -->
 
+      <br><br><br>
+      <p>version: {{ appSettings.x_version}} </p>
+
     </b-container>
     </div>
+    
 
 
 

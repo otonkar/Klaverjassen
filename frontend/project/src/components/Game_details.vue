@@ -18,7 +18,7 @@
         <br>
         <b-card  class="bg-secondary text-center">
         <b-row>
-            <b-col ><b-button @click="doRegister(0)" v-bind:disabled="!allow_register" block class="btn btn-light"> A1: {{  sorted_players[0].player.username }} </b-button> </b-col> 
+            <b-col ><b-button @click="doRegister(0)"  v-bind:disabled="!allow_register" block class="btn btn-light"> A1: {{  sorted_players[0].player.username }} </b-button> </b-col> 
             <b-col ><b-button @click="doRegister(1)" v-bind:disabled="!allow_register" block class="btn btn-dark"> B2: {{  sorted_players[1].player.username }} </b-button> </b-col> 
         </b-row>
         <br>
@@ -35,7 +35,7 @@
 
         <b-row>
             <!-- <b-col ><b-button block class="btn btn-warning"> Accepteer partner </b-button> </b-col>  -->
-            <b-col ><b-button @click="doUnRegister()" v-bind:disabled="allow_register" block class="btn btn-danger"> Afmelden bij potje  </b-button> </b-col> 
+            <b-col ><b-button @click="doUnRegister()" v-if="game.gameStatus !== 'uitgespeeld'" v-bind:disabled="allow_register" block class="btn btn-warning"> Afmelden bij potje  </b-button> </b-col> 
             <b-col></b-col>
             <!-- <b-col> <b-col><b-button block v-on:click="doRefresh()"  class="btn btn-warning"> Refresh  </b-button></b-col> </b-col>  -->
         </b-row>
@@ -286,6 +286,9 @@ export default {
 
         if (this.sorted_players.filter(this.filterOnUsername).length === 0) {
             this.allow_register = true
+            if (this.game.gameStatus === 'uitgespeeld') {
+                this.allow_register = false
+            }
         } else {
             this.allow_register = false
         }

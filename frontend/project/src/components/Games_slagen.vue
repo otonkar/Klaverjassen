@@ -19,7 +19,13 @@
 
 
         <h5>Slagen potje: {{ gameID }}, ronde: {{ leg + 1 }} </h5>
-        <p>Troef : {{ troef_name }} </p>
+        <p>
+            Troef : {{ troef_name }} <br>
+            Aangenomen door speler: {{ game_slagen[0].position_start + 1 }} <br>
+            Telling punten team A (speler 1,3):</strong> {{ tot_scoreA }} + {{ tot_roemA }} = {{ tot_scoreA  + tot_roemA}} <br>
+            Telling punten team B (speler 2,4):</strong> {{ tot_scoreB }} + {{ tot_roemB }} = {{ tot_scoreB  + tot_roemB}}
+
+        </p>
         <div class="Table">
             <b-table-simple small responsive>
                 
@@ -30,7 +36,7 @@
                 <b-thead head-variant="light">
                 <b-tr >
                     <b-th colspan="1" class="text-center" ></b-th>
-                    <b-th colspan="4" class="text-center" >player</b-th>
+                    <b-th colspan="4" class="text-center" >speler</b-th>
                     <!-- <b-th colspan="1" class="text-center" ></b-th>
                     <b-th colspan="1" class="text-center" ></b-th>
                     <b-th colspan="1" class="text-center" ></b-th> -->
@@ -42,7 +48,7 @@
                     <b-th colspan="1" class="text-center" >3</b-th>
                     <b-th colspan="1" class="text-center" >4</b-th>
                     <b-th colspan="1" class="text-center" >win</b-th>
-                    <b-th colspan="1" class="text-center" >sc.</b-th>
+                    <b-th colspan="1" class="text-center" >pnt</b-th>
                     <b-th colspan="1" class="text-center" >roem</b-th>
                 </b-tr>
                 </b-thead>
@@ -102,6 +108,10 @@ export default {
         // leg: 0,
         // gameID: 0,
         troef_name: '----',
+        tot_scoreA: 0,
+        tot_scoreB: 0,
+        tot_roemA: 0,
+        tot_roemB: 0,
     }
   },
 
@@ -151,6 +161,12 @@ export default {
     doGetSlagen: async function (gameID, lega) {
         // Show the current score of the game
 
+        // reset the count of score
+        this.tot_scoreA = 0
+        this.tot_scoreB = 0
+        this.tot_roemA = 0
+        this.tot_roemB = 0
+
        // Do  use 'api_request' or axios, so that this call WILL use the interceptors
         const api_request = require('axios')
         // console.log('DUMMY5')
@@ -198,6 +214,17 @@ export default {
             
             // var converted_card = this.convertCard(this.game_slagen[item].cards_slag[0])
             // // console.log(converted_card)
+
+            // Determine the score of this leg
+            if (this.game_slagen[item].teamA_won === true) {
+                console.log('**', this.game_slagen[item].score)
+                this.tot_scoreA = this.tot_scoreA + this.game_slagen[item].score
+                this.tot_roemA = this.tot_roemA + this.game_slagen[item].roem
+            } else {
+                this.tot_scoreB = this.tot_scoreB + this.game_slagen[item].score
+                this.tot_roemB = this.tot_roemB + this.game_slagen[item].roem
+            }
+
         }
 
         // console.log(this.game_slagen)
