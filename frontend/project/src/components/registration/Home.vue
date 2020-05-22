@@ -27,6 +27,19 @@
           <p>
             Hieronder volgt een kort overzicht van de toegevoegde functionaliteiten per release
           </p>
+          <h5>Release 003</h5>
+          <ul>
+            <li>Do not allow to change the number of legs (rondes) of a match when a first round (slag) has been registered</li>
+            <li>Log the login of users login and the registration of new users</li>
+            <li>Send mail to admin when a new user registers</li>
+            <li>Improve game overview layout</li>
+            <li>Improve text alignment in score view for game</li>
+            <li>Add score of round (slagen) to the overview of rounds  played in the leg (ronde)</li>
+            <li>Show the totalcount of points of a round. In case of 'nat gaan' you can see the actual counted points</li>
+            <li>Not allowed to (un)registered to game (potje) when game is 'uitgespeeld'</li>
+            <li>When game is 'uitgespeeld' show the bar is red color</li>
+          </ul>
+
           <h5>Release 002</h5>
           <ul>
             <li>Support melden verzaken</li>

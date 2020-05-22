@@ -32,7 +32,7 @@
           Er kan een nieuw potje worden aangemaakt. <br> 
           Bij een bestaand potje, kan op een spelerpositie worden geklikt. Je meldt je daarmee aan op die positie. 
           Druk op de rode knop bij het potje om je weer af te melden.
-          Pas als 4 spelers bij een potje zijn aangemeld dan kan het potje gestart worden.
+          Pas als 4 spelers bij een potje zijn aangemeld kan het potje gestart worden.
         </p>
 
         <hr>
