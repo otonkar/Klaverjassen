@@ -119,6 +119,8 @@ class MatchRetrieveUpdate(generics.RetrieveUpdateAPIView):
         # print('***self ', self.__dict__)
         # print('***validated_data ',serializer.validated_data)
 
+        instance = serializer.save()
+
         matchID = self.kwargs.get('matchID')
 
         # First get the current value of n_legs

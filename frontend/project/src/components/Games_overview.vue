@@ -5,7 +5,7 @@
 
         <br>
         <h2> Overzicht potjes </h2>
-        Voor de wedstrijd: <span style="color:purple;font-weight:bold;font-size:1.4em"> {{ matchID }} </span>
+        Wedstrijd: <span style="color:purple;font-weight:bold;font-size:1.4em"> {{ matchID }} </span>
         <hr>
 
         <b-row>
@@ -29,9 +29,9 @@
 
         <br>
         <p> 
-          Er kan een nieuw potje worden aangemaakt. <br> 
+          Er kan een nieuw potje worden aangemaakt als de registratieperiode nog niet verlopen is. <br> 
           Bij een bestaand potje, kan op een spelerpositie worden geklikt. Je meldt je daarmee aan op die positie. 
-          Druk op de rode knop bij het potje om je weer af te melden.
+          Druk op de gele knop bij het potje om je weer af te melden.
           Pas als 4 spelers bij een potje zijn aangemeld kan het potje gestart worden.
         </p>
 

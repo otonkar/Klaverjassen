@@ -229,6 +229,7 @@ class MatchRetreiveUpdateSerializer(serializers.ModelSerializer):
         Validate that description length is less or equals than 500
         """
         length = len(value)
+        print('****', value)
         
         if length > 500:
             raise serializers.ValidationError('De omschrijving moet minder dan 500 karakters bevatten')
@@ -242,14 +243,15 @@ class MatchRetreiveUpdateSerializer(serializers.ModelSerializer):
         And validate that within the match no round (slag) has been registered
         """ 
 
-        data = self.initial_data
-        # print('****', data['matchID'])
+        # data = self.initial_data
+        matchID = self.instance.matchID
+        # print('****', value, self.instance.matchID)
         
         if value < 1 or value > 100:
             raise serializers.ValidationError('het aantal rondes per potje moet liggen tussen [1,2,...100]')
 
         # Check that value of n_legs is changed
-        qs = Match.objects.get(matchID=data['matchID'])
+        qs = Match.objects.get(matchID=matchID)
         if value == qs.n_legs:
             changed = False
         else:
@@ -257,7 +259,7 @@ class MatchRetreiveUpdateSerializer(serializers.ModelSerializer):
 
         # Determine that there are no rounds played in this match
         # Changing n_legs is not allowed
-        qs = Slag.objects.filter(gameID__matchID__matchID=data['matchID'])
+        qs = Slag.objects.filter(gameID__matchID__matchID=matchID)
         # print(len(qs))
 
 

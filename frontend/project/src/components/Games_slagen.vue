@@ -217,7 +217,7 @@ export default {
 
             // Determine the score of this leg
             if (this.game_slagen[item].teamA_won === true) {
-                console.log('**', this.game_slagen[item].score)
+                // console.log('**', this.game_slagen[item].score)
                 this.tot_scoreA = this.tot_scoreA + this.game_slagen[item].score
                 this.tot_roemA = this.tot_roemA + this.game_slagen[item].roem
             } else {
