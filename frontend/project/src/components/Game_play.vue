@@ -633,11 +633,13 @@ export default {
     },//activated
 
     deactivated: function () { 
-      // Destroy the websocket connection when leaving this page.
-      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            if (isMobile) {
-               document.exitFullscreen()
-            }
+      // Exit the full screen
+      // var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      //       if (isMobile) {
+      //          document.exitFullscreen()
+      //       }
+
+      // Destroy the websocket connection when leaving this page.  
       this.disconnectWS()      
 
     },
@@ -904,11 +906,11 @@ export default {
 
         doGoBack: function () {
             // Disconnect from websocket and Go back to the games overview
-            this.disconnectWS()
-            var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            if (isMobile) {
-              document.exitFullscreen()
-            }
+            // this.disconnectWS()
+            // var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            // if (isMobile) {
+            //   document.exitFullscreen()
+            // }
             
             this.$router.push({ name: 'Games_overview' })
         },

@@ -54,7 +54,7 @@
                 <b-col><strong>Datum potje gestart: </strong> {{  game.date_game_start }} </b-col> 
             </b-row>
             <b-row>
-                <b-col><strong>Datum potje gestopt: </strong> {{ game.date_game_stop }} </b-col>
+                <b-col><strong>Datum potje gestopt: </strong> {{ game.date_game_end }} </b-col>
             </b-row>
             <div v-if="game.gameStatus === 'uitgespeeld'">
               <b-row>
@@ -127,6 +127,13 @@ export default {
             this.$router.push({ name: 'Home' })
 
       } else {
+
+          //Check that screen is mobile. If so, set full screen
+          var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+          if (isMobile) {
+            // document.body.requestFullscreen()
+            document.documentElement.requestFullscreen()
+          }
 
           // When coming to this screen via potjes, then no parameter is send.
           if (this.$route.params.matchID) {

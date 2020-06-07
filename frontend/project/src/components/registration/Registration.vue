@@ -245,7 +245,7 @@
                 // console.log('DUMMY3')
                 // console.log(this.errors.response.data)
 
-                // Ckeck the error messages per data input
+                // Check the error messages per data input
                 for (var key2 in this.errors.response.data) {
                     // console.log(key2)
                     // Note when key exists then it mean there was an error message on that data field

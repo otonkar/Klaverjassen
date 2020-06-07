@@ -138,7 +138,7 @@
 
             </article>
         </div> <!-- card.// -->
-              <p class="small text-muted">Coronaright Ole Karlsen, 2020</p>
+              <p class="small text-muted">Coronaright, 2020</p>
 
       </div>
     

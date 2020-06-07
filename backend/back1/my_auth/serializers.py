@@ -2,8 +2,9 @@
 
 from datetime import datetime
 
+from django.core.mail import send_mail                                  # EmailMultiAlternatives, 
+
 from django.core import exceptions
-from django.core.mail import send_mail
 from django.contrib.auth.password_validation import validate_password
 
 from rest_framework import serializers
@@ -84,7 +85,7 @@ class UserSignUpSerializer(serializers.ModelSerializer):
             email       = self.validated_data['email']
         )
 
-        # validate the password usign teh default password validators
+        # validate the password using the default password validators
         password = self.validated_data['password']
         # password = data.get('password')
 
@@ -149,6 +150,6 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         # if qs.exists():
         #     raise serializers.ValidationError("Username already exists!")
         # else:
-            return value
+        return value
 
 

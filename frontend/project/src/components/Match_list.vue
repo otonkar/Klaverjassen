@@ -50,6 +50,13 @@ export default {
       if (this.user.user_is_logged_in === false) {
           this.$router.push({ name: 'Home' })
       } else {
+          // make full screen on mobile/tablet
+          var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+          if (isMobile) {
+            // document.body.requestFullscreen()
+            document.documentElement.requestFullscreen()
+          }
+          
           this.user.show_header = true
           this.$store.dispatch('updateUser', this.user)
           this.getMatchList()

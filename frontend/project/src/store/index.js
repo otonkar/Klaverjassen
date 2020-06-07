@@ -33,6 +33,8 @@ export default new Vuex.Store({
       url_refresh_token       : 'registration/token/refresh/',
       url_logout              : 'registration/logout/',
       url_registration        : 'registration/signup/',
+      url_resetcode           : 'registration/resetcode/',
+      url_resetpassword       : 'registration/resetpassword/',
       url_match_create        : 'klaverjas/matches/create/',
       url_match_list          : 'klaverjas/matches/list',
       url_match_details       : 'klaverjas/matches/',

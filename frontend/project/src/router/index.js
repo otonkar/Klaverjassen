@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Apphome from '../components/registration/Home.vue'
 import Applogin from '../components/registration/Login.vue'
 import Appregistration from '../components/registration/Registration.vue'
+import Appresetpassword from '../components/registration/ResetPassword.vue'
 import Appmatches from '../components/Matches.vue'
 import Appmatchcreate from '../components/Match_create.vue'
 import Appmatchlist from '../components/Match_list.vue'
@@ -20,6 +21,7 @@ const routes = [
   { path: '/', name: 'Home', component: Apphome },
   { path: '/Login', name: 'Login', component: Applogin },
   { path: '/Registration', name: 'Registration', component: Appregistration },
+  { path: '/ResetPassword', name: 'ResetPassword', component: Appresetpassword },
   { path: '/Matches', name: 'Matches', component: Appmatches, meta:{title: 'Wedstrijden'} },
   { path: '/Matches/Create', name: 'Match_create', component: Appmatchcreate },
   { path: '/Matches/List', name: 'Match_list', component: Appmatchlist },

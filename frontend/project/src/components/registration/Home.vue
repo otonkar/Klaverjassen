@@ -12,7 +12,7 @@
           <h3>Opmerking</h3>
           <p>
             Deze site betreft een persoonlijk project om bekend te raken met verschillende web ontwikkel technologien.
-            Het is een site die in ontwikkeling is en alleen bedoeld om te testen door personen die de maker kent
+            Het is een site die in ontwikkeling is en alleen bedoeld om te testen door personen die de maker kent.
           </p>
           <p>
             Het betreft een site om op afstand met elkaar te kunnen klaverjassen. Er kan een wedstrijd worden aangemaakt. 
@@ -118,6 +118,13 @@ export default {
       this.checkRefreshValid()
 
     } else {
+      //Check that screen is mobile. If so, set full screen
+      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      if (isMobile) {
+        // document.body.requestFullscreen()
+        document.documentElement.requestFullscreen()
+      }
+      
       this.user.show_header = true
       this.$store.dispatch('updateUser', this.user)
       // document.body.requestFullscreen()

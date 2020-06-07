@@ -34,7 +34,8 @@
                           </div> <!-- form-group// -->
                           <p class="text-center">
                             <!-- <a class="btn text-success">Paswoord vergeten?</a> -->
-                            <a @click="gotoRegistration()" class="btn text-success">Registeren</a>
+                            <a @click="gotoRegistration()" class="btn text-success">Registeren</a> <br>
+                            <a @click="gotoPasswordReset()" class="btn text-warning">Wachtwoord vergeten</a>
                         </p>
 
                       <!-- </form> -->
@@ -127,9 +128,7 @@
                     await this.gotoHome()
                     // await this.doReloadPage()
                     
-                }
-                
-
+                }//END if
             },  //END doLogin
 
             gotoHome: async function () {
@@ -146,6 +145,11 @@
             gotoRegistration: function () {
                 this.$router.push({ name: 'Registration' })
             },  //END gotoRegistration
+
+            gotoPasswordReset: function () {
+                this.$router.push({ name: 'ResetPassword' })
+            },//END gotoPasswordReset
+
         },  //END methods 
       computed: {
         user () {

@@ -22,8 +22,8 @@
         <p>
             Troef : {{ troef_name }} <br>
             Aangenomen door speler: {{ game_slagen[0].position_start + 1 }} <br>
-            Telling punten team A (speler 1,3):</strong> {{ tot_scoreA }} + {{ tot_roemA }} = {{ tot_scoreA  + tot_roemA}} <br>
-            Telling punten team B (speler 2,4):</strong> {{ tot_scoreB }} + {{ tot_roemB }} = {{ tot_scoreB  + tot_roemB}}
+            Telling team A (speler 1,3):</strong> {{ tot_scoreA }} + {{ tot_roemA }} = {{ tot_scoreA  + tot_roemA}} <br>
+            Telling team B (speler 2,4):</strong> {{ tot_scoreB }} + {{ tot_roemB }} = {{ tot_scoreB  + tot_roemB}}
 
         </p>
         <div class="Table">
