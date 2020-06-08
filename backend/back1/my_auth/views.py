@@ -148,7 +148,7 @@ class ResetCode(APIView):
                 # When no username is given check the email
 
                 if email != '':
-                    qs = User.objects.filter(email=email)
+                    qs = User.objects.filter(email=email).order_by('username')
 
                     if len(qs) == 1:
                         # When there is a single account with this email address this can be used

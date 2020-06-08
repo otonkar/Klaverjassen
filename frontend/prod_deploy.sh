@@ -4,6 +4,9 @@
 #
 # Starting point is that the correct git respository is active
 #    git checkout prod_00x
+# 
+# and that the repository has been updated
+#    pull
 #
 # This script will do the following
 #  * set the production environment variables
