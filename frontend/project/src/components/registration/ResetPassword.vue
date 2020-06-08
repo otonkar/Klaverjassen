@@ -44,7 +44,7 @@
                         <!-- <div ref="f-email" class="invalid-feedback ">Vul een correct mail adres in (user@xxx.com) </div> -->
                         </div> <!-- input-group.// -->
                         <small  class="form-text text-muted">
-                            Het geregistreerde email adres werkt alleen als u slechts 1 gebruikersnaam heeft aangemaakt met dit email adres
+                            Er kunnen meerdere gebruikersnamen zijn geregistreerd op dit email adres.
                         </small>
                     </div> <!-- form-group// -->
 
