@@ -280,8 +280,8 @@ class ResetPassword(APIView):
 
 
         except:
-            content = {'message': 'Fout opgetreden bij het afhandelen van dit verzoek'}
-            return Response(content, status=status.HTTP_400_BAD_REQUEST)
+            content = {'message': 'Interne fout opgetreden bij het afhandelen van dit verzoek'}
+            return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 
