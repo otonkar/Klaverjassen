@@ -33,9 +33,9 @@ def createResetCode(N):
     '''
 
     # Create a list of characters that can be used in the code
-    # avoid characters that can be confusing like, i,I,l,o,O,0,Q
-    char_list = ['a','b','c','d','e','f','h','j','k','l','m','n','p','q','r','s','t', \
-        'u','v','w','x','y','z','A','B','C','D','E','F','G','H','J','K','M','N','P','R', 
+    # avoid characters that can be confusing like, i,I,l,1,o,O,0,Q
+    char_list = ['a','b','c','d','e','f','h','j','k','m','n','p','q','r','s','t', \
+        'u','v','w','x','y','z','A','B','C','D','E','F','G','H','J','K','M','N','P','R', \
         'S','T','U','V','W','X','Y','Z','2','3','4','5','6','7','8','9']
     ll = len(char_list)
 
