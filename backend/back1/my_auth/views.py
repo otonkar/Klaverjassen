@@ -163,7 +163,28 @@ class ResetCode(APIView):
 
                     else:
                         # multiple accounts have been found for the email address
-                        content = {'message': 'Meerdere gebruikersnamen horen bij dit email adres.'}
+
+                        # Put the usernames in a list
+                        list_names = list()
+                        for item in qs:
+                            list_names.append(item.username)
+
+                        # send a mail with these usernames
+                        mailVars = {
+                            "users": list_names, 
+                            "email": email
+                        }
+                        subject = 'Klaverjasfun.nl,  gebruikersnamen voor email adres'
+                        from_email = 'klaverjasfun@gmail.com'
+                        to = [email]
+                        bcc = ['klaverjasfun@gmail.com']
+                        cc = []
+                        html_message = render_to_string('mail_template_multiple_usernames.html', mailVars )
+                        plain_message = strip_tags(html_message)
+                        send_mail(subject, plain_message, from_email, to, html_message=html_message)
+
+
+                        content = {'message': 'Meerdere gebruikersnamen horen bij dit email adres. Er is een mail verstuurd met de verschillende gebruikersnamen.'}
                         return Response(content, status=status.HTTP_404_NOT_FOUND)
 
                 else:

@@ -1,9 +1,12 @@
 <template>
     <div class="Appresetpassword">
 
-      <br><br>  
+      <br>  
 
       <div class="container col-xl-4 col-lg-6" >
+
+        <button  v-on:click="gotoLogin()" class="btn btn-secondary"> Terug naar Login  </button>
+        <br><br>
           
         <div class="card">
             <article class="card-body">

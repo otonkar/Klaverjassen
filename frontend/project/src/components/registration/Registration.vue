@@ -1,9 +1,12 @@
 <template>
     <div class="Appregistration">
 
-      <br><br>  
+      <br>
 
       <div class="container col-xl-4 col-lg-6" >
+
+        <button  v-on:click="gotoLogin()" class="btn btn-secondary"> Terug naar Login  </button>
+        <br><br>
           
         <div class="card">
             <article class="card-body">
@@ -97,9 +100,9 @@
                     <div class="form-group">
                         <button type="submit" v-on:click="doRegistration()" class="btn btn-primary btn-block"> Registreren  </button>
                     </div> <!-- form-group// -->
-                     <div class="form-group">
+                     <!-- <div class="form-group">
                         <button type="submit" v-on:click="gotoLogin()" class="btn btn-secondary btn-block"> Ga terug naar Login  </button>
-                    </div> <!-- form-group// -->
+                    </div>  -->
 
                 <!-- </form> -->
 

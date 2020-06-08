@@ -54,3 +54,18 @@ nginx_restart
 
 # Go back to folder in which the script was started
 cd /apps/Klaverjassen/frontend
+
+
+# Make sure that postgress docker image is running
+# sudo docker run --rm --name psql-klaverjas -e POSTGRES_PASSWORD=Tonsberg01 -p 127.0.0.1:5432:5432 -v /apps/postgres/Klaverjas/pgdata:/var/lib/postgresql/data  -d postgres
+docker ps
+
+# Make sure Daphne server is running
+# In python virtual environment start supervisorctl
+# > start daphne
+
+# make sure Redis service is running
+# sudo systemctl status redis
+sudo systemctl restart redis
+# sudo systemctl disable redis
+# sudo systemctl enable redis

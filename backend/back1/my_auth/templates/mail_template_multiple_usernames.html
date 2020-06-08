@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Klaverjasfun</title>
+    </head>
+
+    <body>
+        
+        <h2>Gebruikersnamen behorende bij email adres</h2>
+
+        <p>
+            U heeft een email adres opgegeven voor het resetten van uw wachtwoord voor klaverjasfun.nl. 
+            Bij dit email adres zijn meerdere gebruikersnamen geregistreerd.<br>
+            Hieronder treft u een overzicht van de geregistreerde gebruikersnamen.
+        </p>
+
+        <p>Email adres : {{ email  }} </p>
+
+        <table>
+            {% for user in users %}
+            <tr>
+                <td>      </td>
+                <td>gebruikers naam </td>
+                <td> : {{ user }} </td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <p>
+            Ga naar https://klaverjasfun.nl/ResetPassword. 
+            Hier kunt u de gebruikersnaam invullen om een reset code aan te vragen. <br>
+            Met de reset code aan daarna het wachtwoord voor deze gebruikersnaam worden gewijzigd.
+        </p>
+
+        <p>
+            Wij wensen u veel speelplezier, <br>
+            Team klaverjasfun.nl
+            <!-- Team klaverjasfun Europa <br>
+            Team klaverjasfun Noord Amerika <br>
+            Team klaverjasfun Wuustwezel en omstreken <br> -->
+        </p>
+
+    </body>
+
+</html>
