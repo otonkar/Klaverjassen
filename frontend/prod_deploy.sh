@@ -31,8 +31,15 @@ cd back1
 python3 manage.py makemigrations
 python3 manage.py migrate
 
-deactivate
+# In the virtual environment restart Daphne server
+# Restart of Daphne is needed, otherwise the not-updated API from cache are still used.
+supervisorctl << EOF
+restart daphne
+exit
+EOF
 
+# Leave the virtual environment
+deactivate
 
 
 # Create folders if not exist

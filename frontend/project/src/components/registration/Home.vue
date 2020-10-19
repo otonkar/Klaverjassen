@@ -15,13 +15,20 @@
             Het is een site die in ontwikkeling is en alleen bedoeld om te testen door personen die de maker kent.
           </p>
           <p>
-            Het betreft een site om op afstand met elkaar te kunnen klaverjassen. Er kan een wedstrijd worden aangemaakt. 
+            Het betreft een spel om op afstand met elkaar te kunnen klaverjassen. Er kan een wedstrijd worden aangemaakt. 
             Binnen een wedstrijd kunnen 1 of meerdere tafels/potjes worden aangemaakt. Spelers kunnen zich bij een potje aanmelden. 
-            Pas als 4 spelers zijn aangemeld bij het potje kan het spel beginnen.
+            Pas als 4 spelers zijn aangemeld bij het potje kan het spel beginnen. Ieder portje binnen een wedstrijd wordt met dezelfde set
+            kaarten gespeeld, zodat de tafels onderling kunnen worden vergeleken.
           </p>
           <p>
             Dit spel is in een beginstadium van ontwikkeling, hetgeen inhoudt dat 'gewenste' functionaliteiten nog ontbreken of niet goed functioneren.
             Bekend is dat de huidige versie niet goed samenwerkt met Apple apparatuur en Internet Explorer. Gebruik bij voorkeur Chrome of Firefox.
+          </p>
+          <p>
+            Tijdens het spelen van het spel moeten de 4 spelers verbonden zijn met het spel, zodat alle informatie tegelijk naar alle 4 de spelers
+            kan worden verzonden. Het kan voorkomen dat een bepaalde speler de informatie (zoals gespeelde kaart) niet goed
+            ontvangen heeft. Gebruik dan reset slag om de slag opniew te laten spelen. Alle gespeelde kaarten in die slag moeten dan opnieuw
+            gespeeld worden.
           </p>
           <h3>Releases</h3>
           <p>
@@ -36,8 +43,11 @@
             <li>Improve text alignment in score view for game</li>
             <li>Add score of round (slagen) to the overview of rounds  played in the leg (ronde)</li>
             <li>Show the totalcount of points of a round. In case of 'nat gaan' you can see the actual counted points</li>
-            <li>Not allowed to (un)registered to game (potje) when game is 'uitgespeeld'</li>
-            <li>When game is 'uitgespeeld' show the bar is red color</li>
+            <li>Not allowed to (un)registere to game (potje) when game is 'uitgespeeld'</li>
+            <li>When game is 'uitgespeeld' show the match bar in red color</li>
+            <li>Make sure all screens for mobile and tablet are full screen (except at login/home)</li>
+            <li>Forgotten password handling using reset code, send html based mail and use reset code expiration</li>
+            <li>For given email address send the usernames that belong to this email address</li>
           </ul>
 
           <h5>Release 002</h5>

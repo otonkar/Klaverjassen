@@ -16,7 +16,7 @@ from my_auth.models import User, LogUser
 
 class OleTokenObtainPairSerializer(TokenObtainSerializer):
     '''
-    Change the standaatd TokenobtainPairSerializer to include
+    Change the standaard TokenobtainPairSerializer to include
     logging of users that get a token
     '''
 
@@ -72,7 +72,7 @@ class UserSignUpSerializer(serializers.ModelSerializer):
 
     def save(self):
         # Define what needs to be saved
-        # use  validated_data as the input from the API
+        # use validated_data as the input from the API
 
         # Create a User with the variable from validated data
         user = User(

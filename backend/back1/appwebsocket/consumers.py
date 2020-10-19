@@ -407,6 +407,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     ## CONNECT
     async def connect(self):
+        #@ Currently there is no validation on user, so everybody can connect to a channel
+        #@ Needs to add an authentication
         self.gameID = self.scope['url_route']['kwargs']['gameID']
         self.group_name = 'game_%s' % self.gameID
 

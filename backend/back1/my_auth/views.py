@@ -112,13 +112,13 @@ class ResetCode(APIView):
     A non-authenticated user can request a code in case of
     forgotten password. 
     This view will receive a username and/or mailaddress.
-    Based on this input a user in looked up in the database and a code is generated
+    Based on this input a user is looked up in the database and a code is generated
     and sent to the mail address.
 
         INPUT: {"username": "ole", "email": "ole.karlsen@gmail.com"}
         when no email or username is used then this must be an empty string
 
-        OUTOUT: {"reset_code": "xxxxxx"}
+        OUTPUT: {"reset_code": "xxxxxx"}
     """
     permission_classes = ( )                # Everybody is allowed use the forgotten password function
 
@@ -226,13 +226,13 @@ class ResetCode(APIView):
 
 class ResetPassword(APIView):
     """
-    A non-authenticated user set a new password using the reset_code.
+    A non-authenticated user can set a new password using the reset_code.
     The reset_code is validated to be less than 15 minutes old.
 
         INPUT: {"username": "ole", "reset_code": "xxxxxxx", "password":"aaaaa"}
         All these input keys should contain valid values
 
-        OUTOUT: No json.
+        OUTPUT: No json.
     """
     permission_classes = ( )                # Everybody is allowed use the forgotten password function
 
