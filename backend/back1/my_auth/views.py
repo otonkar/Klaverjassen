@@ -27,6 +27,13 @@ from my_auth.authentication import JWTAuthenticationBlacklist
 from my_auth import serializers
 from my_auth.models import User
 
+from base.logging.my_logging import create_logger
+
+# Set loggers
+logger_registration = create_logger('registration')
+logger_auth         = create_logger('authentication')
+logger_errors       = create_logger('errors')
+
 def createResetCode(N):
     '''
     Function to create a random reset code with length N to reset the passwords
@@ -98,11 +105,15 @@ class Logout(APIView):
                    )
             item.save()
 
+            #Log the logout
+            logger_auth.info(f'[{user_id}] has logged out')
+
             # see: https://www.django-rest-framework.org/api-guide/status-codes/
             content = {'logout': 'success'}
             return Response(content, status=status.HTTP_200_OK)
         
         except:
+            logger_errors.error(f'User {user_id} failed to logout')
             content = {'logout': 'not succeeded'}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
 

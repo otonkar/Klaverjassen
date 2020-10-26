@@ -12,6 +12,8 @@ from klaverjas.klaverjas_lib import klaverjas
 from klaverjas.models import Match, Game, GamePlayer, Leg, Slag
 from my_auth.models import User
 
+from base.logging.my_logging import create_logger
+
 class MatchCreate(generics.CreateAPIView):
     '''
     Create a new match

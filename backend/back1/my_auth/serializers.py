@@ -14,6 +14,14 @@ from rest_framework_simplejwt.serializers import TokenObtainSerializer
 
 from my_auth.models import User, LogUser
 
+from base.logging.my_logging import create_logger, my_logger
+
+# Set loggers
+logger_registration = create_logger('registration')
+logger_auth         = create_logger('authentication')
+logger_errors       = create_logger('errors')
+logger_debug        = create_logger('debug')
+
 class OleTokenObtainPairSerializer(TokenObtainSerializer):
     '''
     Change the standaard TokenobtainPairSerializer to include
@@ -36,16 +44,21 @@ class OleTokenObtainPairSerializer(TokenObtainSerializer):
         now = datetime.now()
         dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
 
-        f = open("/apps/Klaverjassen/log/klaverjas_login.txt", "a")
-        log_text = "*** " + dt_string + ',   Username : ' +  str(self.user) + "\n"  
-        f.write(log_text)
-        f.close()
+        # f = open("/apps/Klaverjassen/log/klaverjas_login.txt", "a")
+        # log_text = "*** " + dt_string + ',   Username : ' +  str(self.user) + "\n"  
+        # f.write(log_text)
+        # f.close()
 
         #@Ole also log this user in the LogUser table
         log = LogUser()
         log.user = self.user
         log.timestamp = now
         log.save()
+
+        #Log the login
+        # logger_auth.info(f'[{str(self.user)}] has logged in')
+        my_logger('authentication').info(f'[{str(self.user)}] has logged in')
+        my_logger('debug').debug('This is a debug test')
 
         return data
 
@@ -112,28 +125,37 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         now = datetime.now()
         dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
 
-        f = open("/apps/Klaverjassen/log/klaverjas_registration.txt", "a")
-        log_text = '*** ' + dt_string + ', Username: ' + self.validated_data['username'] \
-                    + ', Naam: ' + self.validated_data['first_name'] + ' ' + self.validated_data['last_name'] \
-                    + ', Email: ' + self.validated_data['email'] +  "\n"  
-        f.write(log_text)
-        f.close()
+        # f = open("/apps/Klaverjassen/log/klaverjas_registration.txt", "a")
+        # log_text = '*** ' + dt_string + ', Username: ' + self.validated_data['username'] \
+        #             + ', Naam: ' + self.validated_data['first_name'] + ' ' + self.validated_data['last_name'] \
+        #             + ', Email: ' + self.validated_data['email'] +  "\n"  
+        # f.write(log_text)
+        # f.close()
 
-        # send a mail
-        subject='New user registered'
-        message_text = '*** ' + dt_string + ', Username: ' + self.validated_data['username'] \
+        # log the registration 
+        logger_text = 'Username: ' + self.validated_data['username'] \
                     + ', Naam: ' + self.validated_data['first_name'] + ' ' + self.validated_data['last_name'] \
-                    + ', Email: ' + self.validated_data['email'] 
-        mailfrom='klaverjasfun@gmail.com'  
-        mailto='ole.karlsen@gmail.com'
+                    + ', Email: ' + self.validated_data['email']  
+        logger_registration.info(f'{logger_text}')
 
-        send_mail(
-            subject,
-            message_text,
-            mailfrom,
-            [mailto],
-            fail_silently=False,
-        )
+        try:
+            # send a mail
+            subject='New user registered'
+            message_text = '*** ' + dt_string + ', Username: ' + self.validated_data['username'] \
+                        + ', Naam: ' + self.validated_data['first_name'] + ' ' + self.validated_data['last_name'] \
+                        + ', Email: ' + self.validated_data['email'] 
+            mailfrom='klaverjasfun@gmail.com'  
+            mailto='ole.karlsen@gmail.com'
+            send_mail(
+                subject,
+                message_text,
+                mailfrom,
+                [mailto],
+                fail_silently=False,
+            )
+        except:
+            logger_errors.exception('Mail could not be sent')
+
         
         # Example to change the value that must be stored and displayed in the response
         # self.validated_data['last_name'] = 'XXX'
