@@ -166,7 +166,7 @@ def create_logger(logger_name='not_set'):
 		return logger
 
 
-def my_logger(logger_name='not_set'):
+def logger(logger_name='not_set'):
 	'''
 	Create a logger. 
 	When a logger_name is given, a logger as defined in the LOG_CONFIG dictionairy will be created

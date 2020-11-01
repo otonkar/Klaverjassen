@@ -27,12 +27,8 @@ from my_auth.authentication import JWTAuthenticationBlacklist
 from my_auth import serializers
 from my_auth.models import User
 
-from base.logging.my_logging import create_logger
+from base.logging.my_logging import logger
 
-# Set loggers
-logger_registration = create_logger('registration')
-logger_auth         = create_logger('authentication')
-logger_errors       = create_logger('errors')
 
 def createResetCode(N):
     '''
@@ -106,14 +102,14 @@ class Logout(APIView):
             item.save()
 
             #Log the logout
-            logger_auth.info(f'[{user_id}] has logged out')
+            logger('authentication').info(f'[{user_id}] has logged out')
 
             # see: https://www.django-rest-framework.org/api-guide/status-codes/
             content = {'logout': 'success'}
             return Response(content, status=status.HTTP_200_OK)
         
         except:
-            logger_errors.error(f'User {user_id} failed to logout')
+            logger('errors').error(f'User {user_id} failed to logout')
             content = {'logout': 'not succeeded'}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
@@ -145,6 +141,7 @@ class ResetCode(APIView):
         try:
             username    = request.data['username']
             email       = request.data['email']
+            ip_address  = request.META.get("REMOTE_ADDR")
 
             if username != '':
                 # When username is given, only use username to check the existence of this user
@@ -153,6 +150,7 @@ class ResetCode(APIView):
                 if len(qs) != 1:
                     # When there is not a single result, then create then error
                     content = {'message': 'Deze gebruikersnaam is niet in gebruik'}
+                    logger('authentication').warning(f'Non existent user [{username}] requested password reset from IP [{ip_address}]')
                     return Response(content, status=status.HTTP_404_NOT_FOUND)
 
             else:
@@ -170,6 +168,7 @@ class ResetCode(APIView):
                         # No  email adresses are using this email address,
                         # so so unique user can be determined
                         content = {'message': 'Geen gebruikersnamen gevonden die horen bij dit email adres.'}
+                        logger('authentication').warning(f'Non existent mail address [{email}] requested password reset from IP [{ip_address}]')
                         return Response(content, status=status.HTTP_404_NOT_FOUND)
 
                     else:
@@ -193,6 +192,9 @@ class ResetCode(APIView):
                         html_message = render_to_string('mail_template_multiple_usernames.html', mailVars )
                         plain_message = strip_tags(html_message)
                         send_mail(subject, plain_message, from_email, to, html_message=html_message)
+
+                        #Log sending the reset code
+                        logger('authentication').info(f'Send reset code mail for multiple users for mail [{email}] from IP [{ip_address}]')
 
 
                         content = {'message': 'Meerdere gebruikersnamen horen bij dit email adres. Er is een mail verstuurd met de verschillende gebruikersnamen.'}
@@ -228,10 +230,14 @@ class ResetCode(APIView):
             plain_message = strip_tags(html_message)
             send_mail(subject, plain_message, from_email, to, html_message=html_message)
 
+            #Log sending the reset code
+            logger('authentication').info(f'Send reset code mail for user [{user_obj.username}] and mail [{user_obj.email}] on IP [{ip_address}]')
+ 
             content = {'reset_code': reset_code}
             return Response(content, status=status.HTTP_200_OK)
 
         except:
+            logger('authentication').exception(f'Error creating resetcode for user [{username}] and mail [{email}] from IP [{ip_address}]')
             content = {'reset_code': 'XXXXXXX'}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
@@ -268,9 +274,11 @@ class ResetPassword(APIView):
                 # validate that user is active
                 if user_obj.is_active == False:
                     content = {'message': 'Wachtwoord reset niet gelukt','username': ['Opgegeven gebruikersnaaam is niet meer actief.']}
+                    logger('authentication').warning(f'Reset password failed. User [{username}] is not active anymore')
                     return Response(content, status=status.HTTP_404_NOT_FOUND)
 
             except:
+                logger('authentication').warning(f'Reset password failed. Used incorrect username [{username}]')
                 content = {'message': 'Wachtwoord reset niet gelukt','username': ['Incorrecte gebruikersnaam opgegeven.']}
                 return Response(content, status=status.HTTP_404_NOT_FOUND)
 
@@ -280,11 +288,13 @@ class ResetPassword(APIView):
             # print(user_obj.reset_code_valid_until.strftime('%Y-%m-%d %H:%M:%S') < timezone.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             if reset_code != user_obj.reset_code:
+                logger('authentication').warning(f'Reset password failed. User [{username}] used incorrect reset code')
                 content = {'message': 'Wachtwoord reset niet gelukt','reset_code': ['Opgegeven resetcode is niet correct.']}
                 return Response(content, status=status.HTTP_404_NOT_FOUND)
             else:
                 # code is correct, now validate the expiration of code
                 if user_obj.reset_code_valid_until.strftime('%Y-%m-%d %H:%M:%S') < timezone.now().strftime('%Y-%m-%d %H:%M:%S'):
+                    logger('authentication').warning(f'Reset password failed. User [{username}] used expired reset code')
                     content = {'message': 'Wachtwoord reset niet gelukt','reset_code': ['De reset_code is niet meer geldig']}
                     return Response(content, status=status.HTTP_404_NOT_FOUND)
 
@@ -307,11 +317,13 @@ class ResetPassword(APIView):
             # Save the user object
             user_obj.save()
 
+            logger('authentication').info(f'Reset password completed for user [{username}]')
             content = {'message': 'Wachtwoord van gebruiker is aangepast'}
             return Response(content, status=status.HTTP_201_CREATED)
 
 
         except:
+            logger('authentication').error(f'Reset password for user [{username}] failed due to internal error.')
             content = {'message': 'Interne fout opgetreden bij het afhandelen van dit verzoek'}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

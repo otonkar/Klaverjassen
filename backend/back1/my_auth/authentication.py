@@ -13,7 +13,7 @@ from rest_framework_simplejwt.state import User
 
 from my_auth.models import BlackListedToken
 
-from base.logging.my_logging import create_logger
+from base.logging.my_logging import logger
 
 AUTH_HEADER_TYPES = api_settings.AUTH_HEADER_TYPES
 
@@ -32,9 +32,6 @@ class JWTAuthenticationBlacklist(authentication.BaseAuthentication):
     token provided in a request header.
     """
     www_authenticate_realm = 'api'
-
-    logger_auth = create_logger('authentication')
-    logger_error = create_logger('errors')
 
     def authenticate(self, request):
         header = self.get_header(request)
@@ -65,7 +62,7 @@ class JWTAuthenticationBlacklist(authentication.BaseAuthentication):
         try:
             on_list = BlackListedToken.objects.get(user=user_id, token=validated_token)
             if on_list:
-                logger_auth.info(f'User {user_id} tried to login with token on Blacklist')
+                logger('authentication').info(f'User {user_id} tried to login with token on Blacklist')
                 is_allowed = False
         except BlackListedToken.DoesNotExist:
             is_allowed = True
@@ -107,7 +104,7 @@ class JWTAuthenticationBlacklist(authentication.BaseAuthentication):
             return None
 
         if len(parts) != 2:
-            logger_error.error(f'Authenticaion failed due to header {header}')
+            logger('errors').error(f'Authenticaion failed due to header {header}')
             raise AuthenticationFailed(
                 _('Authorization header must contain two space-delimited values'),
                 code='bad_authorization_header',
