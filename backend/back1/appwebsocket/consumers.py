@@ -16,6 +16,8 @@ from appwebsocket.models import WSConnectedStatus
 from klaverjas import serializers
 from klaverjas.models import Match, Game, GamePlayer, Slag, Troef, GameStatus, Leg
 
+from base.logging.my_logging import logger
+
 
 ####################################################################################
 ##
@@ -44,7 +46,8 @@ def set_connected_status(gameID, position, channel):
         entry.connected = True
         entry.channel = channel
         entry.save()
-        print('++ Entry created ', gameID, position, channel)
+        # print('++ Entry created ', gameID, position, channel)
+        logger('debug').debug(f'++ Entry created, {gameID}, {position}, {channel}')
 
 
 @database_sync_to_async
@@ -93,7 +96,6 @@ def get_players(gameID):
     qs = GamePlayer.objects.filter(gameID=gameID).order_by('position')
 
     serializer = serializers.PlayerListSerializer(qs, many=True)
-    # print(serializer.data)
 
     return serializer.data
 
@@ -108,14 +110,11 @@ def get_player_cards(matchID, gameID, leg, position, troef):
 
     #!!! Can not use MatchSerializer, because this serializer does not return cards
     # serializer = MatchSerializer(match)
-    # print(serializer.data)
 
-    # print('DUMMY2', type(match.cards) )
     # Note: cards were stored in the db as json.dumps in a TextField.
     # Convert to python object using json.loads. Then get the correct set.
     cards = json.loads(match.cards)
     cards = cards[leg][position]
-    # print('DUMMY3')
 
     # Sort the cards 
     # make sure the same order of colors is used as in Vue.
@@ -191,7 +190,7 @@ def update_game(input_data):
     '''
 
     serializer = serializers.GameSerializer(data=input_data) 
-    print('****', input_data)
+    # print('****', input_data)
 
     if serializer.is_valid():
         serializer.save()
@@ -323,7 +322,7 @@ def save_leg(input_data):
 
     if serializer.is_valid():
         serializer.save()
-        print('Serializer OK')
+        # print('Serializer OK')
 
 @database_sync_to_async
 def delete_leg(gameID, leg):
@@ -348,7 +347,8 @@ def evaluate_leg(gameID, leg):
     
 
     if len(qs) != 8:
-        print('WARNING: Leg not properly completed')
+        # print('WARNING: Leg not properly completed')
+        logger('debug').debug('WARNING: Leg not properly completed')
         return 'Leg not properly completed'
     else:
         # Determine who took om this leg. (heeft aangenomen)
@@ -432,6 +432,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # Only send the the client (not to the group)
         await self.send(text_data=json.dumps(message))
         print('Connection created : ', self.channel_name)
+        logger('debug').debug(f'Connection created : , {self.channel_name}')
 
 
 
@@ -468,7 +469,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.channel_name
         )
 
-        print('@@@ DISCONNECTED')
+        # print('@@@ DISCONNECTED')
 
 
     # CLIENT RECEIVE messages from websocket client
@@ -482,14 +483,14 @@ class ChatConsumer(AsyncWebsocketConsumer):
         #### TYPE: connected_update
         ## register this player as connected and send all connection statusses of that game to all players
         if message['type'] == 'connected_update':
-            print('@@@ CONNECTED_UPDATE')
+            # print('@@@ CONNECTED_UPDATE')
             await self.connected_update(message)
 
         #####################################################################################################
         #### TYPE: handle_verzaken
         ## Show to all players that a player has noted verzaakt
         if message['type'] == 'notify_verzaken':
-            print('@@@ HANDLE_VERZAKEN')
+            # print('@@@ HANDLE_VERZAKEN')
             await self.notify_verzaken(message)
 
         #####################################################################################################
@@ -504,7 +505,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         #### TYPE: get_players   !NOT USED ANYMORE !!!
         elif message['type'] == 'get_players':
             # Get the players for a gameID
-            print('@@@ GET_PLAYERS')
+            # print('@@@ GET_PLAYERS')
            
             message = json.loads(text_data)     # converts the data to Python
             # print('**', message)
@@ -540,7 +541,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         ### as the first round
         ###
         elif message['type'] == 'request_new_round':
-            print('@@@ REQUEST_NEW_ROUND')
+            logger('debug').debug('REQUEST_NEW_ROUND')
 
             message = json.loads(text_data)     # converts the data to Python
             # print('**', message)
@@ -655,7 +656,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         #### TYPE: request_player_cards
         ### This sends the cards to only the player that reqeusted the cards
         elif message['type'] == 'request_player_cards':
-            print('@@@ REQUEST_PLAYER_CARDS')
+            # print('@@@ REQUEST_PLAYER_CARDS')
 
             message = json.loads(text_data)     # converts the data to Python
             # print('**', message)
@@ -723,7 +724,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 
 
             # Determine which player and team won the round
-            print('AAAAA',troef, position_start,message['cards'])
+            # print('AAAAA',troef, position_start,message['cards'])
             winner = evaluateSlag(message['cards'], troef, position_start)
 
             message = {
@@ -763,8 +764,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         #### receive : 'gameID', 'leg', 'round', 'cards', 'troef', 'roem'
         elif message['type'] == 'log_round':
             message = json.loads(text_data)     # converts the data to Python
-            print('@@@ LOG_ROUND')
-            print('***', message)
+            # print('@@@ LOG_ROUND')
+            # print('***', message)
             await self.process_log_round(message)
            
                 
@@ -773,7 +774,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         #### For a game get all the leg scores and total score for the game
         elif message['type'] == 'request_scores':
             message = json.loads(text_data)     # converts the data to Python
-            print('@@@ REQUEST SCORES')
+            # print('@@@ REQUEST SCORES')
             # print(message)
 
             scores_per_leg , totalscores = await get_current_scores(message['gameID'])
@@ -802,7 +803,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             # Types that do not need to be processed can directly be forwarded to the group
             # like status updates
             # Send message to room group
-            print('@@@@ Other messages')
+            # print('@@@@ Other messages')
             await self.channel_layer.group_send(
                 self.group_name, 
                 {
@@ -890,7 +891,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
 
     async def process_log_round(self, message):
-        print('*****', message)
+        # print('*****', message)
         # Cover also the case 'verzaakt'
 
         #First delete any slag for the same game/leg/round, if it exists
@@ -933,9 +934,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
             # Determine which player and team won the round
             # team A =  players 0/2    B= players 1/3
-            print('BBBB', message['cards'], troef, position_start)
+            # print('BBBB', message['cards'], troef, position_start)
             winner = evaluateSlag(message['cards'], troef, position_start)
-            print('winner: ', winner)
+            # print('winner: ', winner)
             if (winner == 0) or (winner == 2):
                 teamA_won = True
             else:
@@ -943,7 +944,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
             # print('troef, winner : ', troef, winner)
 
-            print('Team A won: ', teamA_won)
+            # print('Team A won: ', teamA_won)
 
             # Determine the score.
             cards = message['cards']
@@ -1018,7 +1019,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             if message['leg'] < match.n_legs - 1:
                 game.legs_completed = game.legs_completed + 1
                 state = 'end_of_leg'
-                print('LEG is COMPLETED')
+                # print('LEG is COMPLETED')
             else: 
                 # Game is finished
                 state = 'end_of_game'
@@ -1026,7 +1027,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 game.date_game_end = datetime.now()
                 game.gameStatus_id = await get_gameStatus('uitgespeeld')
                 
-                print('GAME is COMPLETED')
+                # print('GAME is COMPLETED')
 
         await save_game(game)
 
@@ -1076,9 +1077,9 @@ class ChatConsumer(AsyncWebsocketConsumer):
             else:
                 # In case of verzaakt assign all 262 + all roem to the other party
                 roem = await get_roem(message['gameID'], leg)
-                print('---- ',roem)
+                # print('---- ',roem)
                 totRoem = roem[0]['roem__sum'] + roem[1]['roem__sum']
-                print('---- ',totRoem)
+                # print('---- ',totRoem)
                 succeeded = False
                 pit = False
 
@@ -1141,7 +1142,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         #### change the game status to 'uitgespeeld' set the date of game end
         if state == 'end_of_game':
 
-            print('State: end of game')
+            # print('State: end of game')
 
             message_out = {
                 'type'                  : 'state_of_game',

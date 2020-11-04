@@ -13,7 +13,7 @@ path_up = os.path.dirname(base_dir)
 log_dir = os.path.join(path_up, "log")
 
 # Log settings
-min_level 	= 'DEBUG'
+min_level 	= settings.MIN_LOG_LEVEL
 maxSize 	= 10000000
 backupCount = 20
 
@@ -128,7 +128,7 @@ LOG_CONFIG = {
 		'debug': {
 			'level': min_level, 
 			'handlers': ['debug_file'], 
-			'propagate': False
+			'propagate': True
 		}
 	}, 
 	'root': {

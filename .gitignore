@@ -1,3 +1,9 @@
+#ignore the .env files
+.env
+
+# ignore postgres data
+/psql-data/
+
 # backend: Ignore the virtual environments, database, migrations
 /backend/**/venv*/
 /backend/**/log/
