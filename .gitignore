@@ -1,5 +1,5 @@
 #ignore the .env files
-.env
+*.env
 
 # ignore postgres data
 /psql-data/
