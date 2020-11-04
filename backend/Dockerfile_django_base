@@ -25,6 +25,9 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /apps
 COPY . /apps
 
+# Remove all env files from the image
+RUN rm *.env
+
 # set working directory to the apps folder
 # In the container the directory is changed to this workdir
 WORKDIR /apps
@@ -96,7 +99,7 @@ RUN chmod 755 /vol/web
 # Change the user of this container to user
 # Never use root the run the docker, because when the root user comprimised
 # the attacker had access to the wholes container.
-# USER user
+USER user
 
 # Set the workdir to the folder that contains the manage.py
 WORKDIR /apps/back1

@@ -52,7 +52,7 @@ class OleTokenObtainPairSerializer(TokenObtainSerializer):
 
         #Log the login
         logger('authentication').info(f'[{str(self.user)}] has logged in')
-        logger('debug').debug('This is a debug test')
+        # logger('debug').debug('This is a debug test')
 
         return data
 
