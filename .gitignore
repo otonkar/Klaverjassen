@@ -1,5 +1,5 @@
 #ignore the .env files
-*.env
+# *.env
 
 # ignore postgres data
 /psql-data/
@@ -9,7 +9,7 @@
 /backend/**/log/
 /backend/**/db.sqlite3
 /backend/**/migrations
-/backend/**/manage.py
+# /backend/**/manage.py
 /backend/tmp/
 /backend/**/__pycache__
 

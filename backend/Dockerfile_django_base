@@ -25,9 +25,6 @@ ENV PYTHONUNBUFFERED 1
 RUN mkdir /apps
 COPY . /apps
 
-# Remove all env files from the image
-RUN rm *.env
-
 # set working directory to the apps folder
 # In the container the directory is changed to this workdir
 WORKDIR /apps
