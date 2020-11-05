@@ -11,17 +11,17 @@ set -e
 # Note, this will be loaded via the env_file in the docker-compose.
 source ../backend_dev.env
 
-# echo "*** Do the database migrations"
-# python manage.py makemigrations my_auth
-# python manage.py migrate my_auth
-# python manage.py makemigrations klaverjas
-# python manage.py migrate klaverjas
-# # python manage.py makemigrations channels
-# # python manage.py migrate channels
-# # python manage.py makemigrations appwebsocket
-# # python manage.py migrate appwebsocket
-# python manage.py makemigrations
-# python manage.py migrate
+echo "*** Do the database migrations"
+python manage.py makemigrations my_auth
+python manage.py migrate my_auth
+python manage.py makemigrations klaverjas
+python manage.py migrate klaverjas
+# python manage.py makemigrations channels
+# python manage.py migrate channels
+# python manage.py makemigrations appwebsocket
+# python manage.py migrate appwebsocket
+python manage.py makemigrations
+python manage.py migrate
 
 
 # #####################################################################

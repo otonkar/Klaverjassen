@@ -5,8 +5,9 @@
  # and start the development backend
 ###
 
-# Make sure the postgres data folder exists.
+# Make sure the postgres data folder and log exists.
 mkdir -p psql-data
+mkdir -p backend/log
 
 # first remove all containers
 docker container prune

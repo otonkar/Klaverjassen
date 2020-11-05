@@ -1,0 +1,65 @@
+###
+ # Example from https://codeburst.io/get-started-with-nginx-on-docker-907e5c0c9f3a
+ #
+ # docker build -f Dockerfile_front_dev -t front_klaverjas .
+ # docker run -it -p 8080:8080 --rm --name front_klaverjas_dev front_klaverjas
+###
+
+# build stage
+FROM node:lts-alpine as build-stage
+
+WORKDIR /app
+# COPY project/package*.json ./
+
+RUN npm install
+
+RUN npm install vue
+RUN npm install -g @vue/cli
+
+# RUN vue add bootstrap-vue 
+RUN npm install vue bootstrap-vue bootstrap                 
+RUN npm install --save reconnecting-websocket
+RUN npm install --save axios
+RUN npm i jquery@1.9.1 --save
+
+# RUN npm install
+
+COPY project/ .
+
+# audit needs the package.json
+RUN npm audit fix --force 
+# RUN npm run build
+
+# CMD ["npm", "run", "serve"]
+
+# # production stage
+# FROM nginx:stable-alpine as production-stage
+
+# COPY --from=build-stage /app/dist /usr/share/nginx/html
+
+# EXPOSE 80
+
+# CMD ["nginx", "-g", "daemon off;"]
+
+
+# # 1. Build our Vue app
+# FROM node:alpine as builder
+
+# WORKDIR /app
+# COPY package.json package-lock.json ./
+# ENV CI=1
+# RUN npm ci
+
+# COPY . .
+# RUN npm run build -- --prod --output-path=/dist
+
+# # 2. Deploy our Angular app to NGINX
+# FROM nginx:alpine
+
+# ## Replace the default nginx index page with our Angular app
+# RUN rm -rf /usr/share/nginx/html/*
+# COPY --from=builder /dist /usr/share/nginx/html
+
+# COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
+
+# ENTRYPOINT ["nginx", "-g", "daemon off;"]
