@@ -16,9 +16,9 @@
 # frontend:Ignore the node libraries
 /frontend/project/node_modules/
 /frontend/project/public/
-/frontend/project/package*
+# /frontend/project/package*
 #frontend/README*
-/frontend/project/babel*
+# /frontend/project/babel*
 /frontend/project/dist/
 /frontend/tmp/
 /frontend/project/.brows*

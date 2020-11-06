@@ -9,7 +9,7 @@ set -e
 
 # load the enviroment variables (defined as: export ENV="development")
 # Note, this will be loaded via the env_file in the docker-compose.
-source ../backend_dev.env
+# source ../backend_dev.env
 
 echo "*** Do the database migrations"
 python manage.py makemigrations my_auth
@@ -18,14 +18,13 @@ python manage.py makemigrations klaverjas
 python manage.py migrate klaverjas
 # python manage.py makemigrations channels
 # python manage.py migrate channels
-# python manage.py makemigrations appwebsocket
-# python manage.py migrate appwebsocket
+python manage.py makemigrations appwebsocket
+python manage.py migrate appwebsocket
 python manage.py makemigrations
 python manage.py migrate
 
-
 # #####################################################################
-# #### Only run when creating the database
+# #### Only run the first time to set base tables in an empty database
 # echo "*** Create superuser and test users"
 # python manage.py runscript setup_create_users.py
 

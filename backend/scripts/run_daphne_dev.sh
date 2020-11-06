@@ -8,7 +8,7 @@
 set -e
 
 # load the enviroment variables (defined as: export ENV="development")
-source ../backend_dev.env
+# source ../backend_dev.env
 
 # Run the migrations
 # python manage.py makemigrations my_auth

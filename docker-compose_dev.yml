@@ -1,0 +1,159 @@
+###
+ # Docker compose for setup Django backend Only
+ #
+ # Docker compose file that belongs to tutorial
+ # https://www.youtube.com/watch?v=nh1ynJGJuT8
+ #
+ # make and start:                      docker-compose -f docker-compose_dev.yml up --build
+ #
+ # remove old images using:             docker-compose -f docker-compose_dev.yml rm
+ # Do this when recreate error occurs
+ #
+ # run the images a being composed:     docker-compose -f docker-compose_dev.yml run -p 7000:8000  app sh
+ #
+ # Get into a running container
+ #  docker exec -it klaverjas_django_dev /bin/sh
+ #
+ # Run the image
+ #  docker run -it django-base /bin/sh
+###
+
+version: '3.8'
+
+services:
+
+  # daphne:
+  #   image: django-base
+  #   container_name: klaverjas_daphne_dev    # specifies the name of the container that is created
+  #   working_dir: /apps/back1
+  #   restart: always
+  #   ports:
+  #     - "6000:6000"
+  #   environment:
+  #     - ENV=$ENV
+  #     - SECRET_KEY=$SECRET_KEY
+  #     - EMAIL_HOST=$EMAIL_HOST
+  #     - EMAIL_USE_TLS=$EMAIL_USE_TLS
+  #     - EMAIL_PORT=$EMAIL_PORT
+  #     - EMAIL_HOST_USER=$EMAIL_HOST_USER
+  #     - EMAIL_HOST_PASSWORD=$EMAIL_HOST_PASSWORD
+  #     - DEFAULT_FROM_EMAIL=$DEFAULT_FROM_EMAIL
+  #     - DB_NAME=$DB_NAME
+  #     - DB_USER=$DB_USER
+  #     - DB_PASSWORD=$DB_PASSWORD
+  #     - DB_HOST=$DB_HOST
+  #     - DB_PORT=$DB_PORT
+  #     - REDIS_HOST=$REDIS_HOST
+  #   # env_file:
+  #   #   - ./development.env                   # load db user, password and db name
+  #   networks:
+  #     - klaverjas_network
+  #   volumes:                              
+  #     - ./backend:/apps 
+  #   command: sh -c "run_daphne_dev.sh"
+  #   depends_on:
+  #     - redis
+  
+  # worker:
+  #   image: django-base
+  #   container_name: klaverjas_worker_dev    # specifies the name of the container that is created
+  #   working_dir: /apps/back1
+  #   restart: always
+  #   environment:
+  #     - REDIS_HOST=redis
+  #   env_file:
+  #     - ./development.env                   # load db user, password and db name
+  #   networks:
+  #     - klaverjas_network
+  #   volumes:                              
+  #     - ./backend:/apps 
+  #   command: sh -c "python manage.py runworker"
+  #   depends_on:
+  #     - redis
+  
+
+  django:                                # name of this services
+    image: django-base
+    container_name: klaverjas_django_dev    # specifies the name of the container that is created
+    restart: always
+    ports:
+      - 5000:5000                          # map external port 7000 to internal port 7000, to use like localhost:7000
+    environment:
+      - ENV=$ENV
+      - SECRET_KEY=$SECRET_KEY
+      - EMAIL_HOST=$EMAIL_HOST
+      - EMAIL_USE_TLS=$EMAIL_USE_TLS
+      - EMAIL_PORT=$EMAIL_PORT
+      - EMAIL_HOST_USER=$EMAIL_HOST_USER
+      - EMAIL_HOST_PASSWORD=$EMAIL_HOST_PASSWORD
+      - DEFAULT_FROM_EMAIL=$DEFAULT_FROM_EMAIL
+      - DB_NAME=$DB_NAME
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_HOST=$DB_HOST
+      - DB_PORT=$DB_PORT
+      - REDIS_HOST=$REDIS_HOST
+    networks:
+      - klaverjas_network
+    volumes:                              # Note volumes are read-only for users and rw for root (not executable !!)
+      - ./backend:/apps                   # maps the backend map to the /apps map in the container to sync realtime. !! align with the dockerfile
+    command: sh -c "run_dev.sh"           # For development
+    depends_on:
+      - psql
+      - redis
+      # - daphne
+
+  psql:
+    image: postgres
+    container_name: klaverjas_psql_dev 
+    restart: always
+    ports:
+      - "5432:5432"
+    networks:
+      - klaverjas_network
+    environment:
+      # - PGDATA=/var/lib/postgresql/data       # The folder in the image where the data is stored
+      - POSTGRES_USER=$DB_USER
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+      - POSTGRES_DB=$DB_NAME
+    volumes:
+      - ./psql-data:/var/lib/postgresql/data    # store postgres data on a folder of the server
+
+  redis:
+    image: redis
+    container_name: klaverjas_redis_dev 
+    networks:
+      - klaverjas_network
+    ports:
+      - "6379:6379"
+
+  front:
+    build:
+      context: ./frontend                   # path to the Dockerfile or URL to respository
+      dockerfile: Dockerfile_front_dev      # default is Dockerfile
+    container_name: klaverjas_front_dev     # specifies the name of the container that is created
+    image: klaverjas_front_dev              # Name of the image that will be created
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - VUE_APP_URL_API_BASE=$VUE_APP_URL_API_BASE
+      - VUE_APP_URL_WEBSOCKET=$VUE_APP_URL_WEBSOCKET
+    networks:
+      - klaverjas_network
+    volumes:                              
+      - ./frontend/project/src:/app/src
+    command: sh -c "npm run serve"
+    depends_on:
+      - django
+
+networks:
+  klaverjas_network:
+
+
+
+
+
+
+
+

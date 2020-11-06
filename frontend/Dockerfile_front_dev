@@ -9,24 +9,23 @@
 FROM node:lts-alpine as build-stage
 
 WORKDIR /app
-# COPY project/package*.json ./
+COPY project/package*.json ./
 
+# To install packages from package.json
 RUN npm install
 
-RUN npm install vue
-RUN npm install -g @vue/cli
+# RUN npm install vue
+# RUN npm install -g @vue/cli
 
-# RUN vue add bootstrap-vue 
-RUN npm install vue bootstrap-vue bootstrap                 
-RUN npm install --save reconnecting-websocket
-RUN npm install --save axios
-RUN npm i jquery@1.9.1 --save
+# # RUN vue add bootstrap-vue 
+# RUN npm install vue bootstrap-vue bootstrap                 
+# RUN npm install --save reconnecting-websocket
+# RUN npm install --save axios
+# RUN npm i jquery@1.9.1 --save
 
-# RUN npm install
+COPY project/src ./src
 
-COPY project/ .
-
-# audit needs the package.json
+# audit to fix security issues,  needs the package.json
 RUN npm audit fix --force 
 # RUN npm run build
 
