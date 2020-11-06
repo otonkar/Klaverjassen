@@ -50,8 +50,8 @@ MIN_LOG_LEVEL = 'INFO'
 if ENV == 'development':
     DEBUG = True
     SECRET_KEY = get_env_variable('SECRET_KEY')
-    ALLOWED_HOSTS = ['localhost','192.168.2.80']
-    # ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.2.80']
+    # ALLOWED_HOSTS = ['localhost','192.168.2.80']
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.2.80']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',

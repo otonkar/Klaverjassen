@@ -22,37 +22,37 @@ version: '3.8'
 
 services:
 
-  # daphne:
-  #   image: django-base
-  #   container_name: klaverjas_daphne_dev    # specifies the name of the container that is created
-  #   working_dir: /apps/back1
-  #   restart: always
-  #   ports:
-  #     - "6000:6000"
-  #   environment:
-  #     - ENV=$ENV
-  #     - SECRET_KEY=$SECRET_KEY
-  #     - EMAIL_HOST=$EMAIL_HOST
-  #     - EMAIL_USE_TLS=$EMAIL_USE_TLS
-  #     - EMAIL_PORT=$EMAIL_PORT
-  #     - EMAIL_HOST_USER=$EMAIL_HOST_USER
-  #     - EMAIL_HOST_PASSWORD=$EMAIL_HOST_PASSWORD
-  #     - DEFAULT_FROM_EMAIL=$DEFAULT_FROM_EMAIL
-  #     - DB_NAME=$DB_NAME
-  #     - DB_USER=$DB_USER
-  #     - DB_PASSWORD=$DB_PASSWORD
-  #     - DB_HOST=$DB_HOST
-  #     - DB_PORT=$DB_PORT
-  #     - REDIS_HOST=$REDIS_HOST
-  #   # env_file:
-  #   #   - ./development.env                   # load db user, password and db name
-  #   networks:
-  #     - klaverjas_network
-  #   volumes:                              
-  #     - ./backend:/apps 
-  #   command: sh -c "run_daphne_dev.sh"
-  #   depends_on:
-  #     - redis
+  daphne:
+    image: django-base
+    container_name: klaverjas_daphne_dev    # specifies the name of the container that is created
+    working_dir: /apps/back1
+    restart: always
+    ports:
+      - "6000:6000"
+    environment:
+      - ENV=$ENV
+      - SECRET_KEY=$SECRET_KEY
+      - EMAIL_HOST=$EMAIL_HOST
+      - EMAIL_USE_TLS=$EMAIL_USE_TLS
+      - EMAIL_PORT=$EMAIL_PORT
+      - EMAIL_HOST_USER=$EMAIL_HOST_USER
+      - EMAIL_HOST_PASSWORD=$EMAIL_HOST_PASSWORD
+      - DEFAULT_FROM_EMAIL=$DEFAULT_FROM_EMAIL
+      - DB_NAME=$DB_NAME
+      - DB_USER=$DB_USER
+      - DB_PASSWORD=$DB_PASSWORD
+      - DB_HOST=$DB_HOST
+      - DB_PORT=$DB_PORT
+      - REDIS_HOST=$REDIS_HOST
+    # env_file:
+    #   - ./development.env                   # load db user, password and db name
+    networks:
+      - klaverjas_network
+    volumes:                              
+      - ./backend:/apps 
+    command: sh -c "run_daphne_dev.sh"
+    depends_on:
+      - redis
   
   # worker:
   #   image: django-base
@@ -101,7 +101,7 @@ services:
     depends_on:
       - psql
       - redis
-      # - daphne
+      - daphne
 
   psql:
     image: postgres
