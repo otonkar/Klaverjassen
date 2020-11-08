@@ -35,6 +35,6 @@ set -e
 # python manage.py runscript setup_troef.py
 # ####################################################################
 
-
-# start the development server for the backend on port 5000 within the container
-python manage.py runserver 0.0.0.0:5000
+# start the daphne server for the backend on port 6000 within the container
+daphne -p 6000 back1.asgi:application
+# python manage.py runserver 0.0.0.0:6000

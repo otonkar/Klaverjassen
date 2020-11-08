@@ -101,11 +101,12 @@ USER user
 # Set the workdir to the folder that contains the manage.py
 WORKDIR /apps/back1
 
+# Use the command in docker-compose!!!
 # Give command to run a script that will start the application.
 # Not needed when started with runserver in docker-compose
 # This is the default command, but can be overruled by CMD in the docker-compose file
 # There can only be 1 CMD that will be executed, either in the Dockerfile, or in docker-compose
 # Do not use ENTRYPOINT because we want the complete command te be overruled, not only the parameters
-CMD ["run_dev.sh"]
+# CMD ["run_dev.sh"]
 
 

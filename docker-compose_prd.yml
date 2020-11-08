@@ -4,9 +4,12 @@
  # Docker compose file that belongs to tutorial
  # https://www.youtube.com/watch?v=nh1ynJGJuT8
  #
- # make and start:                      docker-compose -f docker-compose_dev.yml up --build
+ # make and start:                      docker-compose -f docker-compose_prd.yml up --build
  #
- # run the images a being composed:     docker-compose -f docker-compose_dev.yml run -p 7000:8000  app sh
+ # remove old images using:             docker-compose -f docker-compose_prd.yml rm
+ # Do this when recreate error occurs
+ #
+ # run the images a being composed:     docker-compose -f docker-compose_prd.yml run -p 7000:8000  app sh
  #
  # Get into a running container
  #  docker exec -it klaverjas_django_dev /bin/sh
@@ -19,13 +22,13 @@ version: '3.8'
 
 services:
 
-  django:                                # name of this services
+  daphne:
     image: django-base
-    container_name: klaverjas_django_dev    # specifies the name of the container that is created
+    container_name: klaverjas_daphne_prd    # specifies the name of the container that is created
     working_dir: /apps/back1
     restart: always
     ports:
-      - 5000:5000                          # map external port 7000 to internal port 7000, to use like localhost:7000
+      - "6000:6000"
     environment:
       - ENV=$ENV
       - SECRET_KEY=$SECRET_KEY
@@ -41,18 +44,37 @@ services:
       - DB_HOST=$DB_HOST
       - DB_PORT=$DB_PORT
       - REDIS_HOST=$REDIS_HOST
+    # env_file:
+    #   - ./development.env                   # load db user, password and db name
     networks:
       - klaverjas_network
-    volumes:                              # Note volumes are read-only for users and rw for root (not executable !!)
-      - ./backend:/apps                   # maps the backend map to the /apps map in the container to sync realtime. !! align with the dockerfile
-    command: sh -c "run_dev.sh"           # For development
+    volumes:                              
+      - ./backend:/apps 
+    command: sh -c "run_daphne_prd.sh"
     depends_on:
       - psql
       - redis
+  
+  # worker:
+  #   image: django-base
+  #   container_name: klaverjas_worker_prd    # specifies the name of the container that is created
+  #   working_dir: /apps/back1
+  #   restart: always
+  #   environment:
+  #     - REDIS_HOST=redis
+  #   env_file:
+  #     - ./development.env                   # load db user, password and db name
+  #   networks:
+  #     - klaverjas_network
+  #   volumes:                              
+  #     - ./backend:/apps 
+  #   command: sh -c "python manage.py runworker"
+  #   depends_on:
+  #     - redis
 
   psql:
     image: postgres
-    container_name: klaverjas_psql_dev 
+    container_name: klaverjas_psql_prd 
     restart: always
     ports:
       - "5432:5432"
@@ -74,25 +96,31 @@ services:
     ports:
       - "6379:6379"
 
-  front:
+  nginx:
     build:
       context: ./frontend                   # path to the Dockerfile or URL to respository
-      dockerfile: Dockerfile_front_dev      # default is Dockerfile
-    container_name: klaverjas_front_dev     # specifies the name of the container that is created
-    image: klaverjas_front_dev              # Name of the image that will be created
+      dockerfile: Dockerfile_nginx_prd      # default is Dockerfile
+    container_name: klaverjas_nginx_prd     # specifies the name of the container that is created
+    image: klaverjas_nginx_prd
     restart: always
     ports:
-      - "8082:8080"
+      - "80:80"
+      - "443:443"
+      - "5000:5000"
+      # - "6000:6000"
+      # - "7000:7000"
     environment:
       - VUE_APP_URL_API_BASE=$VUE_APP_URL_API_BASE
       - VUE_APP_URL_WEBSOCKET=$VUE_APP_URL_WEBSOCKET
+    volumes:
+      - ./frontend/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./frontend/nginx/log/:/var/log/nginx/
+      - ./frontend/nginx/letsencrypt/:/etc/letsencrypt/
     networks:
       - klaverjas_network
-    volumes:                              
-      - ./frontend/project/src:/app/src
-    command: sh -c "npm run serve"
     depends_on:
-      - django
+      - daphne 
+      - psql
 
 networks:
   klaverjas_network:
