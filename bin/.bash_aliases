@@ -10,7 +10,7 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias diruse='sudo du -hx --max-depth=1 |sort -hr'        ## show format 325M of 125K
 alias cpu='cat /proc/cpuinfo | grep "MHz"'
-alias h="history"
+alias h="history | tail -n 1000 | tac | more"
 alias pa="ps aux|more"
 
 # GIT
