@@ -15,11 +15,12 @@ alias pa="ps aux|more"
 
 # GIT
 alias gpom="git push origin master"
-alias gs="git status"
-alias ga="git add ."
 alias gb="git branch"
 alias gco="git checkout"
+alias gs="git status"
+alias ga="git add ."
 alias gc="git commit -m "
+alias gp="git push"
 
 
 ### Nginx
