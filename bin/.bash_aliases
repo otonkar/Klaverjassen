@@ -19,6 +19,8 @@ alias gs="git status"
 alias ga="git add ."
 alias gb="git branch"
 alias gco="git checkout"
+alias gc="git commit -m "
+
 
 ### Nginx
 alias nginx_stop='sudo systemctl stop nginx'
