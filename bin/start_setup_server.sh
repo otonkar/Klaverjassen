@@ -49,3 +49,8 @@ ssh root@$SERVER "cd /code/Klaverjassen && git checkout "$BRANCH
 
 #####################################################################################
 ### Create the images
+echo "  "
+echo "***** Create base images"
+echo "  "
+ssh root@$SERVER "cd chmod =x /code/Klaverjassen/bin/*.sh"
+ssh root@$SERVER "cd /code/Klaverjassen/bin/create_images.sh"
