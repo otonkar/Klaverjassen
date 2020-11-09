@@ -52,5 +52,5 @@ ssh root@$SERVER "cd /code/Klaverjassen && git checkout "$BRANCH
 echo "  "
 echo "***** Create base images"
 echo "  "
-ssh root@$SERVER "cd chmod =x /code/Klaverjassen/bin/*.sh"
-ssh root@$SERVER "cd /code/Klaverjassen/bin/create_images.sh"
+ssh root@$SERVER "chmod +x /code/Klaverjassen/bin/*.sh"
+ssh root@$SERVER "/code/Klaverjassen/bin/create_images.sh"

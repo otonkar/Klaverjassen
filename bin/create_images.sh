@@ -10,10 +10,10 @@
 ###
 
 ### Load the production environment variables
-source ../production.env
+source /code/Klaverjassen/production.env
 
 ### Create the django base image
-cd ../backend
+cd /code/Klaverjassen//backend
 docker build -t django-base -f Dockerfile_django_base .
 
 
