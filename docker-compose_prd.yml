@@ -51,6 +51,7 @@ services:
     volumes:                              
       - ./backend:/apps 
     command: sh -c "run_daphne_prd.sh"
+    # command: sh -c "python manage.py runserver 0.0.0.0:6000"
     depends_on:
       - psql
       - redis
@@ -109,9 +110,9 @@ services:
       - "5000:5000"
       # - "6000:6000"
       # - "7000:7000"
-    environment:
-      - VUE_APP_URL_API_BASE=$VUE_APP_URL_API_BASE
-      - VUE_APP_URL_WEBSOCKET=$VUE_APP_URL_WEBSOCKET
+    # environment:
+    #   - VUE_APP_URL_API_BASE=$VUE_APP_URL_API_BASE
+    #   - VUE_APP_URL_WEBSOCKET=$VUE_APP_URL_WEBSOCKET
     volumes:
       - ./frontend/nginx/conf.d/:/etc/nginx/conf.d/
       - ./frontend/nginx/log/:/var/log/nginx/

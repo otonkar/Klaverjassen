@@ -36,5 +36,5 @@ set -e
 # ####################################################################
 
 # start the daphne server for the backend on port 6000 within the container
-daphne -p 6000 back1.asgi:application
+daphne -b 0.0.0.0 -p 6000 back1.asgi:application
 # python manage.py runserver 0.0.0.0:6000
