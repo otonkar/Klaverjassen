@@ -17,3 +17,11 @@ cd /code/Klaverjassen//backend
 docker build -t django-base -f Dockerfile_django_base .
 
 
+# In case this is a first start of the database, create a clean folder
+rm -R /code/Klaverjassen/psql-data 
+mkdir -p /code/Klaverjassen/psql-data 
+
+# Next start the docker-compose
+# Use the run_daphne_prd with the migrations on and create the base tables
+cd /code/Klaverjassen
+docker-compose -f docker-compose_prd.yml up --build

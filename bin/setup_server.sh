@@ -47,7 +47,7 @@ sudo usermod -aG docker ole
 echo "  "
 echo "**** Install docker-compose ****"
 echo "  "
-sudo curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose
+sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
@@ -66,7 +66,7 @@ sudo apt autoremove
 
 #################################################################################
 ###### Create .bash_aliases
-FILE="/home/ole/.bash_aliases"
+FILE="/root/.bash_aliases"
 
 /bin/cat <<EOM >$FILE
 ### General aliases
@@ -95,5 +95,7 @@ alias nginx_start='sudo systemctl start nginx'
 alias nginx_restart='sudo systemctl restart nginx'
 alias nginx_reload='sudo systemctl reload nginx'
 EOM
+
+cp /root.bash_aliases /home/ole/.bash_aliases
 
 
