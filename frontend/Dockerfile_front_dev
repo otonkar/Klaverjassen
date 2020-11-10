@@ -26,7 +26,8 @@ RUN npm install
 COPY project/src ./src
 
 # audit to fix security issues,  needs the package.json
-RUN npm audit fix --force 
+RUN npm audit fix
+# RUN npm audit fix --force 
 # RUN npm run build
 
 # CMD ["npm", "run", "serve"]
