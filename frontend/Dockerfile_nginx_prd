@@ -14,12 +14,16 @@
 # build stage
 FROM node:lts-alpine as build-stage
 
+# Pass arguments to this dockerfile from docker-compose
+ARG VUE_APP_URL_API_BASE
+ARG VUE_APP_URL_WEBSOCKET
+
 # only for production
 # The values will be hardcoded in the build
 # ENV VUE_APP_URL_API_BASE='https://klaverjasfun.nl:5000/'
 # ENV VUE_APP_URL_WEBSOCKET='wss:klaverjasfun.nl:5000/ws/game/'
-ENV VUE_APP_URL_API_BASE='http://localhost:5000/'
-ENV VUE_APP_URL_WEBSOCKET='ws:localhost:5000/ws/game/'
+# ENV VUE_APP_URL_API_BASE='http://localhost:5000/'
+# ENV VUE_APP_URL_WEBSOCKET='ws:localhost:5000/ws/game/'
 
 WORKDIR /app
 COPY ./project/package*.json ./

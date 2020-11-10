@@ -4,7 +4,7 @@
  # Docker compose file that belongs to tutorial
  # https://www.youtube.com/watch?v=nh1ynJGJuT8
  #
- # make and start:                      docker-compose -f docker-compose_prd.yml up --build
+ # make and start:                      docker-compose -f docker-compose_prd_test.yml up --build
  #
  # remove old images using:             docker-compose -f docker-compose_prd.yml rm
  # Do this when recreate error occurs
@@ -114,6 +114,9 @@ services:
     build:
       context: ./frontend                   # path to the Dockerfile or URL to respository
       dockerfile: Dockerfile_nginx_prd      # default is Dockerfile
+      args:
+        - VUE_APP_URL_API_BASE=http://localhost:5000/
+        - VUE_APP_URL_WEBSOCKET=ws:localhost:5000/ws/game/
     container_name: klaverjas_nginx_prd     # specifies the name of the container that is created
     image: klaverjas_nginx_prd
     restart: always
