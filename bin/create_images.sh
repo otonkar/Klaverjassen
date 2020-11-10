@@ -9,11 +9,24 @@
  # This script will be located in /code/Klaverjassen/bin/create_images.sh
 ###
 
+
+#####################################################################################
 ### Load the production environment variables
 source /code/Klaverjassen/production.env
 
+
+#####################################################################################
+### Create folders (/code is already created)
+echo "  "
+echo "***** Create folders"
+echo "  "
+mkdir -p /data/psql
+mkdir -p /data/backup
+
+
 # Set backend to read/write for everybody
 # and create log folder
+mkdir -p /code/Klaverjassen//backend/log
 cd /code/Klaverjassen//backend
 chmod -R 777 *
 mkdir -p /code/Klaverjassen//backend/log

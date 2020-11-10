@@ -3,10 +3,11 @@
 
 # ignore postgres data
 /psql-data/
+/data/
 
 # backend: Ignore the virtual environments, database, migrations
 /backend/**/venv*/
-/backend/**/log/
+/backend/**/log/*
 /backend/**/db.sqlite3
 /backend/**/migrations
 # /backend/**/manage.py

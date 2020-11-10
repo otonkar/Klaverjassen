@@ -96,6 +96,6 @@ alias nginx_restart='sudo systemctl restart nginx'
 alias nginx_reload='sudo systemctl reload nginx'
 EOM
 
-cp /root.bash_aliases /home/ole/.bash_aliases
+cp /root/bash_aliases /home/ole/.bash_aliases
 
 
