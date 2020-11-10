@@ -12,6 +12,12 @@
 ### Load the production environment variables
 source /code/Klaverjassen/production.env
 
+# Set backend to read/write for everybody
+# and create log folder
+cd /code/Klaverjassen//backend
+chmod -R 777 *
+mkdir -p /code/Klaverjassen//backend/log
+
 ### Create the django base image
 cd /code/Klaverjassen//backend
 docker build -t django-base -f Dockerfile_django_base .
