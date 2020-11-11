@@ -71,7 +71,7 @@ services:
       - POSTGRES_DB=$DB_NAME
     volumes:
       - /data/psql:/var/lib/postgresql/data      # store postgres data on a folder of the server
-      - /data/backup:/var/lib/postgresql/data    # Folder to create backups of the database
+      - /data/backup:/tmp                        # Folder to create backups of the database
 
 
   redis:

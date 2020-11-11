@@ -11,7 +11,7 @@
 ###
 
 ### Variables
-SERVER='78.47.123.131'
+SERVER='168.119.60.235'
 BRANCH='dev_004'
 
 #####################################################################################
@@ -23,7 +23,8 @@ mkdir -p ~/.ssh
 ssh-keygen -t rsa
 
 ### Copy the public key to the remote host for root
-ssh-copy-id -i $HOME/.ssh/id_rsa.pub root@$SERVER
+# -o IdentitiesOnly for avoiding "Too many authentication failures"
+ssh-copy-id -i $HOME/.ssh/id_rsa.pub -o IdentitiesOnly=yes  root@$SERVER
 #ssh-copy-id -i ~/.ssh/id_rsa.pub 78.47.123.131    # This is for the current user (like ole)
 
 

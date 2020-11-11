@@ -35,12 +35,20 @@ cd $BASE_DIR/backend
 chmod -R 777 *
 
 
-### Create the django base image
+#####################################################################################
+### ### Create the django base image
+echo "  "
+echo "***** Create Django base image"
+echo "  "
 cd $BASE_DIR/backend
 docker build -t django-base -f Dockerfile_django_base .
 
-
-# Next start the docker-compose
-# Use the run_daphne_prd with the migrations on and create the base tables
+#####################################################################################
+### Create the Nginx image and start the services
+###
+### Use the run_daphne_prd with the migrations on and create the base tables
+echo "  "
+echo "***** Docker compose / create Nginx image"
+echo "  "
 cd $BASE_DIR
 docker-compose -f docker-compose_prd.yml up --build
