@@ -9,10 +9,12 @@
  # This script will be located in /code/Klaverjassen/bin/create_images.sh
 ###
 
+# Variables
+BASE_DIR='/code/Klaverjassen'
 
 #####################################################################################
 ### Load the production environment variables
-source /code/Klaverjassen/production.env
+source $BASE_DIR/production.env
 
 
 #####################################################################################
@@ -22,25 +24,23 @@ echo "***** Create folders"
 echo "  "
 mkdir -p /data/psql
 mkdir -p /data/backup
+mkdir -p /data/nginx/log
+mkdir -p /data/nginx/letsencrypt
 
 
 # Set backend to read/write for everybody
 # and create log folder
-mkdir -p /code/Klaverjassen//backend/log
-cd /code/Klaverjassen//backend
+mkdir -p $BASE_DIR/backend/log
+cd $BASE_DIR/backend
 chmod -R 777 *
-mkdir -p /code/Klaverjassen//backend/log
+
 
 ### Create the django base image
-cd /code/Klaverjassen//backend
+cd $BASE_DIR/backend
 docker build -t django-base -f Dockerfile_django_base .
 
 
-# In case this is a first start of the database, create a clean folder
-rm -R /code/Klaverjassen/psql-data 
-mkdir -p /code/Klaverjassen/psql-data 
-
 # Next start the docker-compose
 # Use the run_daphne_prd with the migrations on and create the base tables
-cd /code/Klaverjassen
+cd $BASE_DIR
 docker-compose -f docker-compose_prd.yml up --build

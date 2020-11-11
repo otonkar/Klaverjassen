@@ -115,8 +115,8 @@ services:
       context: ./frontend                   # path to the Dockerfile or URL to respository
       dockerfile: Dockerfile_nginx_prd      # default is Dockerfile
       args:
-        - VUE_APP_URL_API_BASE=http://localhost:5000/
-        - VUE_APP_URL_WEBSOCKET=ws:localhost:5000/ws/game/
+        - VUE_APP_URL_API_BASE              # Load environment variables
+        - VUE_APP_URL_WEBSOCKET
     container_name: klaverjas_nginx_prd     # specifies the name of the container that is created
     image: klaverjas_nginx_prd
     restart: always
@@ -132,7 +132,7 @@ services:
     volumes:
       - ./frontend/nginx/conf.d/:/etc/nginx/conf.d/
       - ./frontend/nginx/log/:/var/log/nginx/
-      - ./frontend/nginx/letsencrypt/:/etc/letsencrypt/
+      - ./data/nginx/letsencrypt/:/etc/letsencrypt/
     networks:
       - klaverjas_network
     depends_on:
