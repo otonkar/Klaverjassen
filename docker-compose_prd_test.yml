@@ -4,18 +4,11 @@
  # Docker compose file that belongs to tutorial
  # https://www.youtube.com/watch?v=nh1ynJGJuT8
  #
- # make and start:                      docker-compose -f docker-compose_prd_test.yml up --build
+ # make and start:                      
+ #    docker-compose -f docker-compose_prd_test.yml up --build
  #
- # remove old images using:             docker-compose -f docker-compose_prd.yml rm
- # Do this when recreate error occurs
- #
- # run the images a being composed:     docker-compose -f docker-compose_prd.yml run -p 7000:8000  app sh
- #
- # Get into a running container
- #  docker exec -it klaverjas_django_dev /bin/sh
- #
- # Run the image
- #  docker run -it django-base /bin/sh
+ # Run an image in terminal
+ #    docker run -it django-base /bin/sh
 ###
 
 version: '3.8'
@@ -44,8 +37,6 @@ services:
       - DB_HOST=$DB_HOST
       - DB_PORT=$DB_PORT
       - REDIS_HOST=$REDIS_HOST
-    # env_file:
-    #   - ./development.env                   # load db user, password and db name
     networks:
       - klaverjas_network
     volumes:                              
@@ -54,6 +45,59 @@ services:
     depends_on:
       - psql
       - redis
+  
+  psql:
+    image: postgres
+    container_name: klaverjas_psql_prd 
+    restart: always
+    ports:
+      - "5432:5432"
+    networks:
+      - klaverjas_network
+    environment:
+      # - PGDATA=/var/lib/postgresql/data       # The folder in the image where the data is stored
+      - POSTGRES_USER=$DB_USER
+      - POSTGRES_PASSWORD=$DB_PASSWORD
+      - POSTGRES_DB=$DB_NAME
+    volumes:
+      - ./data/psql:/var/lib/postgresql/data        # store postgres data on a folder
+      - ./data/backup:/tmp                          # store postgres backups in folder
+
+  redis:
+    image: redis
+    container_name: klaverjas_redis_dev 
+    networks:
+      - klaverjas_network
+    ports:
+      - "6379:6379"
+
+  nginx:
+    build:
+      context: ./frontend                   # path to the Dockerfile or URL to respository
+      dockerfile: Dockerfile_nginx_prd      # default is Dockerfile
+      args:
+        - VUE_APP_URL_API_BASE              # Load environment variables
+        - VUE_APP_URL_WEBSOCKET
+    container_name: klaverjas_nginx_prd     # specifies the name of the container that is created
+    image: klaverjas_nginx_prd
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+      - "5000:5000"
+    volumes:
+      - ./frontend/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./frontend/nginx/log/:/var/log/nginx/
+      - ./data/nginx/letsencrypt/:/etc/letsencrypt/
+    networks:
+      - klaverjas_network
+    depends_on:
+      - daphne 
+      - psql
+
+networks:
+  klaverjas_network:
+
   
   # worker:
   #   image: django-base
@@ -82,65 +126,6 @@ services:
   #   command: sh -c "python manage.py runworker"
   #   depends_on:
   #     - redis
-
-
-  psql:
-    image: postgres
-    container_name: klaverjas_psql_prd 
-    restart: always
-    ports:
-      - "5432:5432"
-    networks:
-      - klaverjas_network
-    environment:
-      # - PGDATA=/var/lib/postgresql/data       # The folder in the image where the data is stored
-      - POSTGRES_USER=$DB_USER
-      - POSTGRES_PASSWORD=$DB_PASSWORD
-      - POSTGRES_DB=$DB_NAME
-    volumes:
-      - ./data/psql:/var/lib/postgresql/data    # store postgres data on a folder of the server
-      # - /data/psql:/var/lib/postgresql/data      # store postgres data on a folder of the server
-      # - /data/backup:/var/lib/postgresql/data    # store postgres data on a folder of the server
-
-  redis:
-    image: redis
-    container_name: klaverjas_redis_dev 
-    networks:
-      - klaverjas_network
-    ports:
-      - "6379:6379"
-
-  nginx:
-    build:
-      context: ./frontend                   # path to the Dockerfile or URL to respository
-      dockerfile: Dockerfile_nginx_prd      # default is Dockerfile
-      args:
-        - VUE_APP_URL_API_BASE              # Load environment variables
-        - VUE_APP_URL_WEBSOCKET
-    container_name: klaverjas_nginx_prd     # specifies the name of the container that is created
-    image: klaverjas_nginx_prd
-    restart: always
-    ports:
-      - "80:80"
-      - "443:443"
-      - "5000:5000"
-      # - "6000:6000"
-      # - "7000:7000"
-    # environment:
-    #   - VUE_APP_URL_API_BASE=$VUE_APP_URL_API_BASE
-    #   - VUE_APP_URL_WEBSOCKET=$VUE_APP_URL_WEBSOCKET
-    volumes:
-      - ./frontend/nginx/conf.d/:/etc/nginx/conf.d/
-      - ./frontend/nginx/log/:/var/log/nginx/
-      - ./data/nginx/letsencrypt/:/etc/letsencrypt/
-    networks:
-      - klaverjas_network
-    depends_on:
-      - daphne 
-      - psql
-
-networks:
-  klaverjas_network:
 
 
 

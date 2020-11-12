@@ -90,7 +90,7 @@ services:
       - klaverjas_network
     volumes:                              
       - ./frontend/project/src:/app/src
-    command: sh -c "npm run serve"
+    command: sh -c "npm run serve --host=0.0.0.0 --disable-host-check"
     depends_on:
       - django
 
