@@ -57,3 +57,7 @@ echo "***** Create environments"
 echo "  "
 ssh root@$SERVER "chmod +x /code/Klaverjassen/bin/*.sh"
 ssh root@$SERVER "/code/Klaverjassen/bin/create_images.sh"
+
+#####################################################################################
+### Copy production.env from the local machine
+rsync -rvz ~/Programming/Git/Klaverjassen/production.env root@$SERVER:/code/Klaverjassen/production.env

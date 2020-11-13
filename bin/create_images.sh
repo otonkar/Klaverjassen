@@ -52,3 +52,12 @@ echo "***** Docker compose / create Nginx image"
 echo "  "
 cd $BASE_DIR
 docker-compose -f docker-compose_prd.yml up --build
+
+
+#####################################################################################
+### Add a job to cron, that will run the daily backup in the postgres images
+### Note: /data/backup of the server will be mouted to /tmp in the postgres image
+### Ensure to add an empty line ??
+cp ./backup_psql_daily.sh /data/backup/backup_psql_daily.sh
+crontab -l | { cat; echo "*/5 * * * * docker exec -t klaverjas_psql_prd /tmp/backup_psql_daily.sh"; } | crontab -
+crontab -l | { cat; echo "#"; } | crontab -
