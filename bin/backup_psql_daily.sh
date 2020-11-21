@@ -4,16 +4,19 @@
  # This script will create a DAILY backup of the postgres database into a folder.
  # Script to be run in the postgres container.
  #
- # The filename of the backup is: date_backup_dump, where date is like "2020_11_12_21:17:26"
+ # The filename of the backup is: date_D_backup.dump, where date is like "2020_11_12_21-17-26"
+ # Note: do not use : in the time, because this is give issues in the command to copy this file
+ # because \: must be used to escape this special character
  #
- # This script rotate the backup files.
- # a max of x backup files will be stored in the folder.
- # Based on the oldest modify date the the oldest backup file will be removed when more than N files are present. 
+ # This script rotates the backup files.
+ # a max of N_BACKUP backup files will be stored in the folder.
+ # Based on the oldest modify date the oldest backup file will be removed when more than N files are present. 
+ # NOTE: when there are already more files, still only 1 will be removed (later add a while loop)
 ###
 
 ### Set variables
 BACKUP_DIR="/tmp"
-N_BACKUP=7
+N_BACKUP=1
 BASE_NAME="_D_backup.dump"
 
 GREP_STRING="grep $BASE_NAME"
@@ -30,11 +33,20 @@ N_FILES=$(ls | $GREP_STRING | wc -l)
 echo $N_FILES
 
 # Delete the oldest modified backup file when there are more than allowed
-if [ "$N_FILES" -gt "$N_BACKUP" ]; then
+# if [ "$N_FILES" -gt "$N_BACKUP" ]; then
+#   rm "$(ls -t | $GREP_STRING | tail -1)"
+#   NEW_N=$(ls  | $GREP_STRING | wc -l)
+#   echo "$NEW_N backup files in the folder after backup"
+# fi
+
+
+while [ "$N_FILES" -gt "$N_BACKUP" ] ; do
   rm "$(ls -t | $GREP_STRING | tail -1)"
   NEW_N=$(ls  | $GREP_STRING | wc -l)
   echo "$NEW_N backup files in the folder after backup"
-fi
+  # get the new numver of files
+  N_FILES=$(ls | $GREP_STRING | wc -l)
+done
 
 # Note: rsync within a postgres docker container does not work.
 # Therefore on the server an additional job must be run to upload the backup

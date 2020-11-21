@@ -63,7 +63,6 @@ sudo apt install git
 ###### Clean up
 sudo apt autoremove
 
-
 #################################################################################
 ###### Create .bash_aliases
 FILE="/root/.bash_aliases"

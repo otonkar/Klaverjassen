@@ -75,8 +75,8 @@ services:
 
 
   redis:
-    image: redis
-    container_name: klaverjas_redis_dev 
+    image: redis:6.0-alpine
+    container_name: klaverjas_redis_prd 
     networks:
       - klaverjas_network
     ports:

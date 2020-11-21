@@ -67,7 +67,7 @@ services:
       - ./data/psql:/var/lib/postgresql/data    # store postgres data on a folder of the server
 
   redis:
-    image: redis
+    image: redis:6.0-alpine
     container_name: klaverjas_redis_dev 
     networks:
       - klaverjas_network

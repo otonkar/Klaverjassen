@@ -64,7 +64,7 @@ services:
       - ./data/backup:/tmp                          # store postgres backups in folder
 
   redis:
-    image: redis
+    image: redis:6.0-alpine
     container_name: klaverjas_redis_dev 
     networks:
       - klaverjas_network
