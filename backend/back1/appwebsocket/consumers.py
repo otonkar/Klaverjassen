@@ -1,6 +1,7 @@
 # chat/consumers.py
 import json
-from datetime import datetime, date
+from django.utils import timezone
+
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 from django.db.models import Sum
@@ -908,7 +909,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         if (message['leg'] == 0) and (message['round']) == 0:
             # Set the date_game_start and save the game
-            game.date_game_start = datetime.now()
+            game.date_game_start = timezone.now()
             game.gameStatus_id = await get_gameStatus('wordt gespeeld')
             await save_game(game)
 
@@ -1024,7 +1025,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 # Game is finished
                 state = 'end_of_game'
                 game.legs_completed = game.legs_completed + 1
-                game.date_game_end = datetime.now()
+                game.date_game_end = timezone.now()
                 game.gameStatus_id = await get_gameStatus('uitgespeeld')
                 
                 # print('GAME is COMPLETED')
@@ -1038,7 +1039,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             message_out = {
             'type'          : 'state_of_game',
             'state'         : state,
-        # 'data_completed'        : datetime.now(),
+        # 'data_completed'        : timezone.now(),
             # 'player_aangenomen'     : player_aangenomen, 
             'scoreA'                : 0, 
             'roemA'                 : 0,
@@ -1064,7 +1065,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 input_data={
                     'gameID'                : message['gameID'], 
                     'leg'                   : leg, 
-                    'data_completed'        : datetime.now(),
+                    'data_completed'        : timezone.now(),
                     'player_aangenomen'     : player_aangenomen, 
                     'scoreA'                : score_A, 
                     'roemA'                 : roem_A,
@@ -1104,7 +1105,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 input_data={
                     'gameID'                : message['gameID'], 
                     'leg'                   : leg, 
-                    'data_completed'        : datetime.now(),
+                    'data_completed'        : timezone.now(),
                     'player_aangenomen'     : player_aangenomen, 
                     'scoreA'                : score_A, 
                     'roemA'                 : roem_A,
@@ -1125,7 +1126,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             message_out = {
                 'type'                  : 'state_of_game',
                 'state'                 : state,
-                # 'data_completed'        : datetime.now(),
+                # 'data_completed'        : timezone.now(),
                 'player_aangenomen'     : player_aangenomen, 
                 'scoreA'                : score_A, 
                 'roemA'                 : roem_A,
@@ -1147,7 +1148,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             message_out = {
                 'type'                  : 'state_of_game',
                 'state'                 : state,
-                # 'data_completed'        : datetime.now(),
+                # 'data_completed'        : timezone.now(),
                 'player_aangenomen'     : player_aangenomen, 
                 'scoreA'                : score_A, 
                 'roemA'                 : roem_A,
@@ -1169,7 +1170,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
             await save_game(game)
 
-            # new_date = datetime.now()
+            # new_date = timezone.now()
 
             # print('****', message['gameID'])
             
@@ -1180,7 +1181,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
             # #define the game data to be updated
             # game_data = {
             #     'gameID'                : message['gameID'],
-            #     'date_game_end'         : datetime.now(),
+            #     'date_game_end'         : timezone.now(),
             #     'gameStatus'            : 'uitgespeeld',
             #     'scoreA'                : totalscores[0], 
             #     'roemA'                 : totalscores[1],                 

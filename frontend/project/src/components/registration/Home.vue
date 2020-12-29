@@ -9,28 +9,78 @@
               <button  v-on:click="gotoLogin()" class="btn btn-primary"> Ga naar Login pagina  </button>
           </div>
           <br><br>
-          <h3>Opmerking</h3>
+          <h3>Disclaimer</h3>
           <p>
-            Deze site betreft een persoonlijk project om bekend te raken met verschillende web ontwikkel technologien.
-            Het is een site die in ontwikkeling is en alleen bedoeld om te testen door personen die de maker kent.
+            Deze site betreft een persoonlijk project om ervaring op te doen met het maken van een spel. <br>
+            De opzet was om dit spel op afstand met een eigen groep vrienden te spelen in de Corona periode. <br>
+            Iedereen is vrij om zich te registreren en het spel te spelen. <br>
+            Echter, ieder doet dit geheel op eigen risico en er kunnen geen rechten aan het gebruik van dit spel worden ontleend. <br>
+            De beheerder kan zien welke stomme fouten door spelers worden gemaakt. <br>
+            Het is volledig aan de beheerder om stomme fouten bekend te maken met naam en toenaam op alle sociale media.
+          </p>
+
+          <p>Kijk voor een gedetaileerdere uitleg naar de toelichting op de homepage als je bent ingelogd.</p>
+
+          <h3>Het spel</h3>
+          <p>
+            Het betreft een spel om op afstand met elkaar te kunnen klaverjassen in de Rotterdamse variant.
+            Er kan een wedstrijd worden aangemaakt. Binnen een wedstrijd kunnen vervolgens 1 of meerdere tafels/potjes worden aangemaakt. 
+            Spelers kunnen zich bij een potje aanmelden. Zodra 4 spelers bij een potje zijn aangemeld kan het potje gespeeld worden. 
+            Binnen een wedstrijd wordt ieder potje (tafel) met precies dezelfde set gedeelde kaarten gespeeld. 
+            Hierdoor is het mogelijk de score van ieder potje binnen een wedstrijd met elkaar te vergelijken.
           </p>
           <p>
-            Het betreft een spel om op afstand met elkaar te kunnen klaverjassen. Er kan een wedstrijd worden aangemaakt. 
-            Binnen een wedstrijd kunnen 1 of meerdere tafels/potjes worden aangemaakt. Spelers kunnen zich bij een potje aanmelden. 
-            Pas als 4 spelers zijn aangemeld bij het potje kan het spel beginnen. Ieder portje binnen een wedstrijd wordt met dezelfde set
-            kaarten gespeeld, zodat de tafels onderling kunnen worden vergeleken.
+            Tijdens het spelen van het spel moeten de 4 spelers aangemeld zijn in het potje, zodat alle informatie tegelijk naar alle 4 de spelers
+            kan worden verzonden.
+            Er moet verplicht worden aangenomen, waarbij de speler die moet aannemen de troef kan selecteren (door in het midden op de troefkleur te klikken).
+            Het spel geeft aan wie aan de beurt is om een kaart te spelen. Zodra een slag is gespeeld bepaalt het spel wie de slag heeft gewonnen en geeft 
+            de volgende beurt aan de winnaar van de slag. Als alle slagen gespeeld zijn berekend het spel de score en bepaalt of de aangenomen partij 'door'
+            of 'nat' is. Alle overige zaken moeten de spelers zelf regelen, zoals roem melden of verzaken melden.
           </p>
+
+          <h3>Spel in ontwikkeling</h3>
           <p>
-            Dit spel is in een beginstadium van ontwikkeling, hetgeen inhoudt dat 'gewenste' functionaliteiten nog ontbreken of niet goed functioneren.
-            Bekend is dat de huidige versie niet goed samenwerkt met Apple apparatuur en Internet Explorer. Gebruik bij voorkeur Chrome of Firefox.
+            Het spel heeft op dit moment een fase bereikt waarbij het redelijk goed gespeeld kan worden. Toch ontbreken nog een aantal
+            gewenste funtionaliteiten en loopt er soms iets niet geheel goed. 
+            Mocht u bugs tegenkomen of tips en suggesties voor verbetering hebben dan kunt u die sturen naar klaverjasfun@gmail.com. 
           </p>
+
+          <h3>Tips bij spelen</h3>
           <p>
-            Tijdens het spelen van het spel moeten de 4 spelers verbonden zijn met het spel, zodat alle informatie tegelijk naar alle 4 de spelers
-            kan worden verzonden. Het kan voorkomen dat een bepaalde speler de informatie (zoals gespeelde kaart) niet goed
-            ontvangen heeft. Gebruik dan reset slag om de slag opniew te laten spelen. Alle gespeelde kaarten in die slag moeten dan opnieuw
-            gespeeld worden.
+            Hieronder volgen een aantal tips bij het spelen van het spel
+          
+            <ul>
+              <li>Speel het spel met elkaar in een video meeting (Teams, Zoom, etc.) </li>
+              <li>Bekend is dat de huidige versie niet goed samenwerkt met Apple apparatuur en Internet Explorer. 
+                Gebruik bij voorkeur Chrome of Firefox. (Opera en Vivaldi browsers lijken ook goed te werken)</li>
+              <li>Gebruik de buttons van het spel om door het spel te navigeren. 
+                Gebruik NIET de 'Go-back' knop van de browser om terug te gaan naar een vorig scherm.
+              </li>
+              <li>
+                Dit spel werkt op zowel PC, laptop als mobiel. 
+                Het scherm past zich automatisch aan. 
+                Op de PC kan de browser het best worden ingesteld met een smalle breedte.
+                Op tablet of telefoon moet je het toestel rechtop houden, ofwel in portait stand. 
+                In een landscape stand passen de kaarten niet geheel op het scherm en staan de kaarten te ver uit elkaar.
+              </li>
+              <li>Alle spelers moeten tegelijkertijd in verbinding staan met het spel. Bij een slechte verbinding van een speler kan het spel haperen.</li>
+              <li>Soms wordt een kaart gespeeld, maar wordt dit niet getoond. Ga dan naar de Acties-knop en kies Reset-slag. 
+                Hiermee kan de gehele slag opnieuw worden gespeeld. </li>
+              <li>Roem moet worden vastgelegd door de speler die de slag wint. Eerst moet de roem worden gemeld en dan pas de slag worden 'binnengehaald'. 
+                Als een slag is binnengehaald, kan de roem niet meer worden aangepast. Hooguit kan in een volgende slag ter correctie een negatieve roem worden vastgelegd.
+              </li>
+              <li>Een gespeelde kaart kan worden teruggenomen door de gehele slag te resetten voordat de slag is binnengehaald. 
+                Iedere speler moet dan opnieuw zijn kaart spelen.
+              </li>
+              <li>Speel de kaarten niet te snel achter elkaar om synchronisatie issues te vermijden</li>
+              <li>Het spel biedt nog geen mogelijkheden om persoonlijke gegevens te wijzigen of registratie te verwijderen. 
+                Wilt u dat uw registratie wordt verwijderd, stuur dan een mail naar klaverjasfun@gmail.com.  </li>
+          </ul>
+
           </p>
-          <h3>Releases</h3>
+
+            
+          <!-- <h3>Releases</h3>
           <p>
             Hieronder volgt een kort overzicht van de toegevoegde functionaliteiten per release
           </p>
@@ -64,7 +114,7 @@
             <li>Show original position of player on screen, so that player knows which player they are when looking back to the slagen</li> 
             <li>Show original player number in the games details (overview)</li> 
             <li>Make the code independent of dev / prod environment</li>
-          </ul>
+          </ul> -->
 
         </b-container>
      </div>

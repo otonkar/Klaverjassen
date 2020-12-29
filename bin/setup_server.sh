@@ -2,7 +2,7 @@
 
 ###
  # Script to set the correct settings and install the programs
- # that are needs on a Ubuntu 18.04 server to be used for the klaverjassen app
+ # that are needed on a Ubuntu 18.04 server to be used for the klaverjassen app
  #
  # this script must be run as root
 ###

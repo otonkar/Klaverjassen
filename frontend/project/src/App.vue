@@ -67,5 +67,7 @@ export default {
 <style lang="scss">
 body {
   background-color: rgb(173, 212, 183);
+  // max-width: 900px;
+  // margin: auto;
 }
 </style>

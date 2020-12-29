@@ -1,6 +1,7 @@
 # my_auth/serializers.py
 
-from datetime import datetime
+# from datetime import datetime
+from django.utils import timezone
 
 from django.core.mail import send_mail                                  # EmailMultiAlternatives, 
 
@@ -36,7 +37,7 @@ class OleTokenObtainPairSerializer(TokenObtainSerializer):
         data['access'] = str(refresh.access_token)
 
         #@Ole Add the logging 
-        now = datetime.now()
+        now = timezone.now()
         dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
 
         # f = open("/apps/Klaverjassen/log/klaverjas_login.txt", "a")
@@ -116,7 +117,7 @@ class UserSignUpSerializer(serializers.ModelSerializer):
             user.save()
 
         # Log the registration of a new user
-        now = datetime.now()
+        now = timezone.now()
         dt_string = now.strftime("%Y-%m-%d %H:%M:%S")
 
         # f = open("/apps/Klaverjassen/log/klaverjas_registration.txt", "a")

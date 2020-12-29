@@ -5,7 +5,7 @@
  # Script to be run in the postgres container.
  #
  # The filename of the backup is: date_D_backup.dump, where date is like "2020_11_12_21-17-26"
- # Note: do not use : in the time, because this is give issues in the command to copy this file
+ # Note: do not use character ':' in the time, because this will give issues in the command to copy this file
  # because \: must be used to escape this special character
  #
  # This script rotates the backup files.

@@ -1,7 +1,6 @@
 # my_auth/views.py
 
 import random
-import datetime
 from django.utils import timezone
 
 from django.core import exceptions
@@ -212,7 +211,7 @@ class ResetCode(APIView):
             user_obj.reset_code = reset_code
 
             # Set the Valid until to now + 15 minutes for the reset code
-            user_obj.reset_code_valid_until = datetime.datetime.now() + datetime.timedelta(minutes=15)
+            user_obj.reset_code_valid_until = timezone.now() + timezone.timedelta(minutes=15)
             user_obj.save()
 
             # Send a mail to the user
@@ -295,6 +294,7 @@ class ResetPassword(APIView):
                 # code is correct, now validate the expiration of code
                 if user_obj.reset_code_valid_until.strftime('%Y-%m-%d %H:%M:%S') < timezone.now().strftime('%Y-%m-%d %H:%M:%S'):
                     logger('authentication').warning(f'Reset password failed. User [{username}] used expired reset code')
+                    logger('authentication').warning(f"{user_obj.reset_code_valid_until.strftime('%Y-%m-%d %H:%M:%S')} versus {timezone.now().strftime('%Y-%m-%d %H:%M:%S')}")
                     content = {'message': 'Wachtwoord reset niet gelukt','reset_code': ['De reset_code is niet meer geldig']}
                     return Response(content, status=status.HTTP_404_NOT_FOUND)
 
@@ -312,7 +312,7 @@ class ResetPassword(APIView):
             user_obj.set_password(password)
 
             # Also set the reset_code to exipred
-            user_obj.reset_code_valid_until = datetime.datetime.now() - datetime.timedelta(minutes=1)
+            user_obj.reset_code_valid_until = timezone.now() - timezone.timedelta(minutes=1)
 
             # Save the user object
             user_obj.save()

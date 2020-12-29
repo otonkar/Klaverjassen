@@ -11,6 +11,8 @@
 
 # Variables
 BASE_DIR='/code/Klaverjassen'
+NAS_HOST='145.53.40.4'
+RSYNC_SCRIPT='/data/backup/rsync_script.sh'
 
 
 #####################################################################################
@@ -64,6 +66,27 @@ docker-compose -f docker-compose_prd.yml up --build
 ### Every hour in minute 22 and 23
 ### !!! MAKE SURE ADMIN kan access the NAS
 cp ./backup_psql_daily.sh /data/backup/backup_psql_daily.sh
-crontab -l | { cat; echo "22 * * * * docker exec -t klaverjas_psql_prd /tmp/backup_psql_daily.sh"; } | crontab -
-crontab -l | { cat; echo "23 * * * * rsync -rvz /data/backup/$(ls -t /data/backup |grep D_backup.dump | head -1) admin@$NAS_HOST:/volume1/Backup_remote/klaverjas_daily.dump"; } | crontab -
+
+### Create script with variables that copies the backup to the NAS.
+### Note: Use single quotes to make a string. With double quotes the variables/characters will be interpreted 
+# touch $RSYNC_SCRIPT
+# echo '#!/bin/bash' >> $RSYNC_SCRIPT
+# echo 'rsync -rvz /data/backup/$(ls -t /data/backup |grep D_backup.dump | head -1) admin@'"$NAS_HOST:/volume1/Backup_remote/klaverjas_daily.dump" >> $RSYNC_SCRIPT
+# chmod +x $RSYNC_SCRIPT
+
+### Note: the $(ls -t.. is in single quotes, so will not be interpreted will writing to cron.
+### The $NAS_HOST part is in double quotes, so the actual address will be filled in
+### Make a daily backup at 02:20 and copy to NAS at 02:25
+### For every day in the week backup to a new file
+crontab -l | { cat; echo '20 2 * * * docker exec -t klaverjas_psql_prd /tmp/backup_psql_daily.sh'; } | crontab -
+crontab -l | { cat; echo '25 2 * * 0 rsync -rvz /data/backup/$(ls -t /data/backup |grep D_backup.dump | head -1) admin@'"$NAS_HOST:/volume1/Backup_remote/klaverjas_day_0.dump"; } | crontab -
+crontab -l | { cat; echo '25 2 * * 1 rsync -rvz /data/backup/$(ls -t /data/backup |grep D_backup.dump | head -1) admin@'"$NAS_HOST:/volume1/Backup_remote/klaverjas_day_1.dump"; } | crontab -
+crontab -l | { cat; echo '25 2 * * 2 rsync -rvz /data/backup/$(ls -t /data/backup |grep D_backup.dump | head -1) admin@'"$NAS_HOST:/volume1/Backup_remote/klaverjas_day_2.dump"; } | crontab -
+crontab -l | { cat; echo '25 2 * * 3 rsync -rvz /data/backup/$(ls -t /data/backup |grep D_backup.dump | head -1) admin@'"$NAS_HOST:/volume1/Backup_remote/klaverjas_day_3.dump"; } | crontab -
+crontab -l | { cat; echo '25 2 * * 4 rsync -rvz /data/backup/$(ls -t /data/backup |grep D_backup.dump | head -1) admin@'"$NAS_HOST:/volume1/Backup_remote/klaverjas_day_4.dump"; } | crontab -
+crontab -l | { cat; echo '25 2 * * 5 rsync -rvz /data/backup/$(ls -t /data/backup |grep D_backup.dump | head -1) admin@'"$NAS_HOST:/volume1/Backup_remote/klaverjas_day_5.dump"; } | crontab -
+crontab -l | { cat; echo '25 2 * * 6 rsync -rvz /data/backup/$(ls -t /data/backup |grep D_backup.dump | head -1) admin@'"$NAS_HOST:/volume1/Backup_remote/klaverjas_day_6.dump"; } | crontab -
 crontab -l | { cat; echo "#"; } | crontab -
+
+# crontab -l | { cat; echo "25 2 * * * $RSYNC_SCRIPT"; } | crontab -
+

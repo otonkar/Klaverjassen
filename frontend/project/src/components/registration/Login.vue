@@ -3,7 +3,7 @@
 
       <br><br>  
 
-      <div class="container col-xl-4 col-lg-6" >
+      <div class="container col-xl-7 col-lg-6" >
           
               <div class="card">
                   <article class="card-body">
