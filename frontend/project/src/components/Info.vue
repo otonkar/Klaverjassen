@@ -94,6 +94,9 @@
                             <li><a href="#ref_wachtwoord_vergeten">Wachtwoord vergeten</a></li>
                             <li><a href="#ref_terminologie">Terminologie</a></li>
                             <li><a href="#ref_wedstrijden">Wedstrijden</a></li>
+                            <li><a href="#ref_potjes">Potjes</a></li>
+                            <li><a href="#ref_speel_potje">Het spelen van een Potje</a></li>
+                            <li><a href="#ref_melden_verzaken">Melden verzaken</a></li>
                         </ul>
                     </p>
 
@@ -281,57 +284,205 @@
                             </li>
                         </ul>
                     </p>
-                    
 
-
-
-
-
-
-
-
-
-
-
-                    
-                    <h5>Spelen van een potje</h5>
+                    <h5>Wedstrijd details</h5>
                     <p>
-                        Een portje kan pas worden gespeeld als 4 spelers zich bij het potje hebben geregistreerd.
-                        Dan pas wordt een knop zichtbaar met 'Speel dit potje'. Het potje gaat verder met de ronde en
-                        slag waar de laatste keer is gestopt. Pas als alle 4 de spelers in het speelscherm zitten kan 
-                        een kaart worden gespeeld. 
+                        Vanuit het 'Overzicht potjes' kan via 'Wedstrijd details' de informatie van de wedstrijd 
+                        worden opgevraagd. Ook is het mogelijk bepaalde details aan te passen. Hiervoor gelden de volgende 
+                        regels:
+                        <ul>
+                            <li>Alleen de eigenaar van de wedstrijd mag de details aanpassen</li>
+                            <li>Naam van wedstrijd en eigenaar kunnen niet worden aangepast</li>
+                            <li>Het aantal rondjes per potje kan alleen worden aangepast zolang geen enkel potje
+                                van deze wedstrijd is gestart.
+                            </li>
+                        </ul>
+                    </p>
+
+
+                    <h3 id=ref_potjes>Potjes</h3>
+                    <p>
+                        Als vanuit 'Overzicht wedstrijden' op een wedstrijd wordt geklikt dan kom je in het scherm van 
+                        'Overzicht potjes'. Vanuit dit scherm kunnen nieuwe potjes binnen de wedstrijd worden aangemaakt 
+                        en kunnen spelers zich aanmelden bij een portje om te spelen.
+                    </p>
+
+                    <h5>Nieuw potje aanmaken</h5>
+                    <p>
+                        Alleen als de wedstrijd in een status is dat nog nieuwe potjes mogen worden aangemaakt zal een knop 
+                        zichtbaar zijn met 'Nieuw potje aanmaken'. Iedere speler kan dan een nieuwe potje aanmaken. Het nieuwe potje
+                        krijgt een ID met een nummer dat uniek is voor het potje.  
+                    </p>
+
+                    <h5>Status van een potje</h5>
+                    <p>
+                        Een potje kan zich in de volgende statussen bevinden:
+
+                        <ul>
+                            <li>
+                                <b>niet gestart</b> <br>
+                                Het potje wordt aangegeven met een blauwe balk als het potje nog niet is gestart.
+                            </li>
+                            <li>
+                                <b>wordt gespeeld</b> <br>
+                                Zodra de eerste slag is geregistreerd, maar nog niet alle rondes volledig zijn gespeeld, bevindt het potje zich
+                                in de status 'wordt gespeeld'. Het potje wordt dan aangegeven met een blauwe balk.
+                            </li>
+                            <li>
+                                <b>uitgespeeld</b> <br>
+                                Zodra de alle rondes van het potjes zijn gespeeld is het potje afgelopen. Het potje wordt dan aangegeven met een rode balk.
+                            </li>
+                        </ul>
+                    </p>
+
+                    <h5>Aanmelden/afmelden bij een potje</h5>
+                    <p>
+                       Een speler kan zich aanmelden bij een potje door op 1 van de speelposities te klikken. 
+                       Als een speelpositie nog niet is bezet dan wordt dit aangegeven door '--geen speler--'. 
+                       Als een speler op een spelerspositie klikt die al bezet is door een andere speler, dan wordt de andere speler
+                       verwijderd en de nieuwe speler toegevoegd aan het potje. Een speler kan maar 1 keer binnen een potje zijn aangemeld. 
+                       Als een speler is aangemeld wordt de knop 'Afmelden bij potje' actief, zodat een speler zich weer kan afmelden. 
+                       Ook als een potje eenmaal begonnen is kan nog van speler worden gewisseld.
+                    </p>
+
+
+                    <h5>A en B Teams</h5>
+                    <p>
+                        De speelposities binnen een potjes zijn genummerd van 1 t/m 4. Spelers 1 en 3 vormen het A-team, spelers 2 en 4 het B-team. 
+                        In het spel zitten de spelers van hetzelfde team tegenover elkaar. 
+                    </p>
+
+                    <h5>Score en slagen van een potje bekijken</h5>
+                    <p>
+                        Zodra een potjes is gestart worden de speelde slagen, rondes en scores geregistreerd. Door vanuit 'Overzicht potjes' op de balk 
+                        van een bepaald potje te klikken verschijnt de score zoals tot dusverre gespeeld van dat potje. Door vervolgens op de regel van een bepaalde 
+                        ronde te klikken verschijnt onder de score het overzicht van de gespeelde slagen van de betreffede ronde en de puntentelling.
+                    </p>
+                    <p>
+                        Zodra een potje is uitgespeeld wordt de eindscore zichtbaar in het 'Overzicht potjes'
+                    </p>
+
+
+                    <h3 id=ref_speel_potje>Het spelen van een potje</h3>
+                    <p>
+                        Een portje kan worden gespeeld zodra alle 4 de spelers zich bij het potje hebben geregistreerd.
+                        In dat geval wordt een knop zichtbaar met 'Speel dit potje'. Door hierop te klikken komt u in het speelscherm
+                    </p>
+
+                    <h5>Het speelscherm</h5>
+                    <p>
+                       U als speler zit op de positie aan de onderkant van het scherm. Hier ziet u uw gebruikersnaam en tussen haakjes of u behoort tot
+                       team-A of team-B en u ziet uw speelpositie. Tegenover u zit uw medespeler. Uw tegenstander zitten links en rechts van het scherm. 
+                    </p>
+                    <p>
+                        Bij de speelpositie van de andere spelers staat een bolletje dat groen of rood gekleurd kan zijn. Dit bolletje geeft aan of de 
+                        betreffende speler nog aanwezig (geconnecteerd is) met het spel (groen) of niet (rood). Zolang 1 van de bolletjes rood gekleurd is 
+                        kunnen geen kaarten gespeeld worden.
+                    </p>
+                    <p>
+                       In het midden van de het scherm ziet u de troef die geldt voor de betreffende ronde. Om de troef heen ziet u 4 kaartposities. 
+                       Hier worden de kaarten van een slag zichtbaar die worden gespeeld. Wanneer een lege kaartpositie een lichtgroene kleur heeft 
+                       dan geeft dit aan dat die betreffende speler aan de beurt is om te spelen. Alleen deze speler kan daadwerkelijk zijn kaart spelen. 
+                       De kaartpositie is ook lichtgroen in het begin van de ronde om aan te geven welke speler de troef kan bepalen en daarna moet uitkomen.
+                    </p>
+                    <p>
+                        Aan de linkerkant van het scherm wordt de roem getoond zoals die is gemeld binnen de ronde die wordt gespeeld.
+                    </p>
+
+                    <h5>Actie knoppen</h5>
+                    <p>
+                        Rechtsboven in het scherm bevindt zich een knop met 'Acties'. 
+                        Door hierop de klikken kunnen een aantal acties worden gekozen:
+
+                        <ul>
+                            <li>
+                                <b>Reset slag</b> <br>
+                                Hiermee worden alle tot dusverre gespeelde kaarten van een slag teruggenomen, zodat de gehele slag 
+                                opnieuw gespeeld moet worden. Dit kan alleen als de slag nog niet is 'genomen'. 
+                                Reset slag kan nodig zijn indien een speler per ongeluk een verkeerde kaart heeft gespeeld en dit wilt corrigeren. 
+                                Ook kan reset slag worden gebruikt indien de gespeeld kaart door het spel niet goed wordt getoond.
+                            </li>
+                            <li>
+                                <b>Bekijk score</b> <br>
+                                Hiermee is het mogelijk de stand tot dusverre in het potje te bekijken. 
+                                In dit score overzicht is het niet mogelijk om de afzonderlijke slagen terug te zien.
+                            </li>
+                            <li>
+                                <b>Vorige slag</b> <br>
+                                Hiermee is het mogelijk om de gespeelde kaarten van de vorige slag in te zien. 
+                            </li>
+                            <li>
+                                <b>Melden verzaken</b> <br>
+                                Hiermee wordt de procedure opgestart om verzaken te melden.
+                            </li>
+                        </ul>
                     </p>
 
                     <h5>Troef kiezen</h5>
                     <p>
                         In het midden van het scherm is de troef zichtbaar. Voordat de eerste kaart van een ronde is gespeeld
-                    kan de troef worden aangepast door de speler die als eerste moet uitkomen. Door één of meerdere keren op 
-                    de troef te klikken kan de gewenste troef worden gekozen. Zodra de eerste kaart van de ronde is gespeeld kan 
-                    de troef niet meer worden aangepast tot aan de volgende ronde.
+                        kan de troef worden aangepast door de speler die als eerste moet uitkomen. Door één of meerdere keren op 
+                        de troef te klikken kan de gewenste troef worden gekozen. Zodra de eerste kaart van de ronde is gespeeld kan 
+                        de troef niet meer worden aangepast tot aan de volgende ronde.
                     </p>
                     <p>
-                        Op dit moment kan alleen de speler die als eerste moet uitkomen de troef aanpassen. 
-                        Dit biedt de mogelijkheid om een spelvorm te spelen, waarbij deze speler moet aannemen en 
-                        zelf de troef mag kiezen.
+                        De speler die binnen een ronde als eerste moet uitkomen kan de troef naar wens aanpassen.
+                        Dit is tevens de speler die de ronde moet aannemen. 
                     </p>
+                   
+
+                    <h5 >Beurt</h5>
                     <p>
-                        Later zal een mogelijkheid worden toegevoegd om aan te nemen en te passen.
+                        Na iedere gespeelde ronde moet een volgende speler aanmenen en als eerste uitkomen. Bij iedere slag wordt bepaald wie de slag heeft gewonnen.
+                        De winnaar van de vorige slag moet uitkomen bij de nieuwe slag. Wie aan de beurt is om aan te nemen of een kaart te spelen wordt aangegeven
+                        door een lichtgroene kleur van de lege kaartpositie in het midden van het scherm.
+                        Alleen deze speler kan daadwerkelijk zijn kaart spelen. Als andere spelers hun kaart proberen te spelen dan zal deze een klein beetje bewegen om 
+                        aan te geven dat het spel gaande is, maar dat deze speler nog niet daadwerkelijk mag spelen. Indien 1 van de indicatiebollejes rood is zullen 
+                        de kaarten niet bewegen om aan te geven dat niet iedereen meer in het spel zit.
                     </p>
                     
-
-                    <h5 id="ref_beurt">Beurt</h5>
+                    <h5>Kaart spelen en reset slag</h5>
                     <p>
-                        Na iedere ronde moet een volgende speler als eerste uitkomen. Indien een speler aan de beurt is 
-                    dan wordt de naam vergroot en geel aangegeven. Bij iedere slag wordt bepaald wie de slag heeft gewonnen.
-                    De winnaar van de slag moet als eerste uitkomen.
+                        De speler die aan de beurt is kan een kaart spelen door op de betreffende kaart te klikken. 
+                        De kaart zal zich dan vervolgens naar het midden van het scherm begeven. De beurt gaat daarna over naar de volgende speler.
+                        Een gespeeld kaart kan niet worden teruggenomen. 
                     </p>
-                    
 
+                    <h5>Roem melden en slag nemen</h5>
+                    <p>
+                        Zodra alle spelers hun kaart hebben gespeeld bepaalt het spel welke speler de slag heeft gewonnen. 
+                        Bij deze speler verschijnen vervolgens twee koppen: een knop om roem te melden en een knop om de slag te pakken. 
+                        Indien de slag roem heeft dan moet de speler deze eerst registreren en daarna pas de slag nemen. Zodra de slag genomen is 
+                        kan de roem niet meer worden aangepast voor deze slag. Hooguit kan bij een foute roem registatie in de eventuele volgende slag 
+                        een correctie plaatsvinden door een negatieve of positieve roem toe te kennen.
+                    </p>
 
-                    <h5>... toe te voegen..</h5>
+                    <h3 id=ref_melden_verzaken>Melden verzaken</h3>
+                    <p>
+                        Het spel checkt niet of een speler verzaakt. Spelers moeten zelf constateren of iemand verzaakt heeft of niet. 
+                        Indien een speler denkt dat iemand verzaakt heeft dan kan hij dat melden. Er zal vervolgens een procedure worden gestart 
+                        waarmee de spelers met elkaar kunnen evalueren of iemand daadwerkelijk verzaakt heeft. Het einde van de procedure resulteert erin dat 
+                        de melding goed was of dat er een false melding was. In beide gevallen zullen alle punten , roem en 100 extra roem moeten worden 
+                        toegekend aan het A-team of B-team.
+                    </p>
 
-                    
+                    <h5>Opstarten procedure verzaken</h5>
+                    <p>
+                        Via de knop acties kan 'Melden verzaken' worden geactiveerd. Bij de speler (melder) die dit heeft aangeklikt verschijnt eerst een melding 
+                        met de vraag of de melder daadwerkelijk het verzaken wilt melden of de procedure wilt stoppen. Indien de procedure wordt gestopt kan het 
+                        spel gewoon verder gaan. Echter, indien de melder doorgaat dan zullen verdere stappen worden gezet en uiteindelijk alle punten aan een bepaald 
+                        team moeten worden toegekend.
+                    </p>
 
+                    <h5>Doorgaan met melden verzaken</h5>
+                    <p>
+                        Als de melder heeft besloten door te gaan met het melden van verzaken verschijnt bij alle ander spelers een bericht op het scherm dat 
+                        dat de melder een melding van verzaken doet. Bij de melder zelf verschijnt een nieuwe melding met uitleg hoe hij verder moet handelen. 
+                        Alle spelers krijgen de mogelijkheid om de tot dusverre gespeelde slagen van de betreffende ronde in te zien, zodat met elkaar overlegd kan worden
+                        over de juistheid van de melding. Zodra de spelers het met elkaar eens zijn moet de melder selecteren welke team alle punten, roem en 100 extra roem 
+                        krijgt toegewezen. Zodra hij dat heeft gedaan zien de melder en de andere spelers welke keuze is gemaakt. Daarna kan
+                        begonnen worden aan de volgende ronde.
+                    </p>
 
                 </b-card-text>
             </b-tab>
@@ -434,10 +585,8 @@
                     </p>
                     <ul>
                         <li>Mogelijkheid om aan te nemen of te passen</li>
-                        <li>Mogelijkheid om een gehele ronde opnieuw te spelen</li>
-                        <li>Het inzien van gemaakt slagen</li>
+                        <li>Mogelijkheid om gezamelijk een correctie uit te voeren op geregistreerde score.</li>
                         <li>Uitgebereidere rapportages over gemaakte scores en het vergelijken van games</li>
-                        <li>Het 'afspelen' van een gespeeld potje</li>
                     </ul>
                 </b-card-text>
             </b-tab>
@@ -449,8 +598,8 @@
                         Dit is spel is ontwikkeld door Ole Karlsen.
                         De drijver om dit spel op te zetten was drieledig. <br> <br>
                         <ul>
-                            <li>Een tijdverdrijf te vinden gedurende de Corona lockdown periode</li>
-                            <li>Kennis vergroting</li>
+                            <li>Een tijdverdrijf vinden gedurende de Corona lockdown periode</li>
+                            <li>Kennis vergroting van website technologien</li>
                             <li>Een leuke manier vinden om op afstand met elkaar een spel te kunnen spelen</li>
                         </ul>
                     </p>
