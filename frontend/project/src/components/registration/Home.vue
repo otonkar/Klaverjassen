@@ -15,8 +15,9 @@
             De opzet was om dit spel op afstand met een eigen groep vrienden te spelen in de Corona periode. <br>
             Iedereen is vrij om zich te registreren en het spel te spelen. <br>
             Echter, ieder doet dit geheel op eigen risico en er kunnen geen rechten aan het gebruik van dit spel worden ontleend. <br>
-            De beheerder kan zien welke stomme fouten door spelers worden gemaakt. <br>
-            Het is volledig aan de beheerder om stomme fouten bekend te maken met naam en toenaam op alle sociale media.
+            <b>De beheerder kan zien welke stomme fouten door spelers worden gemaakt. <br>
+            Het is volledig aan de beheerder om stomme fouten bekend te maken met naam en toenaam op alle sociale media.</b>
+            
           </p>
 
           <p>Kijk voor een gedetaileerdere uitleg naar de toelichting op de homepage als je bent ingelogd.</p>

@@ -1,7 +1,7 @@
 # klaverjas/models.py
 
+# from datetime import date
 from django.db import models
-# from datetime import datetime, date
 from django.utils import timezone
 from computed_property import ComputedTextField
 # import os
@@ -37,7 +37,8 @@ class Match(models.Model):
         # success (green)   : match play started and can register
         # danger(rood)      : match has stopped
 
-        today = date.today()
+        # today = date.today()
+        today = timezone.now().date()
 
         # print(self.matchID)
         before_start = ( today < self.date_match_start )  #True/False

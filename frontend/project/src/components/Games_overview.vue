@@ -6,6 +6,9 @@
         <br>
         <h2> Overzicht potjes </h2>
         Wedstrijd: <span style="color:purple;font-weight:bold;font-size:1.4em"> {{ matchID }} </span>
+        <p>
+          {{ status_text}}
+        </p>
         <hr>
 
         <b-row>
@@ -95,6 +98,8 @@ export default {
         polling: null,            // Needed to auto refresh this page
         isLoaded: false,          // to rerender the page when data is loaded
         matchID: '',              // Contains the matchID as received from the match list
+        status_color: '',         // Contains the  color indicator of the match
+        status_text: '',          // Describes the status of the match
         match_details: '',        // Contains the details of the match
         games: '',
         allow_game_create: false,
@@ -138,6 +143,24 @@ export default {
           // When coming to this screen via potjes, then no parameter is send.
           if (this.$route.params.matchID) {
             this.matchID = this.$route.params.matchID;
+          }
+          if (this.$route.params.status_color) {
+            this.status_color = this.$route.params.status_color;
+            if (this.status_color === 'success') {
+              this.status_text = 'Wedstrijd is gestart, spelers mogen potjes aanmaken of zich aanmelden bij potje'
+            }
+            if (this.status_color === 'danger') {
+              this.status_text = 'Wedstrijd is gestopt. spelers mogen geen potjes aanmaken of zich aanmelden bij potje. Potjes mogen niet meer gestart worden. Reeds gestarte potjes mogen worden afgespeeld.'
+            }
+            if (this.status_color === 'secondary') {
+              this.status_text = 'Wedstrijd is nog niet gestart, spelers mogen geen potjes aanmaken of zich aanmelden bij potje.'
+            }
+            if (this.status_color === 'primary') {
+              this.status_text = 'Wedstrijd is nog niet gestart,spelers mogen wel potjes aanmaken of zich aanmelden bij potje.'
+            }
+            if (this.status_color === 'warning') {
+              this.status_text = 'Wedstrijd is gestart, spelers mogen geen potjes aanmaken of zich aanmelden bij potje. Wel mogen bestaande potjes nog gestart worden.'
+            }
           }
 
           // Get the match details

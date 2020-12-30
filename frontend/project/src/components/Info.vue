@@ -11,7 +11,7 @@
                 <b-card-text>
 
                     <p>
-                        Dit is een klaverjas spel dat met 4 personen op afstand met elkaar gespeeld kan worden. 
+                        Dit is een klaverjasspel dat met 4 personen op afstand met elkaar gespeeld kan worden. 
                         Hieronder wordt op hoofdlijnen het spel beschreven. In de andere tabs wordt ingegaan 
                         op de details.  
                     </p>
@@ -237,13 +237,13 @@
                             </li>
                             <li>
                                 <b>Stop datum wedstrijd</b> <br>
-                                Stop datum wedstrijd is de datum vanaf wanneer geen potjes van deze wedstrijd gespeeld mogen worden.
+                                Stop datum wedstrijd is de datum vanaf wanneer geen potjes van deze wedstrijd gestart mogen worden.
+                                Potjes die al gestart zijn mogen worden uitgespeeld.
                             </li>
                             <li>
                                 <b>Stop registreer datum</b> <br>
-                                Speler kunnen zich aanmelden bij een potje. 
-                                De Stop registeer datum is de datum vanaf wanneer spelers zich niet meer bij potjes van 
-                                deze wedstrijd kunnen aanmelden. Deze datum moet liggen voor de Stop datum.
+                                De Stop registeer datum is de datum vanaf wanneer spelers geen potjes meer kunnen aanmaken 
+                                en zich niet meer bij potjes van deze wedstrijd kunnen aanmelden. 
                             </li>
                         </ul>
                     </p>
@@ -257,12 +257,27 @@
                     <p>
                         <ul>
                             <li>
+                                <b>Grijs:</b> <br>
+                                Wedstrijd is nog niet gestart, spelers mogen geen potjes aanmaken of zich aanmelden bij potje.
+                                
+                            </li>
+                            <li>
+                                <b>Blauw:</b> <br>
+                                Wedstrijd is nog niet gestart,spelers mogen wel potjes aanmaken of zich aanmelden bij potje.
+                            </li>
+                            <li>
                                 <b>Groen: </b> <br> 
-                                Spelers mogen registreren bij potje en potje mag gestart worden.
+                                Wedstrijd is gestart, spelers mogen potjes aanmaken of zich aanmelden bij potje
                             </li>
                             <li>
                                 <b>Geel:</b> <br>
-                                
+                                Wedstrijd is gestart, spelers mogen geen potjes aanmaken of zich aanmelden bij potje.
+                                Wel mogen bestaande potjes nog gestart worden.
+                            </li>
+                            <li>
+                                <b>Rood:</b> <br>
+                                Wedstrijd is gestopt. spelers mogen geen potjes aanmaken of zich aanmelden bij potje.
+                                Potjes mogen niet meer gestart worden. Reeds gestarte potjes mogen afgespeeld worden.
                             </li>
                         </ul>
                     </p>
@@ -271,8 +286,7 @@
 
 
 
-                    kleur 
-                    aanmaken wedstrijd
+
 
 
 

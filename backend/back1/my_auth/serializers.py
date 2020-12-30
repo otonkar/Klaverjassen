@@ -1,6 +1,5 @@
 # my_auth/serializers.py
 
-# from datetime import datetime
 from django.utils import timezone
 
 from django.core.mail import send_mail                                  # EmailMultiAlternatives, 

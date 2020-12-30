@@ -15,7 +15,7 @@
       <div v-for="item in match_list" v-bind:key="item.matchID">
     
         <!-- <b-button v-on:click="gotoMatchDetails(item.matchID)" block v-bind:variant="item.status_color">{{ item.matchID }} ({{ item.owner.username }})</b-button> -->
-        <b-button v-on:click=" gotoGamesOverview(item.matchID)" block v-bind:variant="item.status_color">{{ item.matchID }} ({{ item.owner.username }})</b-button>
+        <b-button v-on:click=" gotoGamesOverview(item.matchID, item.status_color)" block v-bind:variant="item.status_color">{{ item.matchID }} ({{ item.owner.username }})</b-button>
 
         <br>
 
@@ -72,9 +72,9 @@ export default {
     gotoMatchDetails: function (id) {
       this.$router.push({ name: 'Match_details', params: {id} })
     },
-    gotoGamesOverview: function (matchID) {
+    gotoGamesOverview: function (matchID, status_color) {
       // goto to new page and send 1 or more parameters in a params object
-        this.$router.push({ name: 'Games_overview', params: { matchID: matchID } })
+        this.$router.push({ name: 'Games_overview', params: { matchID: matchID, status_color:status_color } })
     }, //END gotoGamesOverview 
     getMatchList: function () {
       // make sure the request  WILL use the interceptors
