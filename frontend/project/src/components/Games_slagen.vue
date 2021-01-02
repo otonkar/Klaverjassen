@@ -27,7 +27,6 @@
             Aangenomen door speler: {{ game_slagen[0].position_start + 1 }} <br>
             Telling team A (speler 1,3):</strong> {{ tot_scoreA }} + {{ tot_roemA }} = {{ tot_scoreA  + tot_roemA}} <br>
             Telling team B (speler 2,4):</strong> {{ tot_scoreB }} + {{ tot_roemB }} = {{ tot_scoreB  + tot_roemB}} <br> 
-            {{ is_allowed}}
 
         </p>
         <div class="Table">
@@ -126,16 +125,20 @@ export default {
         tot_roemA: 0,
         tot_roemB: 0,
         is_allowed: false,          // Indicates that user is allowed to see the legs of this game
+        event_data: []              // data coming from the changeLeg event
     }
   },
 
-  mounted: function () {
-        // On event changeLeg do the method doGetSlagen
+  mounted: async function () {
+        // On mount set that the component must listen on the even 'changeLeg'
 
-        // console.log('mounted : ', this.gameID, this.leg)
-        this.$root.$on('changeLeg', async lega => await this.doGetSlagen(this.gameID, lega) )
+        this.$root.$on('changeLeg', async data => await this.doUpdateSlagen(data) )
+        // console.log('Mounted: ', this.gameID, this.leg)
+
+        // On mount make sure that the original data is loaded.
+        // In next steps  the data is updated by the event
+        await this.doGetSlagen(this.gameID, this.leg)
   },
-
 
   // Do not use mounted, otherwise no new game will be loaded
   activated: async function () {
@@ -148,8 +151,10 @@ export default {
 
         } else {
 
-            console.log('activated', this.gameID, this.leg)
-            // Get the match details
+            // console.log('activated', this.gameID, this.leg)
+            
+            // Do NOT get the slagen here, because these will result in doubled numbers of the score,
+            // because also the event will update the data
             await this.doGetSlagen(this.gameID, this.leg)
 
         }//END if
@@ -173,14 +178,31 @@ export default {
 
     // }, //END getImage
 
+    doUpdateSlagen: async function (data) {
+        // In the event both the game and leg are updated
+
+        this.event_data = data
+        await this.doGetSlagen(this.event_data[1], this.event_data[0])
+
+    },
+
     doGetSlagen: async function (gameID, lega) {
         // Show the current score of the game
 
         // reset the count of score
+        // Note: when the activated and the event run simulanuously that they will both update the
+        // this. variables. This is result in double counts. 
+        // There do the internal calculations with local variables and at the end copy the value to the
+        // global (this.) version
         this.tot_scoreA = 0
         this.tot_scoreB = 0
         this.tot_roemA = 0
         this.tot_roemB = 0
+        let tot_scoreA = 0
+        let tot_scoreB = 0
+        let tot_roemA = 0
+        let tot_roemB = 0
+        this.game_slagen = []    // to avoid doubled scores 
         // Need to reset this so that when switching to another game 
         // the correct information will be shown.
         this.is_allowed = false
@@ -200,7 +222,8 @@ export default {
             if (response.status === 200) {
                 this.game_slagen = response.data[0]
                 this.is_allowed = response.data[1]
-                // // console.log(this.test)
+                // console.log('doGetSlagen is_allowed:', this.is_allowed)
+                // console.log('length of array slagen: ', this.game_slagen.length)
             }
         })
         .catch(() => {
@@ -216,7 +239,6 @@ export default {
             this.troef_name = tmp[troef]
             this.show_game_slagen = true
         }
-
 
         for (var item in this.game_slagen) {
             // // console.log(this.game_slagen[item].cards_slag)
@@ -238,12 +260,18 @@ export default {
             // Determine the score of this leg
             if (this.game_slagen[item].teamA_won === true) {
                 // console.log('**', this.game_slagen[item].score)
-                this.tot_scoreA = this.tot_scoreA + this.game_slagen[item].score
-                this.tot_roemA = this.tot_roemA + this.game_slagen[item].roem
+                tot_scoreA = tot_scoreA + this.game_slagen[item].score
+                tot_roemA = tot_roemA + this.game_slagen[item].roem
+                // console.log('ScoreA :', tot_scoreA, this.game_slagen[item].score)
             } else {
-                this.tot_scoreB = this.tot_scoreB + this.game_slagen[item].score
-                this.tot_roemB = this.tot_roemB + this.game_slagen[item].roem
+                tot_scoreB = tot_scoreB + this.game_slagen[item].score
+                tot_roemB = tot_roemB + this.game_slagen[item].roem
             }
+
+            this.tot_scoreA = tot_scoreA
+            this.tot_roemA = tot_roemA
+            this.tot_scoreB = tot_scoreB
+            this.tot_roemB = tot_roemB
 
         }
 

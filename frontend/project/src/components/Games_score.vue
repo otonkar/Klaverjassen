@@ -12,7 +12,7 @@
             <b-col></b-col>
         </b-row>
         <br>
-        <p>Klik op de ronde om de gespeelde slagen te zien</p>
+        <p>Klik op de ronde om de gespeelde slagen te zien. De slagen worden onder deze scorelijst getoond.</p>
 
         <div class="Table">
             <b-table-simple small caption-top responsive>
@@ -95,7 +95,7 @@ export default {
         ],                          // Store the score data fo the game
         gameID: 0,  
         gameID_to_show: 0,
-        leg_to_show: 0 
+        leg_to_show: 0 ,
     }
   },
 
@@ -168,22 +168,23 @@ export default {
     }, //END doGetScores
 
     showSlagen: function (gameID, leg) {
+      this.isLoaded = false
 
-      // this.variables.show_slagen = false
-      // this.$store.dispatch('updateVariables', this.variables)
+      // Make sure that the slagen component is first created, otherwise
+      // the mount hook has not yet created the watch on events
 
-      // // Create an event to another component so that slagen will be updated
-    
       this.gameID_to_show = gameID
       this.leg_to_show = leg
-      
-      // console.log('SSS', this.gameID_to_show,this.leg_to_show  )
-
-      // console.log('Before emit', this.leg_to_show)
-      this.$root.$emit('changeLeg', this.leg_to_show);
+      // console.log('Showslagen', this.gameID_to_show,this.leg_to_show  )
 
       this.variables.show_slagen = true
       this.$store.dispatch('updateVariables', this.variables)
+
+    
+      // Create an event to another component so that slagen will be updated
+      this.$root.$emit('changeLeg', [this.leg_to_show, this.gameID_to_show]);
+
+      this.isLoaded = true
 
     }, //END gotoSlagen
        

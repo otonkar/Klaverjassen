@@ -282,19 +282,17 @@ class SlagList(APIView):
 
         use as:  https://klaverjasfun.nl:5000/klaverjas/games/slagen/search/?gameID=26&leg=2&n_slag=2
 
-    Validation:
-    The slag is only allowed to be shown 
-        * To all players registered to the game
-        * When match is stopped everybody can see the legs
-        * When match is not stopped, then only players that have finished a game of this match are allowed
-    '''
-
+    Validation: on who is allowed to see the 'slagen'
     
+    '''
 
     # queryset = Game.objects.all()
     # serializer_class = serializers.SlagSerializer
 
     def get_queryset(self):
+        '''
+        Get all the 'slagen' for a leg
+        '''
 
         queryset = Slag.objects.all()
 
@@ -315,17 +313,18 @@ class SlagList(APIView):
         if value_n_slag is not None:
             queryset = queryset.filter(n_slag=value_n_slag)
 
-        
-        # a = [queryset.order_by('id'), is_allowed ]
-        # print('ZZ6', a[0])
-        # print('ZZ7', a[1])
-        # return [queryset.order_by('id'), is_allowed ]
         return queryset.order_by('id')
 
     def validate_user_is_allowed(self, gameID, user):
-        ### Valdate that the user is allowed to see the scores
+        '''
+        Validate that the user is allowed to see the scores.
+        The slag is only allowed to be shown 
+            * To all players registered to the game
+            * When match is stopped everybody can see the legs
+            * When match is not stopped, then only players that have finished a game of this match are allowed
+        '''
 
-        ### That user is allowed to see the slag
+        ### Variable that indicates that user is allowed to see the slag
         is_allowed = False
 
         ### First check that user is a player of this game
@@ -333,52 +332,62 @@ class SlagList(APIView):
         if qs:
             ## Player is part of the game
             is_allowed = True
-            print('ZZ1-user part of game')
+            # print('ZZ1-user part of game')
         else:
             ## Check that the match has ended (status red/danger)
             try:
                 match_obj = Game.objects.get(gameID = gameID).matchID
                 match_status = match_obj.status_color
-                print('ZZ1-matchdetails', match_obj.matchID, match_status)
+                # print('ZZ1-matchdetails', match_obj.matchID, match_status)
                 if match_status == 'danger':
                     ## When match has been stopped everybody may see the legs
                     is_allowed = True
-                    print('ZZ2-match has stopped')
+                    # print('ZZ2-match has stopped')
                 else:
                     try:
                         ## Check that user has played a game in the same match
+                        ## and that the game has been finished (end date of game is not NULL)
+
+                        # Check that user has been registered with a game of that match
                         qs1 = GamePlayer.objects.filter(player__username = user).filter(gameID__matchID__matchID = match_obj.matchID)
                         if qs1:
                             ## Check that the game was finished.
                             ## Note: A user can play multiple games in the same match.
-                            ## if at least 1 is completed then he is allowed to see the leg
+                            ## if at least 1 game is completed then the user is allowed to see the leg
                             for item in qs1:
                                 if item.gameID.date_game_end:
                                     is_allowed = True
-                                    print('ZZ3-User plaed the game')
+                                    # print('ZZ3-User plaed the game')
                                 else:
-                                    print('ZZ4-User did niet finish the game')
+                                    # print('ZZ4-User did niet finish the game')
+                                    pass
                     except:
                         is_allowed = False
-                        print('ZZ5-except')
+                        # print('ZZ5-except')
             except:
                 is_allowed = False
-                print('ZZ5-except')
+                # print('ZZ5-except')
 
         return is_allowed
 
 
-
     def get(self, request):
+        ### Define the get for the APIView.
         user = request.user
         gameID = request.query_params.get('gameID', None)
-        print('XX', user, gameID)
+        # print('XX', user, gameID)
 
         is_allowed = self.validate_user_is_allowed(gameID, user)
-        print('ZZ6-is-allowed', is_allowed, gameID)
+        # print('ZZ6-is-allowed', is_allowed, gameID)
 
         model = self.get_queryset()
         serializer = serializers.SlagSerializer(model, many=True)
-        return Response([serializer.data, is_allowed])
+
+        if is_allowed:
+            return Response([serializer.data, is_allowed])
+        else:
+            ### send and empty array so that the info can not be seen even in the API.
+            return Response([ [], is_allowed])
+
 
 
