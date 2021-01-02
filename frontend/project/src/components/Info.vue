@@ -87,7 +87,7 @@
             <b-tab title="Toelichting">
                 <b-card-text>
 
-                    <h5>Inhoudsopgave</h5>
+                    <h5 id="inhoudsopgave">Inhoudsopgave</h5>
                     <p>
                         <ul>
                             <li><a href="#ref_aanmelden">Registreren en inloggen </a></li>
@@ -143,6 +143,8 @@
                         De inlog rechten zijn maar een aantal uren geldig. Daarna moet weer worden ingelogd.
                     </p>
 
+                    <p> <a href="#inhoudsopgave">terug naar inhoudsopgave...</a></p>
+
                     <h3 id=ref_wachtwoord_vergeten>Wachtwoord vergeten</h3>
                     <p>
                         Als u uw wachtwoord bent vergeten dan kunt u een nieuw wachtwoord instellen via 
@@ -175,6 +177,8 @@
                         vervolgens een nieuw wachtwoord instellen.
                     </p>
 
+                    <p> <a href="#inhoudsopgave">terug naar inhoudsopgave...</a></p>
+
                     <h3 id=ref_terminologie>Terminologie</h3>
                     <p>
                         In het spel worden een aantal termen gebruikt die hieronder nader worden uitgelegd
@@ -201,11 +205,13 @@
                                 <b>Wedstrijd</b> <br>
                                 Binnen een wedstrijd kunnen meerdere teams aan verschillende 'tafels' 
                                 een potje spelen. Alle potjes binnen dezelfde wedstrijd spelen hetzelfde aantal rondes en met exact
-                                dezelfde set aan gedeelde kaarten. Hierdoor kan het resultaat van een potje vergelijken worden 
+                                dezelfde set aan gedeelde kaarten. Hierdoor kan het resultaat van een potje vergeleken worden 
                                 met de andere potjes binnen dezelfde wedstrijd.
                             </li>
                         </ul>
                     </p>
+
+                    <p> <a href="#inhoudsopgave">terug naar inhoudsopgave...</a></p>
 
                     <h3 id=ref_wedstrijden>Wedstrijden</h3>
                     <p>
@@ -299,6 +305,8 @@
                         </ul>
                     </p>
 
+                    <p> <a href="#inhoudsopgave">terug naar inhoudsopgave...</a></p>
+
 
                     <h3 id=ref_potjes>Potjes</h3>
                     <p>
@@ -361,6 +369,8 @@
                     <p>
                         Zodra een potje is uitgespeeld wordt de eindscore zichtbaar in het 'Overzicht potjes'
                     </p>
+
+                    <p> <a href="#inhoudsopgave">terug naar inhoudsopgave...</a></p>
 
 
                     <h3 id=ref_speel_potje>Het spelen van een potje</h3>
@@ -457,6 +467,8 @@
                         een correctie plaatsvinden door een negatieve of positieve roem toe te kennen.
                     </p>
 
+                    <p> <a href="#inhoudsopgave">terug naar inhoudsopgave...</a></p>
+
                     <h3 id=ref_melden_verzaken>Melden verzaken</h3>
                     <p>
                         Het spel checkt niet of een speler verzaakt. Spelers moeten zelf constateren of iemand verzaakt heeft of niet. 
@@ -483,6 +495,8 @@
                         krijgt toegewezen. Zodra hij dat heeft gedaan zien de melder en de andere spelers welke keuze is gemaakt. Daarna kan
                         begonnen worden aan de volgende ronde.
                     </p>
+
+                    <p> <a href="#inhoudsopgave">terug naar inhoudsopgave...</a></p>
 
                 </b-card-text>
             </b-tab>
@@ -572,8 +586,7 @@
                         in de browser zodat de pagina's opnieuw geladen worden. Tip: doe dit twee keer achter elkaar. De gegevens 
                         worden dan gereset. 
                     </p>
-           
-                    
+    
 
                 </b-card-text>
             </b-tab>

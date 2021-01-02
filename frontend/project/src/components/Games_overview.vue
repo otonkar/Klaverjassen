@@ -5,9 +5,9 @@
 
         <br>
         <h2> Overzicht potjes </h2>
-        Wedstrijd: <span style="color:purple;font-weight:bold;font-size:1.4em"> {{ matchID }} </span>
+        <b>Wedstrijdnaam:</b> <span style="color:purple;font-weight:bold;font-size:1.4em"> {{ matchID }} </span>
         <p>
-          {{ status_text}}
+          <b>Status: </b> {{ status_text}}
         </p>
         <hr>
 
@@ -147,7 +147,7 @@ export default {
           if (this.$route.params.status_color) {
             this.status_color = this.$route.params.status_color;
             if (this.status_color === 'success') {
-              this.status_text = 'Wedstrijd is gestart, spelers mogen potjes aanmaken of zich aanmelden bij potje'
+              this.status_text = 'Wedstrijd is gestart, spelers mogen potjes aanmaken, zich aanmelden bij potje en potjes mogen gestart worden.'
             }
             if (this.status_color === 'danger') {
               this.status_text = 'Wedstrijd is gestopt. spelers mogen geen potjes aanmaken of zich aanmelden bij potje. Potjes mogen niet meer gestart worden. Reeds gestarte potjes mogen worden afgespeeld.'

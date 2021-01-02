@@ -5,19 +5,92 @@
 
       <br>
       <h2>Overzicht wedstrijden</h2>
+      <!-- {{ filterStatus }}
+      {{ match_list}} -->
 
       <hr>
       <button  v-on:click="gotoMatches()" class="btn btn-secondary"> Terug naar wedstrijd pagina  </button>
       <hr>
+      <!-- <input type="text" v-model="filterName" placeholder="Filter By Name"/> -->
       <!-- <button  v-on:click="$router.go(-1)" class="btn btn-primary"> Ga naar home pagina  </button> -->
+
+      <h5>Filter op wedstrijden</h5>
+      <p>
+        Om de lengte van de lijst gevonden wedstrijden in te perken kunt u filters gebruiken.
+      </p>
+      <!-- <div>
+        <b-form inline>
+          <label class="sr-only" for="inline-form-input-name">Name</label>
+          <b-form-input
+            v-model="filterName"
+            id="filterName"
+            class="mb-1 mr-sm-2 mb-sm-0"
+            placeholder="Wedstrijdnaam"
+          ></b-form-input>
+
+          <label class="sr-only" for="inline-form-input-name">Owner</label>
+          <b-form-input
+            v-model="filterOwner"
+            id="filterOwner"
+            class="mb-1 mr-sm-2 mb-sm-0"
+            placeholder="Eigenaar wedstrijd"
+          ></b-form-input>
+
+          <b-form-select
+            id="filterStatus"
+            v-model="filterStatus"
+            :options="match_statusses"
+            required
+        ></b-form-select>
+
+        </b-form>
+      </div> -->
+
+      <div>
+        <b-form>
+          <b-form-input
+            v-model="filterName"
+            id="filterName"
+            placeholder="Wedstrijdnaam"
+          ></b-form-input>
+
+          <b-form-input
+            v-model="filterDescription"
+            id="filterDescription"
+            placeholder="Omschrijving wedstrijd"
+          ></b-form-input>
+
+          <b-form-input
+            v-model="filterOwner"
+            id="filterOwner"
+            placeholder="Eigenaar wedstrijd"
+          ></b-form-input>
+
+          <b-form-select
+            id="filterStatus"
+            v-model="filterStatus"
+            :options="match_statusses"
+            required
+        ></b-form-select>
+
+        </b-form>
+      </div>
+
       <br>
 
-      <div v-for="item in match_list" v-bind:key="item.matchID">
+       <button  v-on:click="clearFilters()" class="btn btn-secondary"> Verwijder filters  </button>
+
+
+      <hr>
+      <h4>Gevonden wedstrijden</h4>
+      <br>
+
+      <div v-for="item in filterMatches" v-bind:key="item.matchID">
     
         <!-- <b-button v-on:click="gotoMatchDetails(item.matchID)" block v-bind:variant="item.status_color">{{ item.matchID }} ({{ item.owner.username }})</b-button> -->
         <b-button v-on:click=" gotoGamesOverview(item.matchID, item.status_color)" block v-bind:variant="item.status_color">{{ item.matchID }} ({{ item.owner.username }})</b-button>
-
-        <br>
+        <b>Omschrijving: </b> {{item.description | shorten(600)}}
+        <br><br>
 
       </div>
 
@@ -38,9 +111,21 @@ export default {
     return {
       title: 'Match list page',
       test: {},
-      match_list: {},
+      match_list: [],
       result_test: {},
       match_color: '',          // Color to show
+      filterName:'',             // used to filter on name of match
+      filterOwner: '',          // used to filter on owner of match
+      filterStatus: '',
+      filterDescription: '',
+      match_statusses: [
+        {'text': 'Geen filter op status', 'value': ''},
+        {'text': 'Status blauw', 'value': 'primary'},
+        {'text': 'Status geel', 'value': 'warning'},
+        {'text': 'Status grijs', 'value': 'secondairy'},
+        {'text': 'Status groen', 'value': 'success'},       
+        {'text': 'Status rood', 'value': 'danger'},
+      ]
     }
   },
   activated: function () {
@@ -106,14 +191,50 @@ export default {
             // console.log('Fout bij het ophalen van de wedstrijdlijst')
         })
 
+    },
+    filterByName: function(matches) {
+      return matches.filter(match => match.matchID.toLowerCase().includes(this.filterName.toLowerCase()) ? match : '' );
+    },
+    filterByOwner: function(matches) {
+      return matches.filter(match => match.owner.username.toLowerCase().includes(this.filterOwner.toLowerCase()) ? match : '' );
+    },
+    filterByStatus: function(matches) {
+      return matches.filter(match => match.status_color.toLowerCase().includes(this.filterStatus.toLowerCase()) ? match : '' );
+    },
+    filterByDescription: function(matches) {
+      return matches.filter(match => match.description.toLowerCase().includes(this.filterDescription.toLowerCase()) ? match : '' );
+    },
+    clearFilters: function(){
+      this.filterName = ''
+      this.filterOwner = ''
+      this.filterStatus = ''
+      this.filterDescription = ''
     }
   },  //END methods
+  filters: {
+    shorten: function (text, size){
+
+      if (!text) return '';
+
+      text = text.toString();
+
+      if (text.length <= size) {
+        return text;
+      }
+      return text.substr(0, size) + '...';
+
+    }
+
+  }, //END filter
   computed: {
     user () {
       return this.$store.state.user
     },
     appSettings () {
       return this.$store.state.appSettings
+    },
+    filterMatches: function(){
+      return this.filterByName( this.filterByOwner( this.filterByStatus(this.filterByDescription(this.match_list))) )
     }
   }
 }

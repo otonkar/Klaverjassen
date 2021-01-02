@@ -17,7 +17,7 @@ class Match(models.Model):
     owner              = models.ForeignKey(User,on_delete=models.PROTECT, blank=False, null=False)
     description        = models.CharField(max_length=500, blank=True, null=True)
     n_legs             = models.PositiveSmallIntegerField(null=False, blank=False)
-    date_created       = models.DateTimeField(default=timezone.now(), blank=False, null=False)
+    date_created       = models.DateTimeField(default=timezone.now, blank=False, null=False)
     # cards              = models.CharField(max_length=80000, blank=False, null=False)
     cards              = models.TextField(max_length=80000, blank=False, null=False)
     date_match_start   = models.DateField(blank=True, null=True)     # date when games may start
@@ -109,7 +109,7 @@ class Leg(models.Model):
     legID               = models.AutoField(primary_key=True)
     gameID              = models.ForeignKey(Game,on_delete=models.PROTECT, blank=True, null=False)
     leg                 = models.PositiveSmallIntegerField(null=True, blank=True)       # The leg that was played [0,..n_leg-1]
-    date_completed      = models.DateTimeField(default=timezone.now(), blank=False, null=False)
+    date_completed      = models.DateTimeField(default=timezone.now, blank=False, null=False)
     player_aangenomen   = models.PositiveSmallIntegerField(null=True, blank=True)       # origonal position of player that heeft aangenomen.
     scoreA              = models.PositiveSmallIntegerField(null=True, blank=True)
     roemA               = models.PositiveSmallIntegerField(null=True, blank=True)

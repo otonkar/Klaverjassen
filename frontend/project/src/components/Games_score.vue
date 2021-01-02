@@ -176,8 +176,8 @@ export default {
     
       this.gameID_to_show = gameID
       this.leg_to_show = leg
-
-      // console.log(this.gameID_to_show,this.leg_to_show  )
+      
+      // console.log('SSS', this.gameID_to_show,this.leg_to_show  )
 
       // console.log('Before emit', this.leg_to_show)
       this.$root.$emit('changeLeg', this.leg_to_show);

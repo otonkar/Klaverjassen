@@ -1,5 +1,8 @@
 <template>
-  <div class="Appgames_slagen" v-if="isLoaded">
+
+
+  <div class="Appgames_slagen" v-if="isLoaded && is_allowed">
+      <!-- loaded : game {{ gameID}}, leg {{leg+1}} -->
 
 
 
@@ -23,7 +26,8 @@
             Troef : {{ troef_name }} <br>
             Aangenomen door speler: {{ game_slagen[0].position_start + 1 }} <br>
             Telling team A (speler 1,3):</strong> {{ tot_scoreA }} + {{ tot_roemA }} = {{ tot_scoreA  + tot_roemA}} <br>
-            Telling team B (speler 2,4):</strong> {{ tot_scoreB }} + {{ tot_roemB }} = {{ tot_scoreB  + tot_roemB}}
+            Telling team B (speler 2,4):</strong> {{ tot_scoreB }} + {{ tot_roemB }} = {{ tot_scoreB  + tot_roemB}} <br> 
+            {{ is_allowed}}
 
         </p>
         <div class="Table">
@@ -80,6 +84,15 @@
          <b-button variant="primary" @click="doCloseSlagen()" >Sluiten</b-button>
 
   </div>
+  <div v-else>
+      <h3>Geen toegang</h3>
+      <!-- loaded : game {{ gameID}}, leg {{leg+1}} -->
+      <p>
+          Het is niet toegestaan de slagen van een potje in te zien als de wedstrijd nog niet is afgelopen. 
+          Alleen als je zelf al een potje binnen deze wedstrijd hebt afgerond, of als je zelf speler bent van dit potje, 
+          dan mogen deze slagen getoond worden
+      </p>
+  </div>
 </template>
 
 <script>
@@ -112,6 +125,7 @@ export default {
         tot_scoreB: 0,
         tot_roemA: 0,
         tot_roemB: 0,
+        is_allowed: false,          // Indicates that user is allowed to see the legs of this game
     }
   },
 
@@ -119,7 +133,7 @@ export default {
         // On event changeLeg do the method doGetSlagen
 
         // console.log('mounted : ', this.gameID, this.leg)
-        this.$root.$on('changeLeg', lega => this.doGetSlagen(this.gameID, lega) )
+        this.$root.$on('changeLeg', async lega => await this.doGetSlagen(this.gameID, lega) )
   },
 
 
@@ -134,7 +148,7 @@ export default {
 
         } else {
 
-            // console.log('activated', this.gameID, this.leg)
+            console.log('activated', this.gameID, this.leg)
             // Get the match details
             await this.doGetSlagen(this.gameID, this.leg)
 
@@ -145,6 +159,7 @@ export default {
 
     goBack: function () {
         this.variables.show_slagen = false
+        this.game_slagen = []
         this.$store.dispatch('updateVariables', this.variables)
         this.$router.go(-1)
     },  //END goBack
@@ -166,6 +181,10 @@ export default {
         this.tot_scoreB = 0
         this.tot_roemA = 0
         this.tot_roemB = 0
+        // Need to reset this so that when switching to another game 
+        // the correct information will be shown.
+        this.is_allowed = false
+        this.isLoaded = false
 
        // Do  use 'api_request' or axios, so that this call WILL use the interceptors
         const api_request = require('axios')
@@ -179,7 +198,8 @@ export default {
         })
         .then(response => {
             if (response.status === 200) {
-                this.game_slagen = response.data
+                this.game_slagen = response.data[0]
+                this.is_allowed = response.data[1]
                 // // console.log(this.test)
             }
         })
@@ -237,6 +257,7 @@ export default {
 
     doCloseSlagen: function () {
         this.variables.show_slagen = false
+        this.game_slagen = []
         this.$store.dispatch('updateVariables', this.variables)
 
     }, //END doCloseSlagen

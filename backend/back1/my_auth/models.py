@@ -14,7 +14,7 @@ class User(AbstractUser):
     is_klaverjas_admin      = models.BooleanField(default=False)
     # To reset password
     reset_code              = models.CharField(max_length=20, blank=True, null=True)
-    reset_code_valid_until  = models.DateTimeField(default=timezone.now(), blank=False, null=False)
+    reset_code_valid_until  = models.DateTimeField(default=timezone.now, blank=False, null=False)
 
     def __str__(self):
         return self.username
@@ -27,7 +27,7 @@ class LogUser(models.Model):
 
     logID               = models.AutoField(primary_key=True)
     user                = models.ForeignKey(User, related_name="log_user", on_delete=models.CASCADE)
-    timestamp           = models.DateTimeField(default=timezone.now(), blank=False, null=False)
+    timestamp           = models.DateTimeField(default=timezone.now, blank=False, null=False)
 
     def __str__(self):
         return self.logID + '-' + str(self.user)
