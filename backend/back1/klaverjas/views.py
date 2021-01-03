@@ -1,8 +1,11 @@
 # klaverjas/views.py
 
-from rest_framework import generics         # to use the generic views
+from django.core.mail import send_mail, EmailMessage   
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+
+from rest_framework import filters, generics, status        # to use the generic views
 from rest_framework.response import Response
-from rest_framework import filters
 from rest_framework.views import APIView
 
 import json
@@ -12,7 +15,7 @@ from klaverjas.klaverjas_lib import klaverjas
 from klaverjas.models import Match, Game, GamePlayer, Leg, Slag
 from my_auth.models import User
 
-from base.logging.my_logging import create_logger
+from base.logging.my_logging import logger
 
 class MatchCreate(generics.CreateAPIView):
     '''
@@ -390,4 +393,102 @@ class SlagList(APIView):
             return Response([ [], is_allowed])
 
 
+class MailToPlayers(APIView):
+    """
+    This view is to receive a flat mail text that must be send to the players
+    that belong to the same game
 
+        INPUT: {"gameID": 17, "mailText": "This is a text ....."}
+
+
+        OUTPUT: Mail to players
+    """
+
+    def post(self, request):
+        """
+        Receive gameID and mailText.
+        Validate that user is part of the game.
+        Send mails to participants.
+        """
+
+        try:
+            user        = request.user
+            gameID      = request.data['gameID']
+            mailText    = request.data['mailText']
+
+            # print('XX', user, gameID, mailText)
+
+            ## Get the players with mail address 
+            players = GamePlayer.objects.filter(gameID = gameID)
+
+        
+            ###  Get the mail addresses
+            ### and check that user is a player of this game
+            mail_addresses = list()
+            user_is_valid = False
+            for player in players:
+                if str(player.player.username) == str(user):
+                    user_is_valid = True
+                    user_mail_address = player.player.email
+
+                # print(player.player.username, user)
+                # print(player.player.email)
+                mail_addresses.append(player.player.email)
+
+            # ## remove the user mail address from the mail list
+            # mail_addresses.remove(user_mail_address)
+
+            if not user_is_valid:
+                content = [False, 'Mail is niet verstuurd. U bent geen speler van dit potje.']
+                return Response(content, status=status.HTTP_401_UNAUTHORIZED)
+
+        
+            ## there must be at least 1 mail adress and the user mail address
+            if len(mail_addresses) < 2 :
+                content = [False, 'Mail is niet verstuurd. Er zijn nog geen andere speler aangemeld om een mail naar te sturen.']
+                return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
+
+            ### Send the mail
+            # send a mail with the variables for the mail template.
+            mailVars = {
+                "gameID"    : gameID, 
+                "user"      : user,
+                "mailText"  : mailText,
+            }
+
+            mail_addresses.append('klaverjasfun@gmail.com')
+            subject = f'Klaverjasfun.nl, bericht voor potje {gameID}.'
+            from_email = 'klaverjasfun@gmail.com'
+            to = []
+            bcc = mail_addresses
+            cc = []
+            
+            html_message = render_to_string('mail_template_mail_to_players.html', mailVars )
+            plain_message = strip_tags(html_message)
+            
+            # send_mail(subject, plain_message, from_email, to, html_message=html_message)
+
+            html_message
+            email = EmailMessage(
+                subject,
+                html_message,
+                from_email,
+                to,
+                bcc,
+                reply_to=['klaverjasfun@gmail.com']
+            )
+
+            email.content_subtype = "html"
+            email.send(fail_silently=True)
+
+            #Log sending the reset code
+            logger('default').info(f'Send mails for user [{user}] for game {gameID}. ')
+
+        except:
+            content = [False, 'Mail is niet verstuurd. Er is een fout opgetreden bij het versturen van de mails']
+            return Response(content, status=status.HTTP_400_BAD_REQUEST)
+
+
+        content = [True, 'De mail is verstuurd naar de andere speler(s).']
+        return Response(content, status=status.HTTP_200_OK)

@@ -110,7 +110,7 @@ LOG_CONFIG = {
 			'handlers': ['default_file'], 
 			'propagate': True
 		},
-    	'registration': {
+    'registration': {
 			'level': 'INFO', 
 			'handlers': ['registration_file'], 
 			'propagate': True

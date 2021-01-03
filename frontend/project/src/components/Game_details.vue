@@ -1,6 +1,38 @@
 <template>
   <div class="Appgame_details">
 
+    <!-- Show Send mail  -->
+    <b-jumbotron class="jumbotron" v-bind="{hidden: !show_send_mail}">
+        <h3>Verstuur mail </h3>
+        <p> 
+            U kunt een anonieme mail sturen naar de andere spelers van dit potje om informatie te delen over:
+            <ul>
+                <li>datum en speeltijden</li>
+                <li>de te gebruiken video meetings</li>
+                <li>telefoonnummer of mail addressen om nader af te spreken</li>
+            </ul>
+        </p>
+
+          <div>
+            <b-form-textarea
+            id="textarea"
+            v-model="mailText"
+            placeholder="Schrijf hier uw mail"
+            rows="3"
+            max-rows="6"
+            ></b-form-textarea>
+
+            <!-- <pre class="mt-3 mb-0">{{ text }}</pre> -->
+        </div>
+
+
+        <b-row>
+            <b-col><b-button block v-on:click="doSendMail()"  class="btn btn-success"> Verstuur mail  </b-button></b-col>
+            <b-col><b-button block @click="doStopMail()"  class="btn btn-danger"> Stoppen  </b-button></b-col>
+        </b-row>
+    </b-jumbotron>
+
+
     <b-container v-if="isLoaded">
 
         <!-- <div v-for="player in sorted_players" v-bind:key="player.id"> 
@@ -35,8 +67,8 @@
 
         <b-row>
             <!-- <b-col ><b-button block class="btn btn-warning"> Accepteer partner </b-button> </b-col>  -->
-            <b-col ><b-button @click="doUnRegister()" v-if="game.gameStatus !== 'uitgespeeld'" v-bind:disabled="allow_register" block class="btn btn-warning"> Afmelden bij potje  </b-button> </b-col> 
-            <b-col></b-col>
+            <b-col><b-button @click="doUnRegister()" v-if="game.gameStatus !== 'uitgespeeld'" v-bind:disabled="allow_register" block class="btn btn-warning"> Afmelden bij potje  </b-button> </b-col> 
+            <b-col><b-button @click="doShowMail()" v-if="!allow_register"  block variant="primary" > Stuur bericht naar spelers  </b-button> </b-col>
             <!-- <b-col> <b-col><b-button block v-on:click="doRefresh()"  class="btn btn-warning"> Refresh  </b-button></b-col> </b-col>  -->
         </b-row>
 
@@ -60,6 +92,8 @@ export default {
         title: 'Game details page',
         polling: null,            // Needed to auto refresh this page
         isLoaded: false,
+        show_send_mail: false,      // Show pop up to send mails
+        mailText: '',               // Input mail text
         players: [ 
             {
                 position: '',
@@ -188,6 +222,57 @@ export default {
         // Filter the players on usersname
       return item.player.username === this.user.username
     },
+    doShowMail: function () {
+        this.show_send_mail = true
+
+    },
+    doStopMail: function () {
+        this.mailText = ''
+        this.show_send_mail = false
+
+    },
+    doSendMail: async function () {
+        // Send a mail to the players
+            
+        // Do  use 'api_request' or axios, so that this call WILL use the interceptors
+        const api_request = require('axios')
+
+        if (this.mailText.length !== 0) {
+
+            await api_request({
+                method: 'post',
+                url: this.appSettings.url_games_mail,
+                data: {
+                    gameID: this.game.gameID,
+                    mailText: this.mailText,
+                }
+            })
+            .then(response => {
+                // // console.log('Status get game overview: ',response.status)
+                if (response.status === 200) {
+                    console.log(response.data[0], response.data[1])
+                    // mail_result = response.data
+                    alert(response.data[1])
+                    this.show_send_mail = false
+                    this.mailText = ''
+                    // console.log(this.game.matchID.matchID, this.game.gameID)
+                    // console.log('getPlayers in Details ', this.players)
+                }
+            })
+            .catch(error => {
+                // console.log('Get match details failed')
+                // console.log(error.response.data)
+                alert(error.response.data[1])
+
+            })
+
+        } else {
+            alert('Vul eerst de tekst voor de mail in')
+        }
+
+    },  //END doSendMail
+
+
     getPlayers: async function () {
         // Get the players registered for this game
         // Check the condition to show the buttons to start the game

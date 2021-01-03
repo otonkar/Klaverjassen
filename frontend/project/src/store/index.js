@@ -44,6 +44,7 @@ export default new Vuex.Store({
       url_match_details       : 'klaverjas/matches/',
       url_games_create        : 'klaverjas/games/create',
       url_games_list          : 'klaverjas/games/search/?',
+      url_games_mail          : 'klaverjas/games/mail',
       url_game_score          : 'klaverjas/games/score/?',
       url_game_slagen         : 'klaverjas/games/slagen/?',
       url_game_players        : 'klaverjas/players/search/?',

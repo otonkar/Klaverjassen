@@ -13,6 +13,7 @@ urlpatterns = [
     path('matches/<str:matchID>/', views.MatchRetrieveUpdate.as_view(), name='match_retreive_update'),
     # path('games/list', views.Game2MatchList.as_view(), name='game_list'),
     path('games/create', views.GameCreate.as_view(), name='game_create'),
+    path('games/mail', views.MailToPlayers.as_view(), name='game_mail'),
     url(r'^games/search/$', views.Game2MatchList.as_view(), name='game_list'),
     url(r'^games/score/$', views.GameScore.as_view(), name='game_score'),
     url(r'^games/slagen/$', views.SlagList.as_view(), name='slag_list'),
