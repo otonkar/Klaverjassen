@@ -21,12 +21,19 @@
         <p></p> -->
 
 
-        <h5>Slagen potje: {{ gameID }}, ronde: {{ leg + 1 }} </h5>
+        <h5>
+            Slagen potje: {{ gameID }}, ronde: {{ leg + 1 }} 
+            <span v-if="!succeeded && !verzaakt"> (Nat gegaan)</span> 
+            <span v-if="verzaakt"> (Verzaakt)</span>
+            <span v-if="pit"> (Pit gespeeld)</span>
+        </h5>
         <p>
             Troef : {{ troef_name }} <br>
             Aangenomen door speler: {{ game_slagen[0].position_start + 1 }} <br>
             Telling team A (speler 1,3):</strong> {{ tot_scoreA }} + {{ tot_roemA }} = {{ tot_scoreA  + tot_roemA}} <br>
             Telling team B (speler 2,4):</strong> {{ tot_scoreB }} + {{ tot_roemB }} = {{ tot_scoreB  + tot_roemB}} <br> 
+            <span v-if="pit"> Pit: + 100 roem extra</span>
+
 
         </p>
         <div class="Table">
@@ -85,12 +92,17 @@
   </div>
   <div v-else>
       <h3>Geen toegang</h3>
-      <!-- loaded : game {{ gameID}}, leg {{leg+1}} -->
+      <p>
+          Je hebt opgevraagd potje {{ gameID}}, ronde {{leg+1}}.
+      </p>
       <p>
           Het is niet toegestaan de slagen van een potje in te zien als de wedstrijd nog niet is afgelopen. 
           Alleen als je zelf al een potje binnen deze wedstrijd hebt afgerond, of als je zelf speler bent van dit potje, 
           dan mogen deze slagen getoond worden
       </p>
+
+      <b-button variant="primary" @click="doCloseSlagen()" >Sluiten</b-button>
+
   </div>
 </template>
 
@@ -105,8 +117,12 @@
 export default {
   name: 'Appgameslagen',
   props: {
-    gameID: Number,
-    leg: Number,
+    gameID      : Number,
+    leg         : Number,
+    succeeded   : Boolean,
+    pit         : Boolean,
+    verzaakt    : Boolean,
+
   },
 
   data () {

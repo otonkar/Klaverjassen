@@ -1058,6 +1058,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             leg = game.legs_completed - 1   # Note this was already increaed by 1
 
             if message['verzaakt'] == False:
+
+                verzaakt = False
                 # Get the scores of the leg
                 [player_aangenomen, succeeded, pit, team,  score_A, roem_A, score_B, roem_B] = await evaluate_leg(message['gameID'], leg)
                 
@@ -1072,7 +1074,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     'scoreB'                : score_B,
                     'roemB'                 : roem_B,
                     'succeeded'             : succeeded, 
-                    'pit'                   : pit
+                    'pit'                   : pit,
+                    'verzaakt'              : verzaakt,
                     }
 
             else:
@@ -1083,6 +1086,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 # print('---- ',totRoem)
                 succeeded = False
                 pit = False
+                verzaakt = True
 
                 player_aangenomen = leg % 4  # In the game variant 'verplicht aannemen'
 
@@ -1112,12 +1116,15 @@ class ChatConsumer(AsyncWebsocketConsumer):
                     'scoreB'                : score_B,
                     'roemB'                 : roem_B,
                     'succeeded'             : succeeded, 
-                    'pit'                   : pit
+                    'pit'                   : pit,
+                    'verzaakt'              : verzaakt,
                     }
 
 
             #First delete any leg for the same game , if it exists.
             await delete_leg(message['gameID'], message['leg'])
+
+            print('ZZZ-pit:', pit)
 
             # save the Leg to the database
             await save_leg(input_data)
@@ -1134,7 +1141,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'roemB'                 : roem_B,
                 'succeeded'             : succeeded, 
                 'pit'                   : pit,
-                'team'                  : team          # team A or team B
+                'team'                  : team,         # team A or team B 
+                'verzaakt'              : verzaakt,
             }
 
 
@@ -1156,7 +1164,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'roemB'                 : roem_B,
                 'succeeded'             : succeeded, 
                 'pit'                   : pit,
-                'team'                  : team          # team A or team B
+                'team'                  : team,          # team A or team B
+                'verzaakt'              : verzaakt,
             }
 
 

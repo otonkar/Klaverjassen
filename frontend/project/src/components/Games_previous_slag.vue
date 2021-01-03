@@ -83,7 +83,8 @@ export default {
         // leg: 0,
         // gameID: 0,
         troef_name: '----',
-        show_game_slagen: false
+        show_game_slagen: false,
+        is_allowed: false,
         
     }
   },
@@ -107,7 +108,7 @@ export default {
 
         } else {
 
-            // console.log('activated', this.gameID, this.leg)
+            // console.log('activated', this.gameID, this.leg, this.round)
             // Get the match details
             await this.doGetSlag(this.gameID, this.leg, this.round)
 
@@ -146,7 +147,8 @@ export default {
         })
         .then(response => {
             if (response.status === 200) {
-                this.game_slagen = response.data
+                this.game_slagen = response.data[0]
+                this.is_allowed = response.data[1]
                 // // console.log(this.test)
             }
         })

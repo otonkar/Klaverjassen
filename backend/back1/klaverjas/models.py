@@ -117,7 +117,9 @@ class Leg(models.Model):
     roemB               = models.PositiveSmallIntegerField(null=True, blank=True)
     succeeded           = models.BooleanField(null=False, blank=False, default=False)
     pit                 = models.BooleanField(null=False, blank=False, default=False)
-    verzaakt            = models.PositiveSmallIntegerField(null=True, blank=True)    # original player position. If empty than not verzaakt
+    # verzaakt            = models.PositiveSmallIntegerField(null=True, blank=True)    # original player position. If empty than not verzaakt
+    # verzaakt            = models.BooleanField(null=False, blank=False, default=False)
+    verzaakt            = models.BooleanField(null=False, blank=False, default=False)
 
 
 class GamePlayer(models.Model):

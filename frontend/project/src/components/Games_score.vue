@@ -35,7 +35,7 @@
                 </b-tr>
                 </b-thead>
                 <b-tbody >
-                    <b-tr @click="showSlagen(gameID, leg.leg)" v-for="leg in game_score[0]" v-bind:key="leg.leg">
+                    <b-tr @click="showSlagen(gameID, leg)" v-for="leg in game_score[0]" v-bind:key="leg.leg">
                     <b-th variant="light" class="text-right"> {{ leg.leg + 1  }} </b-th>
                     <b-th variant="light" class="text-right"> {{ leg.scoreA }} </b-th>
                     <b-th variant="light" class="text-right"> {{ leg.roemA }} </b-th>
@@ -61,6 +61,9 @@
               v-if="variables.show_slagen"
               v-bind:gameID="gameID_to_show"
               v-bind:leg="leg_to_show"
+              v-bind:succeeded="succeeded"
+              v-bind:verzaakt="verzaakt"
+              v-bind:pit="pit"
           ></app-gameslagen>
         </keep-alive>
 
@@ -96,6 +99,9 @@ export default {
         gameID: 0,  
         gameID_to_show: 0,
         leg_to_show: 0 ,
+        succeeded: false,
+        verzaakt: false,
+        pit: false,
     }
   },
 
@@ -174,8 +180,11 @@ export default {
       // the mount hook has not yet created the watch on events
 
       this.gameID_to_show = gameID
-      this.leg_to_show = leg
-      // console.log('Showslagen', this.gameID_to_show,this.leg_to_show  )
+      this.leg_to_show = leg.leg
+      this.succeeded = leg.succeeded
+      this.verzaakt = leg.verzaakt
+      this.pit = leg.pit
+      // console.log('Showslagen', this.gameID_to_show,this.leg_to_show, this.succeeded  )
 
       this.variables.show_slagen = true
       this.$store.dispatch('updateVariables', this.variables)

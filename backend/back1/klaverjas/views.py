@@ -366,7 +366,7 @@ class SlagList(APIView):
                         # print('ZZ5-except')
             except:
                 is_allowed = False
-                # print('ZZ5-except')
+                # print('ZZ6-except')
 
         return is_allowed
 

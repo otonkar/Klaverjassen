@@ -231,8 +231,12 @@
 
         <keep-alive>
           <app-gameslagen
+              v-if="variables.show_slagen"
               v-bind:gameID="game.gameID"
               v-bind:leg="current_leg"
+              v-bind:succeeded="true_value"
+              v-bind:verzaakt="false_value"
+              v-bind:pit="false_value"
           ></app-gameslagen>
         </keep-alive>
 
@@ -339,6 +343,8 @@ export default {
         return {
             modalShow: false,         // Show the modal to notifiy that player is not allowed to click on troef
             title: 'Game play page',
+            true_value: true,         // To be used as true variable
+            false_value: false,         // To be used as true variable
             show_new_leg: false,      // !! OUD To show the button for play new round
             show_new_round: false,    // To show a button to load a new round. (is also reset/replay current round)
             show_register_roem: false, // Show the button the register roem
@@ -1442,10 +1448,12 @@ export default {
         doShowSlagen: function () {
           // Show slagen when evaluating verzaken
 
+          // First make sure the component is created
+          this.variables.show_slagen = true
+
           // console.log('Before emit', this.current_leg)
           this.$root.$emit('changeLeg', this.current_leg);
 
-          this.variables.show_slagen = true
           this.$store.dispatch('updateVariables', this.variables)
           
 
