@@ -67,6 +67,9 @@
           ></app-gameslagen>
         </keep-alive>
 
+        <br>
+        <p>klaverjasfun.nl</p>
+
             <!-- v-bind:leg="this.leg_to_show" -->
 
             <!-- <b-td variant="success"> <img src="./clubs.png" width="17px"> A  </b-td> -->
@@ -169,7 +172,6 @@ export default {
         })
 
         this.show_game_score = true
-        // console.log('doGetScores', this.game_score)
 
     }, //END doGetScores
 
@@ -194,6 +196,9 @@ export default {
       this.$root.$emit('changeLeg', [this.leg_to_show, this.gameID_to_show]);
 
       this.isLoaded = true
+
+      // jump the the end of page
+      document.body.scrollIntoView(false);
 
     }, //END gotoSlagen
        

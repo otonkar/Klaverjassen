@@ -68,7 +68,7 @@
         <b-row>
             <!-- <b-col ><b-button block class="btn btn-warning"> Accepteer partner </b-button> </b-col>  -->
             <b-col><b-button @click="doUnRegister()" v-if="game.gameStatus !== 'uitgespeeld'" v-bind:disabled="allow_register" block class="btn btn-warning"> Afmelden bij potje  </b-button> </b-col> 
-            <b-col><b-button @click="doShowMail()" v-if="!allow_register"  block variant="primary" > Stuur bericht naar spelers  </b-button> </b-col>
+            <b-col><b-button @click="doShowMail()" v-if="player_registered"  block variant="primary" > Stuur bericht naar spelers  </b-button> </b-col>
             <!-- <b-col> <b-col><b-button block v-on:click="doRefresh()"  class="btn btn-warning"> Refresh  </b-button></b-col> </b-col>  -->
         </b-row>
 
@@ -156,7 +156,8 @@ export default {
         ],
         allow_register: false,       // indicate that you are allowed to register at a game
         allow_start_game: false,
-        errors: {}
+        errors: {}, 
+        player_registered: false    //Boolean to indicate that player is registered at game
     }
   },
   created: function () {
@@ -357,13 +358,6 @@ export default {
 
         // console.log('allow1 ',this.game.gameID, this.game.gameStatus, allow1, this.allow_start_game)
 
-
-
-
-
-
-
-
         // Determine that person is not already registered at this game
         // Filter the players based on name of current user.
         // // console.log(this.sorted_players[0].player.username)
@@ -371,11 +365,13 @@ export default {
 
         if (this.sorted_players.filter(this.filterOnUsername).length === 0) {
             this.allow_register = true
+            this.player_registered = false
             if (this.game.gameStatus === 'uitgespeeld') {
                 this.allow_register = false
             }
         } else {
             this.allow_register = false
+            this.player_registered = true
         }
 
          this.isLoaded = true

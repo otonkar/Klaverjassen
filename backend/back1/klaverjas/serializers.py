@@ -10,7 +10,7 @@ from my_auth.models import User
 
 from klaverjas.klaverjas_lib import klaverjas
 
-from klaverjas.models import Match, Game, GamePlayer, Leg, Slag
+from klaverjas.models import Match, Game, GamePlayer, Leg, Slag, Remark
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -337,6 +337,29 @@ class PlayerSerializer(serializers.ModelSerializer):
 
         # depth = 1    # Specify how deep the (left)joined data must be included (nested serialization)
 
+
+class RemarkSerializer(serializers.ModelSerializer):
+    '''
+    Define this serializer to show remarks.
+    '''
+
+    class Meta:
+        model = Remark
+        fields = '__all__'  
+
+
+class RemarkListSerializer(serializers.ModelSerializer):
+    '''
+    Define this serializer to show remarks.
+    '''
+
+    user = UserSerializer()
+    date_created = serializers.DateTimeField(format="%Y-%m-%d, %H:%M:%S")
+
+    class Meta:
+        model = Remark
+        fields = '__all__'  
+        depth = 1
 
 
 

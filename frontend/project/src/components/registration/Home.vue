@@ -130,6 +130,7 @@
 
       <div>
         <b-button v-on:click="gotoMatches" block variant="info">Ga naar wedstrijden</b-button>
+        <b-button v-on:click="gotoRemarks()" block variant="info">Gebruikers feedback</b-button>
         <!-- <b-button v-on:click="gotoChat" block variant="info">test chat</b-button> -->
         <!-- <b-button v-on:click="gotoViezePlaatjes" block variant="info">hele vieze plaatjes</b-button> -->
         <b-button v-on:click="gotoInfo" block variant="info">Toelichting</b-button>
@@ -205,6 +206,9 @@ export default {
     gotoLogin: function () {
       this.$router.push({ name: 'Login' })
     },  //END gotoLogin
+    gotoRemarks: function () {
+      this.$router.push({ name: 'Remarks' })
+    },  //END gotoChat
     gotoChat: function () {
       this.$router.push({ name: 'Chat' })
     },  //END gotoChat

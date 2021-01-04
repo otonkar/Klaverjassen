@@ -50,6 +50,10 @@ export default new Vuex.Store({
       url_game_players        : 'klaverjas/players/search/?',
       url_game_players_create : 'klaverjas/players/create/',
       url_game_players_rud    : 'klaverjas/players/',                     // Retreive, Update, Delete
+      url_remarks_create      : 'klaverjas/remarks/create',               
+      url_remarks_list        : 'klaverjas/remarks/list',      
+      url_remarks_create      : 'klaverjas/remarks/create/',               
+      // url_remarks_retreive_update : 'klaverjas/remarks/retreive',            // Retreive, Update
       url_user_details        : 'klaverjas/users/',
       url_test                : 'test/',
     },

@@ -12,6 +12,7 @@ import Appgamesoverview from '../components/Games_overview.vue'
 import Appgameplay from '../components/Game_play.vue'
 import Appgamescore from '../components/Games_score.vue'
 // import Appgameslagen from '../components/Games_slagen.vue'
+import Appremarks from '../components/Remarks.vue'
 import Appinfo from '../components/Info.vue'
 import Appchat from '../components/Chat.vue'
 
@@ -30,6 +31,7 @@ const routes = [
   { path: '/Matches/Games/play', name: 'Game_play', component: Appgameplay },
   { path: '/Matches/Games/score', name: 'Game_score', component: Appgamescore },
   // { path: '/Matches/Games/score/slagen', name: 'Game_slagen', component: Appgameslagen },
+  { path: '/Remarks', name: 'Remarks', component: Appremarks },
   { path: '/Info', name: 'Info', component: Appinfo },
   { path: '/Chat', name: 'Chat', component: Appchat }
 ]

@@ -159,7 +159,15 @@ class Slag(models.Model):
     teamA_won           = models.BooleanField(null=False, blank=False, default=False)   #team A is players (0,2)
     score               = models.PositiveSmallIntegerField(null=False, blank=False, default=0)
     roem                = models.IntegerField(null=False, blank=False, default=0)
-    
 
+
+class Remark(models.Model):
+    '''
+    Register remarks made by the users
+    '''
+    remarkID            = models.AutoField(primary_key=True)
+    user                = models.ForeignKey(User,on_delete=models.PROTECT, blank=False, null=False) 
+    date_created        = models.DateTimeField(default=timezone.now, blank=False, null=False)  
+    remark              = models.TextField(max_length=500, blank=False, null=False) 
 
 

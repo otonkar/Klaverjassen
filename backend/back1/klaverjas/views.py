@@ -12,7 +12,7 @@ import json
 
 from klaverjas import serializers
 from klaverjas.klaverjas_lib import klaverjas
-from klaverjas.models import Match, Game, GamePlayer, Leg, Slag
+from klaverjas.models import Match, Game, GamePlayer, Leg, Slag, Remark
 from my_auth.models import User
 
 from base.logging.my_logging import logger
@@ -440,13 +440,13 @@ class MailToPlayers(APIView):
 
             if not user_is_valid:
                 content = [False, 'Mail is niet verstuurd. U bent geen speler van dit potje.']
-                return Response(content, status=status.HTTP_401_UNAUTHORIZED)
+                return Response(content, status=status.HTTP_200_OK)
 
         
             ## there must be at least 1 mail adress and the user mail address
             if len(mail_addresses) < 2 :
-                content = [False, 'Mail is niet verstuurd. Er zijn nog geen andere speler aangemeld om een mail naar te sturen.']
-                return Response(content, status=status.HTTP_400_BAD_REQUEST)
+                content = [False, 'Mail is niet verstuurd. Er zijn nog geen andere spelers aangemeld om een mail naar te sturen.']
+                return Response(content, status=status.HTTP_200_OK)
 
 
             ### Send the mail
@@ -487,8 +487,66 @@ class MailToPlayers(APIView):
 
         except:
             content = [False, 'Mail is niet verstuurd. Er is een fout opgetreden bij het versturen van de mails']
-            return Response(content, status=status.HTTP_400_BAD_REQUEST)
+            return Response(content, status=status.HTTP_200_OK)
 
 
         content = [True, 'De mail is verstuurd naar de andere speler(s).']
         return Response(content, status=status.HTTP_200_OK)
+
+
+class RemarkCreate(APIView):
+    '''
+    Create a new Remark and list the remarks
+    '''
+
+    def post(self, request):
+        """
+        Receive the posted data and store Remark
+        """
+
+        try:
+            ### use the user from the request because this is authenticated
+            print('YY0')
+            input_data = dict()
+            input_data["user"]      = request.user.id
+            input_data["remark"]    = request.data['remark']
+            print('YY1')
+
+            serializer = serializers.RemarkSerializer(data = input_data)
+            if serializer.is_valid():
+                serializer.save()
+                return Response(serializer.data, status=status.HTTP_201_CREATED )
+
+            return Response(serializer.errors, status=status.HTTP_401_BAD_REQUEST)
+            
+
+        except:
+            return Response('Error in handling view', status=status.HTTP_401_BAD_REQUEST)
+
+
+class RemarkList(APIView):
+    '''
+    Create a adjusted list of Remarks
+        * send username
+        * send date
+        * send time
+    '''
+    serializer_class = serializers.RemarkSerializer
+
+    def get_queryset(self):
+        """
+        Possibily to add search arguments
+        """
+        queryset = Remark.objects.all().order_by('-date_created')
+
+        return queryset 
+
+    def get(self, request):
+
+        model = self.get_queryset()
+        serializer = serializers.RemarkListSerializer(model, many=True) 
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
