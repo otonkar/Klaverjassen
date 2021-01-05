@@ -9,26 +9,57 @@
               <button  v-on:click="gotoLogin()" class="btn btn-primary"> Ga naar Login pagina  </button>
           </div>
           <br><br>
-          <h3>Disclaimer</h3>
+          <h3>Welkom bij Klaverjasfun.nl</h3>
           <p>
-            Deze site betreft een persoonlijk project om ervaring op te doen met het maken van een spel. <br>
-            De opzet was om dit spel op afstand met een eigen groep vrienden te spelen in de Corona periode. <br>
-            Iedereen is vrij om zich te registreren en het spel te spelen. <br>
-            Echter, ieder doet dit geheel op eigen risico en er kunnen geen rechten aan het gebruik van dit spel worden ontleend. <br>
-            <b>De beheerder kan zien welke stomme fouten door spelers worden gemaakt. <br>
-            Het is volledig aan de beheerder om stomme fouten bekend te maken met naam en toenaam op alle sociale media.</b>
-            
+            Deze website is ontwikkeld om gedurende de Corona 
+            lockdown periode met mijn vriendengroep  on-line te kunen klaverjassen 
+            Na veel positieve reacties en het doorvoeren van een aantal verbeteringen heb ik besloten dit spel 
+            ook voor personen buiten mijn directe vriendengroep beschikbaar te stellen.
           </p>
 
-          <p>Kijk voor een gedetaileerdere uitleg naar de toelichting op de homepage als je bent ingelogd.</p>
+          <h5>Het klaverjas spel</h5>
+          <p>
+            Met dit spel kan op afstand (on-line) met elkaar worden geklaverjast in de Rotterdamse variant.
+            Er kan een wedstrijd worden aangemaakt, waarbinnen vervolgens 1 of meerdere tafels/potjes kunnen worden gespeeld.
+            Kenmerk is dat <b>alle potjes binnen dezelfde wedstrijd met exact dezelfde set aan gedeelde kaarten 
+            wordt gespeeld</b>. Hierdoor kunnen de verschillende potjes binnen een wedstrijd op een 'eerlijke' manier met elkaar worden vergeleken.
+          </p>
+          <p>
+            Spelers kunnen zich registeren bij deze website en na inloggen zich aanmelden bij een potje. 
+            Pas zodra 4 spelers bij een potje zijn aangemeld kan het potje gestart worden. 
+            Het spelen van een potje kan alleen als alle 4 de spelers zich bevinden in het speelscherm van het potje 
+          </p>
+          <p>
+            Deze site betreft een persoonlijk project zonder commerciele doelstelling en wordt best-effort ontwikkeld.
+            Het spel heeft op dit moment een fase bereikt waarbij het goed gespeeld kan worden.
+
+          </p>
+          <p>
+            Op de hoofdpagina van het spel bevindt zich de knop 'Toelichting'. 
+            Hier is een gedetailleerde uitleg te vinden en een aantal tips om het spel goed te laten verlopen.
+          </p>
+            
+
+          <h5>Disclaimer</h5>
+          <p>
+            
+            Iedereen is vrij om zich te registreren en het klaverjasspel te spelen. 
+            Echter, ieder doet dit geheel op eigen risico en er kunnen geen rechten aan het gebruik
+            van dit spel worden ontleend. De beheerder kan iedere moment besluiten deze website te stoppen. 
+          </p>
+          <p>
+            Wees ervan bewust dat de beheerder zicht heeft op alle gespeelde slagen. 
+            Het is volledig aan de beheerder om <b>stomme speelfouten</b> bekend te maken met naam en toenaam 
+            op <b>alle sociale media</b> naar wens.
+          </p> 
+
+            
+
+          <!-- <p>Kijk voor een gedetaileerdere uitleg naar de toelichting op de homepage als je bent ingelogd.</p>
 
           <h3>Het spel</h3>
           <p>
-            Het betreft een spel om op afstand met elkaar te kunnen klaverjassen in de Rotterdamse variant.
-            Er kan een wedstrijd worden aangemaakt. Binnen een wedstrijd kunnen vervolgens 1 of meerdere tafels/potjes worden aangemaakt. 
-            Spelers kunnen zich bij een potje aanmelden. Zodra 4 spelers bij een potje zijn aangemeld kan het potje gespeeld worden. 
-            Binnen een wedstrijd wordt ieder potje (tafel) met precies dezelfde set gedeelde kaarten gespeeld. 
-            Hierdoor is het mogelijk de score van ieder potje binnen een wedstrijd met elkaar te vergelijken.
+            
           </p>
           <p>
             Tijdens het spelen van het spel moeten de 4 spelers aangemeld zijn in het potje, zodat alle informatie tegelijk naar alle 4 de spelers
@@ -78,7 +109,7 @@
                 Wilt u dat uw registratie wordt verwijderd, stuur dan een mail naar klaverjasfun@gmail.com.  </li>
           </ul>
 
-          </p>
+          </p> -->
 
             
           <!-- <h3>Releases</h3>
@@ -130,7 +161,7 @@
 
       <div>
         <b-button v-on:click="gotoMatches" block variant="info">Ga naar wedstrijden</b-button>
-        <b-button v-on:click="gotoRemarks()" block variant="info">Gebruikers feedback</b-button>
+        <b-button v-on:click="gotoRemarks()" block variant="info">Berichten</b-button>
         <!-- <b-button v-on:click="gotoChat" block variant="info">test chat</b-button> -->
         <!-- <b-button v-on:click="gotoViezePlaatjes" block variant="info">hele vieze plaatjes</b-button> -->
         <b-button v-on:click="gotoInfo" block variant="info">Toelichting</b-button>
@@ -138,22 +169,16 @@
 
     <br>
     <hr>
-      <!-- <button  v-on:click="doTest()" class="btn btn-primary"> Test request  </button>
-      {{ result_test }} -->
-
-      <br><br>
+    
       <!-- <button  v-on:click="getWindowSize()" class="btn btn-primary"> Get window size  </button> -->
       <!-- <p>Current windowsize is {{ window_size.width }}, {{ window_size.height }} </p> -->
 
-      <br><br><br>
-      <p>version: {{ appSettings.x_version}} </p>
+      <br>
+      <p>versie: {{ appSettings.x_version}} </p>
 
     </b-container>
     </div>
     
-
-
-
   </div>
 </template>
 
@@ -208,7 +233,7 @@ export default {
     },  //END gotoLogin
     gotoRemarks: function () {
       this.$router.push({ name: 'Remarks' })
-    },  //END gotoChat
+    },  //END gotoRemarks
     gotoChat: function () {
       this.$router.push({ name: 'Chat' })
     },  //END gotoChat

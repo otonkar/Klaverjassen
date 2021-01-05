@@ -11,7 +11,7 @@
                 <b-card-text>
 
                     <p>
-                        Dit is een klaverjasspel dat met 4 personen op afstand met elkaar gespeeld kan worden. 
+                        Dit is een klaverjasspel dat met 4 personen on-line met elkaar gespeeld kan worden. 
                         Hieronder wordt op hoofdlijnen het spel beschreven. In de andere tabs wordt ingegaan 
                         op de details.  
                     </p>
@@ -27,21 +27,30 @@
 
                     <h5>Wedstrijden en potjes</h5>
                     <p>
-                        Iedere speler kan een nieuwe wedstrijd aanmaken. Binnen een wedstrijd kunnen 1 of meerdere potjes worden 
-                        aangemaakt. Een potje wordt gespeeld met 4 spelers: A-team en B-team, die tegelijkertijd zijn 
-                        ingelogd voor dat potje. <br>
+                        Iedere speler kan een nieuwe wedstrijd aanmaken. 
+                        Zodra een wedstrijd is aangemaakt en de de registratieperiode voor deze wedstrijd begonnen is, dan 
+                        kunnen binnen deze wedstrijd 1 of meerdere potjes worden aangemaakt.
+                        Een potje wordt gespeeld met 4 spelers: A-team en B-team. die tegelijkertijd zijn 
+                        ingelogd voor dat potje.
+                    </p>
+                    <p>
                         Pas als 4 spelers zich bij een potje hebben aangemeld verschijnt de knop 'speel dit potje'. 
                         Als hierop wordt gedrukt wordt het speelscherm opgestart met de speelkaarten. Een kaart kan pas 
                         worden gespeeld als alle spelers in het spel zitten (aangegeven met een groene ronde bol 
                         bij de kaart). Als een speler nog niet in het spel is, wordt dit aangegeven met een rode bol
                         en kan niet gespeeld worden. Dit merk je als je met de muis over de kaarten beweegt. Alleen als 
-                        alle bollen groen zijn bewegen de kaarten als je met de muis hierover beweegt. <br>
+                        alle bollen groen zijn bewegen de kaarten als je met de muis hierover beweegt. 
                         Alleen de speler die aan de beurt is kan daadwerkelijk een kaart spelen.
-                        De beurt wordt aangegeven met de licht groene kaartpositie in het midden van spel.<br>
+                        De beurt wordt aangegeven met de licht groene kaartpositie in het midden van spel.
+                    </p>
+                    <p>
                         Ieder potje binnen een wedstrijd bestaat uit hetzelfde aantal rondes dat 
                         moet worden gespeeld. Ook wordt ieder potje binnen een wedstrijd met exact dezelfde set aan gedeelde
                         kaarten gespeeld. Ieder potje binnen dezelfde westrijd speelt dus precies hetzelfde spel, zodat
                         de prestaties van de teams binnen een wedstrijd vergeleken kan worden.
+                    </p>
+                        
+                        
                     </p>
 
                     <h5>Rotterdamse spelvariant</h5>
@@ -97,6 +106,7 @@
                             <li><a href="#ref_potjes">Potjes</a></li>
                             <li><a href="#ref_speel_potje">Het spelen van een Potje</a></li>
                             <li><a href="#ref_melden_verzaken">Melden verzaken</a></li>
+                            <li><a href="#ref_berichten">Berichten</a></li>
                         </ul>
                     </p>
 
@@ -112,7 +122,7 @@
                     </p>
                     <h5>Registreren</h5>
                     <p>
-                        Als je nog geen gebruikers account hebt dan kan je jezelf registeren via de inlog pagina.
+                        Als je nog geen gebruikersaccount hebt dan kan je jezelf registeren via de inlog pagina.
                         Bij het registreren moet een gebruikersnaam worden gekozen. Dit is de naam die wordt gebruikt 
                         bij het inloggen en die wordt getoond in het spel.
                     </p>
@@ -257,7 +267,7 @@
                         </ul>
                     </p>
 
-                    <h5>Overzicht wedstrijden</h5>
+                    <h5 id="kleur">Overzicht wedstrijden</h5>
                     <p>
                         Via de knop 'Overzicht wedstrijden' krijgt u een overzicht te zien van alle wedstrijden die 
                         zijn aangemaakt door alle spelers. De wedstrijd wordt getoond in een bepaalde kleur afhankelijk van de 
@@ -266,29 +276,47 @@
                     <p>
                         <ul>
                             <li>
+                                <b>Blauw:</b> <br>
+                                Wedstrijd is nog niet gestart, registratie bij een potje mag nog plaatsvinden. <br>
+                                Spelers mogen potjes aanmaken, zich aan- en afmelden bij een potje.
+                                Nieuwe potjes mogen niet gestart worden om te spelen. 
+                                Wel mag een reeds gestart potje worden uitgespeeld.
+                            </li>
+                            <li>
                                 <b>Grijs:</b> <br>
-                                Wedstrijd is nog niet gestart, spelers mogen geen potjes aanmaken of zich aanmelden bij potje.
+                                Wedstrijd is nog niet gestart, registratie mag niet meer plaatsvinden. <br>
+                                Spelers mogen geen potjes aanmaken, zich aan- en afmelden bij een potje of een potje starten om te spelen.
+                                Wel mag een reeds gestart potje worden uitgespeeld.
                                 
                             </li>
                             <li>
-                                <b>Blauw:</b> <br>
-                                Wedstrijd is nog niet gestart,spelers mogen wel potjes aanmaken of zich aanmelden bij potje.
-                            </li>
-                            <li>
                                 <b>Groen: </b> <br> 
-                                Wedstrijd is gestart, spelers mogen potjes aanmaken of zich aanmelden bij potje
+                                Wedstrijd is gestart, maar nog niet gestopt en registratie mag nog plaatsvinden. <br>
+                                Spelers mogen potjes aanmaken, potjes starten en zich aan/af melden bij potjes.
                             </li>
                             <li>
                                 <b>Geel:</b> <br>
-                                Wedstrijd is gestart, spelers mogen geen potjes aanmaken of zich aanmelden bij potje.
-                                Wel mogen bestaande potjes nog gestart worden.
+                                Wedstrijd is gestart, maar nog niet gestopt en registratie mag niet meer plaatsvinden. <br>
+                                Spelers mogen potjes aanmaken en zich niet meer aan- en afmelden bij een potje.
+                                Wel mag een potje gestart worden om te spelen.                               
                             </li>
                             <li>
                                 <b>Rood:</b> <br>
-                                Wedstrijd is gestopt. spelers mogen geen potjes aanmaken of zich aanmelden bij potje.
-                                Potjes mogen niet meer gestart worden. Reeds gestarte potjes mogen afgespeeld worden.
+                                Wedstrijd is gestopt. <br>
+                                Spelers mogen geen potjes meer aanmaken of zich aanmelden bij potje.
+                                Potjes mogen niet meer gestart worden. Reeds gestarte potjes mogen wel afgespeeld worden.
+                                Spelers van buiten dit potje mogen de gespeelde slagen inzien.
                             </li>
                         </ul>
+                    </p>
+
+                    <h5>Filter op wedstrijd</h5>
+                    <p>
+                        In het overzicht van wedstrijden heeft u de mogelijkheid de lijst met wedstrijden te verkleinen 
+                        door 1 of meerdere filters te gebruiken. U kunt dit doen door een zoekterm in het veld van het 
+                        filter te plaatsen. Hierdoor wordt de lijst gefilterd op de betreffende term. Ook kunt u via een 
+                        dropdown menu filteren op de status (kleur) van de wedstrijd. Middels de knop 'Verwijder filters'
+                        worden alle filters verwijderd en is de volledige lijst met wedstrijden zichtbaar.
                     </p>
 
                     <h5>Wedstrijd details</h5>
@@ -312,7 +340,8 @@
                     <p>
                         Als vanuit 'Overzicht wedstrijden' op een wedstrijd wordt geklikt dan kom je in het scherm van 
                         'Overzicht potjes'. Vanuit dit scherm kunnen nieuwe potjes binnen de wedstrijd worden aangemaakt 
-                        en kunnen spelers zich aanmelden bij een portje om te spelen.
+                        en kunnen spelers zich aanmelden bij een portje om te spelen. Dit kan echter alleen wanneer de wedstrijd 
+                        de juiste <a href="#kleur">status </a> (kleur) hiervoor heeft en zolang het betreffende potje nog niet is uitgespeeld.
                     </p>
 
                     <h5>Nieuw potje aanmaken</h5>
@@ -351,6 +380,18 @@
                        verwijderd en de nieuwe speler toegevoegd aan het potje. Een speler kan maar 1 keer binnen een potje zijn aangemeld. 
                        Als een speler is aangemeld wordt de knop 'Afmelden bij potje' actief, zodat een speler zich weer kan afmelden. 
                        Ook als een potje eenmaal begonnen is kan nog van speler worden gewisseld.
+                    </p>
+
+                    <h5>Mail versturen naar spelers</h5>
+                    <p>
+                        Zodra u bent aangemeld bij een potje heeft u de mogelijkheid een anonieme mail te sturen naar de andere 
+                        spelers van dit potje. Anoniem houdt in dat alleen uw gebruikersnaam wordt getoond in de mail. Uw 
+                        echte naam of e-mail adres worden niet verstuurd. Middels deze mail kunt u informatie uitwisselen 
+                        over speeltijden en datum, de te gebuiken video meeting software. U kunt er ook voor kiezen uw echte mail 
+                        adres of telefoonnummer te delen, zodat direct nader afgestemd kan worden
+                    </p>
+                    <p>
+                        De andere spelers van het potje kunnen op dezelfde wijze een mail versturen.
                     </p>
 
 
@@ -477,6 +518,10 @@
                         de melding goed was of dat er een false melding was. In beide gevallen zullen alle punten , roem en 100 extra roem moeten worden 
                         toegekend aan het A-team of B-team.
                     </p>
+                    <p>
+                        Melden verzaken kan alleen als de ronde nog niet is afgerond, dat wil zeggen wanneer de laatste slag van de ronde nog niet is genomen.<br>
+                        <b>Zorg er daarom voor dat verzaken wordt gemeld voordat de laatste slag wordt geregistreerd (slag wordt genomen).</b>
+                    </p>
 
                     <h5>Opstarten procedure verzaken</h5>
                     <p>
@@ -498,10 +543,28 @@
 
                     <p> <a href="#inhoudsopgave">terug naar inhoudsopgave...</a></p>
 
+                    <h3 id=ref_berichten>Berichten</h3>
+                    <p>
+                        Via de home pagina kunt u naar berichten gaan. 
+                        Op deze pagina kunnen gebruikers van dit spel opmerkingen plaatsen of feedback geven, zoals:
+                        <ul>
+                            <li>het delen van eigen ervaringen met het spelen van dit spel</li>
+                            <li>het melden van bugs</li>
+                            <li>het geven van tips en suggesties voor verbeteringen</li>
+                            <li>het stellen van vragen</li>
+                        </ul>
+                    </p>
+                    <p>
+                        Ook de beheerder kan een bericht plaatsen om updates te geven over de ontwikkeling van het spel.
+                    </p>
+
+
+                    <p> <a href="#inhoudsopgave">terug naar inhoudsopgave...</a></p>
+
                 </b-card-text>
             </b-tab>
 
-            <b-tab title="Tips">
+            <b-tab title="Speeltips">
                 <b-card-text>
                     <p>
                         Dit is spel is ter vermaak ontwikkelt 
@@ -574,6 +637,12 @@
                         Hooguit kan in een volgende slag ter correctie een negatieve roem worden vastgelegd.
                     </p>
 
+                    <h5>Melden verzaken</h5>
+                    <p>
+                        Melden verzaken kan alleen als de ronde nog niet is afgerond, dat wil zeggen wanneer de laatste slag van de ronde nog niet is genomen.<br>
+                        Zorg er daarom voor dat verzaken wordt gemeld voordat de laatste slag wordt geregistreerd (slag wordt genomen).
+                    </p>
+
                     <h5>Synchronisatie</h5>
                     <p>
                         Speel de kaarten niet te snel achter elkaar om synchronisatie issues te vermijden.
@@ -593,13 +662,13 @@
 
             <b-tab title="Backlog">
                 <b-card-text>
-                    <p>Hieronder staat een lijst met mogelijke verbeteringen of aanvullingen die 
-                        op dit spel gemaakt kunnen worden
+                    <p>Hieronder staat een lijst met verbeteringen of aanvullingen die 
+                        in de toekomst verder ontwikkeld kunnen worden.
                     </p>
                     <ul>
-                        <li>Mogelijkheid om aan te nemen of te passen</li>
                         <li>Mogelijkheid om gezamelijk een correctie uit te voeren op geregistreerde score.</li>
                         <li>Uitgebereidere rapportages over gemaakte scores en het vergelijken van games</li>
+                        <li>De mogelijkheid bieden aan spelers om de eigen gegevens aan te passen</li>
                     </ul>
                 </b-card-text>
             </b-tab>
@@ -611,7 +680,7 @@
                         Dit is spel is ontwikkeld door Ole Karlsen.
                         De drijver om dit spel op te zetten was drieledig. <br> <br>
                         <ul>
-                            <li>Een tijdverdrijf vinden gedurende de Corona lockdown periode</li>
+                            <li>Een tijdsverdrijf vinden gedurende de Corona lockdown periode</li>
                             <li>Kennis vergroting van website technologien</li>
                             <li>Een leuke manier vinden om op afstand met elkaar een spel te kunnen spelen</li>
                         </ul>
@@ -624,9 +693,9 @@
 
                     <p>
                         De bedoeling is dat de komende periode 
-                        kleine verbetering worden doorgevoerd. Mocht je suggesties of feedback hebben, 
-                        stuur die dan naar <br> <br>
-                        mail: klaverjasfun@gmail.com
+                        kleine verbetering worden doorgevoerd. Mocht je suggesties of feedback hebben, maak dan 
+                        een bericht via de hoofdpagina <a href="#" v-on:click="gotoRemarks()">'Berichten'</a>
+                        
                     </p>
 
 
@@ -663,13 +732,25 @@ export default {
 
       if (this.user.user_is_logged_in === false) {
           this.$router.push({ name: 'Home' })
-      } //END if
+      } else {
+
+          //Check that screen is mobile. If so, set full screen
+          var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+          if (isMobile) {
+            // document.body.requestFullscreen()
+            document.documentElement.requestFullscreen()
+          }
+      }
 
   },//END activated
   methods: {
     gotoHome: function () {
         this.$router.push({ name: 'Home' })
-    }  //END gotoHome
+    }, //END gotoHome
+
+    gotoRemarks: function () {
+      this.$router.push({ name: 'Remarks' })
+    },  //END gotoRemarks
 
   },  //END methods
   computed: {

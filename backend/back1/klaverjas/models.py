@@ -93,8 +93,8 @@ class Game(models.Model):
     # gameStatus          = models.CharField(max_length=30, choices=GameStatus, default='niet gestart')
     legs_completed      = models.PositiveSmallIntegerField(null=True, blank=True, default=0)
     rounds_completed    = models.PositiveSmallIntegerField(null=True, blank=True, default=0)  # 0  when no round has been played
-    date_game_start     = models.DateField(blank=True, null=True)
-    date_game_end       = models.DateField(blank=True, null=True)
+    date_game_start     = models.DateTimeField(blank=True, null=True)
+    date_game_end       = models.DateTimeField(blank=True, null=True)
     scoreA              = models.PositiveSmallIntegerField(null=True, blank=True)
     roemA               = models.PositiveSmallIntegerField(null=True, blank=True)
     scoreB              = models.PositiveSmallIntegerField(null=True, blank=True)

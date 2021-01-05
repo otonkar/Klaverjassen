@@ -4,7 +4,7 @@
     <b-container v-if="isLoaded">
 
         <br>
-        <h2> Gebruikersfeedback </h2>
+        <h2> Berichten </h2>
 
         <b-row>
             <b-col><b-button block v-on:click="gotoHome()"  class="btn btn-secondary"> Terug  </b-button></b-col>
@@ -13,11 +13,12 @@
 
         <br>
         <p>
-          Op deze pagina kunnen gebruikers opmerkingen plaatsen over dit spel. Dit kan gaan over: 
+          Op deze pagina kan de beheerder berichten plaatsen. 
+          Ook kunnen gebruikers van dit spel opmerkingen plaatsen of feedback geven, zoals:
           <ul>
-            <li>delen van eigen ervaringen met het spelen van dit spel</li>
+            <li>het delen van eigen ervaringen met het spelen van dit spel</li>
             <li>het melden van bugs</li>
-            <li>tips en suggesties voor verbeteringen</li>
+            <li>het geven van tips en suggesties voor verbeteringen</li>
             <li>het stellen van vragen</li>
           </ul>
         </p>
@@ -25,7 +26,7 @@
 
           <!-- Show confirm send feedback  -->
         <b-jumbotron class="jumbotron" v-bind="{hidden: !show_confirm_create_remark}">
-          <p> Weet je zeker dat je opmerking wilt plaatsen?</p>
+          <p> Weet je zeker dat je de opmerking wilt plaatsen?</p>
           <p> 
             {{ remarkText }}
           </p>
@@ -36,13 +37,13 @@
           </b-row>
         </b-jumbotron>
 
-        <h4> Maak nieuwe feedback opmerking </h4>
+        <h4> Maak nieuw bericht </h4>
 
         <div>
           <b-form-textarea
           id="textarea"
           v-model="remarkText"
-          placeholder="Schrijf hier uw opmerking"
+          placeholder="Schrijf hier uw bericht"
           rows="3"
           max-rows="6"
           ></b-form-textarea>
@@ -51,12 +52,12 @@
         <br>
 
         <b-row>
-            <b-col><b-button block @click="doStartRemark()" variant="primary"  class="btn"> Plaats feedback </b-button></b-col>
-            <b-col><b-button block @click="doStopRemark()"  class="btn btn-warning"> Opschonen tekst  </b-button></b-col>
+            <b-col><b-button block @click="doStartRemark()" variant="primary"  class="btn"> Plaats bericht </b-button></b-col>
+            <b-col><b-button block @click="doStopRemark()"  class="btn btn-warning"> Opschonen bericht  </b-button></b-col>
         </b-row>
         <hr>
 
-        <h4> Overzicht feedback </h4>
+        <h4> Overzicht berichten </h4>
 
         <div v-for="remark in remarks" v-bind:key="remark.remarkID">
           <p>
@@ -110,15 +111,15 @@ export default {
 
       } else {
 
-          //Check that screen is mobile. If so, set full screen
-          var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-          if (isMobile) {
-            // document.body.requestFullscreen()
-            document.documentElement.requestFullscreen()
-          }
+        //Check that screen is mobile. If so, set full screen
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+          // document.body.requestFullscreen()
+          document.documentElement.requestFullscreen()
+        }
 
-          this.doGetRemarks();
-          this.isLoaded = true;
+        this.doGetRemarks();
+        this.isLoaded = true;
 
       }//END if
   },//END activated

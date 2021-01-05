@@ -42,7 +42,7 @@
 
                   </article>
               </div> <!-- card.// -->
-              <p class="small text-muted">Coronaright, 2020, klaverjasfun@gmail.com</p>
+              <p class="small text-muted">Coronaright, 2021, klaverjasfun@gmail.com</p>
 
               <!-- <br><br><br>
               <p class="small text-muted">

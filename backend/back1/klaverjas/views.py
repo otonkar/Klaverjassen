@@ -483,7 +483,7 @@ class MailToPlayers(APIView):
             email.send(fail_silently=True)
 
             #Log sending the reset code
-            logger('default').info(f'Send mails for user [{user}] for game {gameID}. ')
+            logger('default').info(f'Send mails for user [{user}] for game {gameID}. \n {mailText} ')
 
         except:
             content = [False, 'Mail is niet verstuurd. Er is een fout opgetreden bij het versturen van de mails']

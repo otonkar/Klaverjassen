@@ -196,11 +196,19 @@ export default {
       if (this.user.user_is_logged_in === false) {
             this.$router.push({ name: 'Home' })
       } else {
-            this.matchID = this.$route.params.id
-            // // console.log('user = ', this.user)
-            this.user.show_header = true
-            this.$store.dispatch('updateUser', this.user)
-            this.getMatchDetails()
+
+        //Check that screen is mobile. If so, set full screen
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+            // document.body.requestFullscreen()
+            document.documentElement.requestFullscreen()
+        }
+
+        this.matchID = this.$route.params.id
+        // // console.log('user = ', this.user)
+        this.user.show_header = true
+        this.$store.dispatch('updateUser', this.user)
+        this.getMatchDetails()
 
       }//END if
   },//END mounted

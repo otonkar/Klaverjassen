@@ -320,6 +320,9 @@ class Game2MatchSerializer(serializers.ModelSerializer):
     '''
 
     matchID = MatchSerializer()
+    date_game_start = serializers.DateTimeField(format="%Y-%m-%d, %H:%M:%S")
+    date_game_end   = serializers.DateTimeField(format="%Y-%m-%d, %H:%M:%S")
+
 
     class Meta:
         model = Game

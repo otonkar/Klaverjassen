@@ -147,19 +147,30 @@ export default {
           if (this.$route.params.status_color) {
             this.status_color = this.$route.params.status_color;
             if (this.status_color === 'success') {
-              this.status_text = 'Wedstrijd is gestart, spelers mogen potjes aanmaken, zich aanmelden bij potje en potjes mogen gestart worden.'
+              this.status_text = 'Groen - wedstrijd is gestart, maar nog niet gestopt en registratie mag nog plaatsvinden. \
+                                Spelers mogen potjes aanmaken, potjes starten en zich aan/af melden bij potjes.'
             }
             if (this.status_color === 'danger') {
-              this.status_text = 'Wedstrijd is gestopt. spelers mogen geen potjes aanmaken of zich aanmelden bij potje. Potjes mogen niet meer gestart worden. Reeds gestarte potjes mogen worden afgespeeld.'
+              this.status_text = 'Rood - wedstrijd is gestopt. \
+                                Spelers mogen geen potjes meer aanmaken of zich aanmelden bij potje. \
+                                Potjes mogen niet meer gestart worden. Reeds gestarte potjes mogen wel afgespeeld worden. \
+                                Spelers van buiten dit potje mogen de gespeelde slagen inzien.'
             }
             if (this.status_color === 'secondary') {
-              this.status_text = 'Wedstrijd is nog niet gestart, spelers mogen geen potjes aanmaken of zich aanmelden bij potje.'
+              this.status_text = 'Grijs - wedstrijd is nog niet gestart, registratie mag niet meer plaatsvinden. \
+                                Spelers mogen geen potjes aanmaken, zich aan- en afmelden bij een potje of een potje starten om te spelen. \
+                                Wel mag een reeds gestart potje worden uitgespeeld.'
             }
             if (this.status_color === 'primary') {
-              this.status_text = 'Wedstrijd is nog niet gestart,spelers mogen wel potjes aanmaken of zich aanmelden bij potje.'
+              this.status_text = 'Blauw - wedstrijd is nog niet gestart, registratie bij een potje mag nog plaatsvinden. \
+                                Spelers mogen potjes aanmaken, zich aan- en afmelden bij een potje. \
+                                Nieuwe potjes mogen niet gestart worden om te spelen. \
+                                Wel mag een reeds gestart potje worden uitgespeeld.'
             }
             if (this.status_color === 'warning') {
-              this.status_text = 'Wedstrijd is gestart, spelers mogen geen potjes aanmaken of zich aanmelden bij potje. Wel mogen bestaande potjes nog gestart worden.'
+              this.status_text = 'Geel -  wedstrijd is gestart, maar nog niet gestopt en registratie mag niet meer plaatsvinden. \
+                                Spelers mogen potjes aanmaken en zich niet meer aan- en afmelden bij een potje. \
+                                Wel mag een potje gestart worden om te spelen.      '
             }
           }
 
@@ -169,17 +180,37 @@ export default {
           this.user.show_header = true
           this.$store.dispatch('updateUser', this.user)
 
-          // Check that Registration is still open. 
-          // only show create game button when this is allow_game_create = true
-          // Do Check that there are no games empty when pressing the button
-          const currentdate = new Date() 
-          const register_stop = new Date(this.match_details.date_register_stop)
+          //******************************************************************************
+          // Validate allow to make new game
+          //  * match-stop not passed
+          //  * register-stop not passed
+        
+          // initialize parameters
+          let check_match_stop_passed             = false
+          let check_match_registerstop_passed     = false
 
-          if (currentdate < register_stop) {
-              this.allow_game_create = true
-          } else {
-            this.allow_game_create = false
+          const currentdate       = new Date() 
+          const match_stop        = new Date(this.match_details.date_match_stop)
+          const register_stop     = new Date(this.match_details.date_register_stop)
+
+          if (currentdate >= match_stop) {
+            check_match_stop_passed = true
           }
+
+          if (currentdate >= register_stop) {
+            check_match_registerstop_passed = true
+          }
+
+          if (check_match_stop_passed || check_match_registerstop_passed) {
+            this.allow_game_create = false
+          } else {
+            this.allow_game_create = true
+          }
+
+          // @Extra validation: do not allow to create a new game when there is already an empty game.
+          // Do not do this, because a game can get fully un-registered but already mails have been send.
+
+          //************************************************************************************ 
 
           this.game_score = [
             [],

@@ -24,12 +24,12 @@
                                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                             </div>
                             <!-- <input name="" class="form-control" placeholder="Email address" type="email"> -->
-                            <input ref="username" v-model="input.username" class="form-control" placeholder="gebruikers naam" type="text">
+                            <input ref="username" v-model="input.username" class="form-control" placeholder="Gebruikers naam" type="text">
                             <div ref="f-username" class="invalid-feedback "> {{ error_message["username"] }} </div>
                         </div> <!-- input-group.// -->
                         <small id="passwordHelpBlock" class="form-text text-muted">
                             Dit is de naam waarmee u inlogt en die getoond wordt als spelersnaam. 
-                            <br> Gebruik alleen letter en cijfers.
+                            <br> Gebruik alleen letters en cijfers.
                         </small>
                     </div> <!-- form-group// -->
                     <div class="form-group">
@@ -39,11 +39,11 @@
                                 <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                             </div>
                             <!-- <input name="" class="form-control" placeholder="Email address" type="email"> -->
-                            <input ref="first_name" v-model="input.first_name" class="form-control" placeholder="Roepnaam" type="text">
+                            <input ref="first_name" v-model="input.first_name" class="form-control" placeholder="Voornaam" type="text">
                             <div ref="f-username" class="invalid-feedback ">Vul een voornaam in. </div>
                         </div> <!-- input-group.// -->
                         <small id="passwordHelpBlock" class="form-text text-muted">
-                            De naam waarmee u geboren bent, maar die niemand kent
+                            De naam waarmee u geboren bent, maar die waarschijnlijk niemand kent
                         </small>
                     </div> <!-- form-group// -->
                     <div class="form-group">
@@ -108,7 +108,7 @@
 
             </article>
         </div> <!-- card.// -->
-              <p class="small text-muted">Coronaright, 2020</p>
+              <p class="small text-muted">Coronaright, 2021</p>
 
       </div>
     

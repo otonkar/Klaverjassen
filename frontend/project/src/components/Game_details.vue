@@ -27,21 +27,15 @@
 
 
         <b-row>
-            <b-col><b-button block v-on:click="doSendMail()"  class="btn btn-success"> Verstuur mail  </b-button></b-col>
             <b-col><b-button block @click="doStopMail()"  class="btn btn-danger"> Stoppen  </b-button></b-col>
+            <b-col><b-button block v-on:click="doSendMail()"  class="btn btn-success"> Verstuur mail  </b-button></b-col>
         </b-row>
     </b-jumbotron>
 
 
     <b-container v-if="isLoaded">
 
-        <!-- <div v-for="player in sorted_players" v-bind:key="player.id"> 
-            {{ player.position }}: {{ player.id }} , {{ player.player.username }} 
-
-        </div>
-        <br> -->
-
-        <b-row v-if="allow_start_game">
+        <b-row v-if="allow_play_game">
             <!-- <b-col ><b-button block class="btn btn-warning"> Accepteer partner </b-button> </b-col>  -->
             <b-col></b-col>
             <b-col ><b-button @click="playGame(game, players)"  class="btn btn-success"> speel dit potje  </b-button> </b-col> 
@@ -61,15 +55,10 @@
         </b-card>
 
         <br>
-        <!-- <div class="col text-center">
-        <b-button class="btn btn-warning"> Accepteer partner </b-button>
-        </div> -->
 
         <b-row>
-            <!-- <b-col ><b-button block class="btn btn-warning"> Accepteer partner </b-button> </b-col>  -->
-            <b-col><b-button @click="doUnRegister()" v-if="game.gameStatus !== 'uitgespeeld'" v-bind:disabled="allow_register" block class="btn btn-warning"> Afmelden bij potje  </b-button> </b-col> 
-            <b-col><b-button @click="doShowMail()" v-if="player_registered"  block variant="primary" > Stuur bericht naar spelers  </b-button> </b-col>
-            <!-- <b-col> <b-col><b-button block v-on:click="doRefresh()"  class="btn btn-warning"> Refresh  </b-button></b-col> </b-col>  -->
+            <b-col><b-button @click="doUnRegister()" v-if="allow_unregister" v-bind:disabled="!allow_unregister" block class="btn btn-warning"> Afmelden bij potje  </b-button> </b-col> 
+            <b-col><b-button @click="doShowMail()" v-if="allow_send_mail"  block variant="primary" > Stuur bericht naar spelers  </b-button> </b-col>
         </b-row>
 
 
@@ -92,7 +81,6 @@ export default {
         title: 'Game details page',
         polling: null,            // Needed to auto refresh this page
         isLoaded: false,
-        show_send_mail: false,      // Show pop up to send mails
         mailText: '',               // Input mail text
         players: [ 
             {
@@ -154,10 +142,13 @@ export default {
                 },
             },
         ],
-        allow_register: false,       // indicate that you are allowed to register at a game
-        allow_start_game: false,
+        // allow_make_new_game: false,         // For button to make new game,  not needed on this page
+        allow_register: false,              // For button to register a player to a game
+        allow_unregister: false,            // For butoon to un-register a player from a game
+        allow_play_game: false,             // For button to play the game
+        allow_send_mail: false,             // For button to let the form start for sending mails
+        show_send_mail: false,              // For showing the send mail form
         errors: {}, 
-        player_registered: false    //Boolean to indicate that player is registered at game
     }
   },
   created: function () {
@@ -178,9 +169,7 @@ export default {
   activated: function () {
       // Refresh this component every x seconds
       this.pollData()
-      // console.log(this.$route.name)
-      // Do not show full screen on login page
-      // document.exitFullscreen();
+
       if (this.user.user_is_logged_in === false) {
             this.$router.push({ name: 'Home' })
       } else {
@@ -249,19 +238,13 @@ export default {
                 }
             })
             .then(response => {
-                // // console.log('Status get game overview: ',response.status)
                 if (response.status === 200) {
-                    console.log(response.data[0], response.data[1])
-                    // mail_result = response.data
                     alert(response.data[1])
                     this.show_send_mail = false
                     this.mailText = ''
-                    // console.log(this.game.matchID.matchID, this.game.gameID)
-                    // console.log('getPlayers in Details ', this.players)
                 }
             })
             .catch(error => {
-                // console.log('Get match details failed')
                 // console.log(error.response.data)
                 alert(error.response.data[1])
 
@@ -288,15 +271,11 @@ export default {
             // data: this.input
         })
         .then(response => {
-            // // console.log('Status get game overview: ',response.status)
             if (response.status === 200) {
                 this.players = response.data
-                // console.log(this.game.matchID.matchID, this.game.gameID)
-                // console.log('getPlayers in Details ', this.players)
             }
         })
         .catch(() => {
-            // console.log('Get match details failed')
             // console.log(error.response)
         })
 
@@ -322,56 +301,170 @@ export default {
         for (var obj in this.players) {
             this.sorted_players[this.players[obj].position] = this.players[obj]
             count_players = count_players + 1
-            // // console.log(this.players[obj])
-            // // console.log(this.players[obj].position)
         }
 
-        // // console.log('Counted players :', count_players)
+        // ********************************************************************************************************
+        // Validate allow_play_game  (is play the game)
+        //   * match start date is passed (check this because after game was created the start date was changed)
+        //   * 4 players registered at game, and this player is part of the game
+        //   * Game is not ended , that is Not all legs have been completed
+        //   * Match stop date not expired, and game not already started
+        //
+        // 
 
-        // Check that there were 4 players registered at this game
-        this.allow_start_game = false
+        // Buttons to validate on this page
+        //  - Aanmelden bij potje
+        //  - Afmelden bij potje
+        //  - speel potje
+        //  - Stuur mail naar spelers
+
+        // Reset buttons
+        // this.allow_make_new_game    = false      // Not needed on this page
+        this.allow_register         = false
+        this.allow_unregister       = false
+        this.allow_play_game        = false
+        this.allow_send_mail        = false
+
+        // initialize parameters
+        var check_match_start_passed            = false
+        var check_match_stop_passed             = false
+        var check_match_registerstop_passed     = false
+
+        var check_four_players_registered       = false         // There are 4 players registered at this game
+        var check_player_is_registered          = false         // player is registerd at this game
+     
+        var check_game_has_not_ended            = false         // Game has not been completed (ended) (status ended, or all legs completed)
+        var check_game_is_being_played          = false         //
+
+        // Set dates
+        const currentdate       = new Date() 
+        const match_start       = new Date(this.game.matchID.date_match_start)
+        const match_stop        = new Date(this.game.matchID.date_match_stop)
+        const register_stop     = new Date(this.game.matchID.date_register_stop)
+
+        // Check the dates
+        if (currentdate >= match_start) {
+            check_match_start_passed = true
+        }
+        // console.log('check_match_start_passed', check_match_start_passed)
+
+        if (currentdate >= match_stop) {
+            check_match_stop_passed = true
+        }
+        // console.log('check_match_stop_passed', check_match_stop_passed)
+
+        if (currentdate >= register_stop) {
+            check_match_registerstop_passed = true
+        }
+        // console.log('check_match_registerstop_passed', check_match_registerstop_passed)
+
+        // Check that 4 players are registered at game
         if (count_players === 4) {
-            // @ check that logged in player is part of the game
-            for (obj in this.sorted_players) {
-                if (this.sorted_players[obj].player.username === this.user.username) {
-                    this.allow_start_game = true
-                }
+            check_four_players_registered = true
+        } else {
+            check_four_players_registered = false
+        }
+        // console.log('check_four_players_registered', check_four_players_registered)
+
+        // Check that this user is registered with this game
+        for (obj in this.sorted_players) {
+            if (this.sorted_players[obj].player.username === this.user.username) {
+                check_player_is_registered = true
             }
         }
-        // AND check that legs_completed < n_legs
-        // Note legs_completed = 0 implies that 0 legs have been played. 
-        this.allow_start_game = this.allow_start_game && (this.game.legs_completed < this.game.matchID.n_legs )
-
-        // AND check that match_stop date has not been passed
-        // When already started the game is allowed to finish 
-        // But is allowed when game has already started
-        const currentdate = new Date() 
-        const match_stop = new Date(this.game.matchID.date_match_stop)
-        var allow = currentdate < match_stop
-        // console.log(currentdate, match_stop, allow)
-        // console.log(this.game)
-
-        // Check that game has already started
-        var allow1 = this.game.gameStatus === 'wordt gespeeld'
+        // console.log('check_player_is_registered', check_player_is_registered)
         
-        this.allow_start_game = this.allow_start_game && (allow || allow1)
 
-        // console.log('allow1 ',this.game.gameID, this.game.gameStatus, allow1, this.allow_start_game)
+        // Check Game is not ended , that is Not all legs have been completed (that legs_completed < n_legs)
+        // Note legs_completed = 0 implies that 0 legs have been played. 
+        check_game_has_not_ended = this.game.legs_completed < this.game.matchID.n_legs
+        // console.log('check_game_has_not_ended', check_game_has_not_ended)
 
-        // Determine that person is not already registered at this game
-        // Filter the players based on name of current user.
-        // // console.log(this.sorted_players[0].player.username)
-        // // console.log(this.sorted_players.filter(this.filterOnUsername).length)
 
-        if (this.sorted_players.filter(this.filterOnUsername).length === 0) {
-            this.allow_register = true
-            this.player_registered = false
-            if (this.game.gameStatus === 'uitgespeeld') {
-                this.allow_register = false
-            }
+        // Check that game has already started and not ended
+        check_game_is_being_played = this.game.gameStatus === 'wordt gespeeld'
+        // console.log('check_game_is_being_played', check_game_is_being_played)
+
+
+        // Validate allow to play game (start)
+        // This needs to cover starting a new game and resuming a started game
+        // Rules for starting a new game:
+        // * match_start date has passed
+        // ** match_stop date not passed 
+        // ------- Not valid ----------------------------------------------// * registerstop date not passed
+        // ** 4 players registered at game
+        // ** user is a player  of this game
+        // ** game has not ended
+
+        // Rules for starting a existing game:
+        // ** match_stop date not passed 
+        // ** 4 players registered at game
+        // ** user is a player  of this game
+        // * Game in status wordt gespeeld. (dus ook game has not ended)
+
+        if (check_match_stop_passed ||
+                !check_four_players_registered ||
+                !check_player_is_registered ||
+                !check_game_has_not_ended) {
+            this.allow_play_game = false
+            // console.log('A', this.game.gameID, check_match_stop_passed, !check_four_players_registered, !check_player_is_registered, !check_game_has_not_ended )
         } else {
+
+            if (check_game_is_being_played) {
+                 // Existing game
+                this.allow_play_game = true
+                // console.log('B', this.game.gameID)
+            } else {
+                if (!check_match_start_passed ) {
+                    this.allow_play_game = false
+                    // console.log('C', this.game.gameID, !check_match_start_passed, check_match_registerstop_passed)
+                } else {
+                    // new game
+                    this.allow_play_game = true
+                    // console.log('D')
+                }
+            }  
+        }
+
+        // Validate allow to register
+        // * match_stop date not passed
+        // * match registerstop date not passed
+        // * player is not already registered
+        // * game has not yet been completed
+        if (check_match_stop_passed ||
+                check_match_registerstop_passed ||
+                check_player_is_registered ||
+                !check_game_has_not_ended ) {
+
             this.allow_register = false
-            this.player_registered = true
+        } else {
+            this.allow_register = true
+        }
+        // console.log('allow_register', this.allow_register)
+
+        // Validate allow to un-register
+        // * match_stop date not passed
+        // * player is registered with game
+        // * game has not yet been completed 
+        // if (!check_match_start_passed && check_player_is_registered )  {
+        if (check_match_stop_passed ||
+                check_match_registerstop_passed ||
+                !check_player_is_registered ||
+                !check_game_has_not_ended ) {
+
+            this.allow_unregister = false
+        } else {
+            this.allow_unregister = true
+        }
+        // console.log('allow_unregister', this.allow_unregister)
+
+
+        // Validate allow to send mail
+        //  * player is registered with game
+        if (check_player_is_registered ) {
+            this.allow_send_mail = true
+        } else {
+            this.allow_send_mail = false
         }
 
          this.isLoaded = true
@@ -391,14 +484,11 @@ export default {
             // data: this.input
         })
         .then(response => {
-            // // console.log('Status get user id: ',response.status)
             if (response.status === 200) {
                 this.user.id = response.data.id
-                // // console.log(response.data.id)
             }
         })
         .catch(() => {
-            // console.log('Get userdetails failed')
             // console.log(error.response)
         })
 
@@ -476,11 +566,8 @@ export default {
         for (var obj in this.sorted_players) {
             if (this.sorted_players[obj].player.username === this.user.username) {
                 id = this.sorted_players[obj].id
-                // // console.log(this.sorted_players[obj].player.username, this.sorted_players[obj].id )
             }
         }
-
-        // // console.log('GamePlayer ID = ', id)
 
         // Next remove this player from the game
         await api_request({
@@ -489,18 +576,12 @@ export default {
             // data: this.input
         })
         .then(response => {
-            // console.log('Status delete player: ',response.status)
-            // // console.log(response)
             if (response.status === 200) {
-                // // console.log(response.data.id)
             }
         })
         .catch(() => {
-            // console.log('Delete player failed')
             // console.log(error.response)
         })
-
-        
 
         this.getPlayers()
 

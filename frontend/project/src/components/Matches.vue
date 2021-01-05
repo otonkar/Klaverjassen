@@ -13,7 +13,7 @@
 
       <br>
       <hr>
-      <button  v-on:click="gotoHome()" class="btn btn-secondary"> Ga naar home pagina  </button>
+      <button  v-on:click="gotoHome()" class="btn btn-secondary"> Ga naar start pagina  </button>
       <!-- <button  v-on:click="$router.go(-1)" class="btn btn-primary"> Ga naar home pagina  </button> -->
 
     </b-container>
@@ -43,7 +43,16 @@ export default {
 
       if (this.user.user_is_logged_in === false) {
           this.$router.push({ name: 'Home' })
-      } //END if
+      } else {
+
+        //Check that screen is mobile. If so, set full screen
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        if (isMobile) {
+          // document.body.requestFullscreen()
+          document.documentElement.requestFullscreen()
+        }
+
+      }
   },//END mounted
   methods: {
     gotoHome: function () {

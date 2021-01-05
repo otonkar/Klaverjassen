@@ -51,19 +51,19 @@
           <b-form-input
             v-model="filterName"
             id="filterName"
-            placeholder="Wedstrijdnaam"
+            placeholder="Geef (deel van) wedstrijdnaam"
           ></b-form-input>
 
           <b-form-input
             v-model="filterDescription"
             id="filterDescription"
-            placeholder="Omschrijving wedstrijd"
+            placeholder="Geef (deel van) omschrijving wedstrijd"
           ></b-form-input>
 
           <b-form-input
             v-model="filterOwner"
             id="filterOwner"
-            placeholder="Eigenaar wedstrijd"
+            placeholder="Geef (deel van) eigenaar wedstrijd"
           ></b-form-input>
 
           <b-form-select
@@ -78,7 +78,8 @@
 
       <br>
 
-       <button  v-on:click="clearFilters()" class="btn btn-secondary"> Verwijder filters  </button>
+       <!-- <button  v-on:click="clearFilters()" class="btn btn-secondary"> Verwijder filters  </button> -->
+       <b-button v-on:click="clearFilters()" variant="primary" class="btn"> Verwijder filters  </b-button>
 
 
       <hr>
@@ -122,7 +123,7 @@ export default {
         {'text': 'Geen filter op status', 'value': ''},
         {'text': 'Status blauw', 'value': 'primary'},
         {'text': 'Status geel', 'value': 'warning'},
-        {'text': 'Status grijs', 'value': 'secondairy'},
+        {'text': 'Status grijs', 'value': 'secondary'},
         {'text': 'Status groen', 'value': 'success'},       
         {'text': 'Status rood', 'value': 'danger'},
       ]
