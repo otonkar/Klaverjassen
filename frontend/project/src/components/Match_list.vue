@@ -142,6 +142,12 @@
           <br>
 
           <p>
+            De eigenaar van een wedstrijd heeft de mogelijkheid de start/stop datums aan te passen. 
+            Hierdoor kan de status van een wedstrijd gewijzigd worden. Dit kan inhouden dat al potjes in een 
+            wedstrijd zijn gestart, terwijl daarna de wedstrijd start datum wordt aangepast naar een later tijdstip.
+            
+          </p>
+          <p>
             Hieronder volgt een nadere uitleg.
             <ul>
               <li>

@@ -148,29 +148,29 @@ export default {
             this.status_color = this.$route.params.status_color;
             if (this.status_color === 'success') {
               this.status_text = 'Groen - wedstrijd is gestart en nog niet gestopt. Registratie mag nog plaatsvinden. \
-                                Spelers mogen potjes aanmaken, potjes starten en zich aan/af melden bij potjes.'
+                                Spelers mogen potjes aanmaken, potjes starten en zich aan/af melden bij een potje.'
             }
             if (this.status_color === 'danger') {
               this.status_text = 'Rood - wedstrijd is gestopt. \
-                                Spelers mogen geen potjes meer aanmaken of zich aanmelden bij potje. \
-                                Potjes mogen niet meer gestart worden. Reeds gestarte potjes mogen wel afgespeeld worden. \
+                                Spelers mogen geen potjes meer aanmaken of zich aan/af melden bij een potje. \
+                                Potjes mogen niet meer gestart worden. \
                                 Spelers van buiten dit potje mogen de gespeelde slagen inzien.'
             }
             if (this.status_color === 'secondary') {
               this.status_text = 'Grijs - wedstrijd is nog niet gestart, registratie mag niet meer plaatsvinden. \
-                                Spelers mogen geen potjes aanmaken, zich aan- en afmelden bij een potje of een potje starten om te spelen. \
+                                Spelers mogen geen potjes aanmaken, zich aan- of afmelden bij een potje of een potje starten om te spelen. \
                                 Wel mag een reeds gestart potje worden uitgespeeld.'
             }
             if (this.status_color === 'primary') {
               this.status_text = 'Blauw - wedstrijd is nog niet gestart, registratie bij een potje mag nog plaatsvinden. \
                                 Spelers mogen potjes aanmaken, zich aan- en afmelden bij een potje. \
-                                Nieuwe potjes mogen niet gestart worden om te spelen. \
+                                Nieuwe potjes mogen (nog) niet gestart worden om te spelen. \
                                 Wel mag een reeds gestart potje worden uitgespeeld.'
             }
             if (this.status_color === 'warning') {
               this.status_text = 'Geel -  wedstrijd is gestart en nog niet gestopt. Registratie mag niet meer plaatsvinden. \
-                                Spelers mogen potjes aanmaken en zich niet meer aan- en afmelden bij een potje. \
-                                Wel mag een potje gestart worden om te spelen.      '
+                                Spelers mogen geen potjes aanmaken of zich aan/af melden bij een potje. \
+                                Wel mag een potje gestart worden om te spelen.'
             }
           }
 
