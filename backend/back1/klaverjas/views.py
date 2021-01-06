@@ -506,11 +506,9 @@ class RemarkCreate(APIView):
 
         try:
             ### use the user from the request because this is authenticated
-            print('YY0')
             input_data = dict()
             input_data["user"]      = request.user.id
             input_data["remark"]    = request.data['remark']
-            print('YY1')
 
             serializer = serializers.RemarkSerializer(data = input_data)
             if serializer.is_valid():

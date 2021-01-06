@@ -15,6 +15,8 @@
       <!-- <button  v-on:click="$router.go(-1)" class="btn btn-primary"> Ga naar home pagina  </button> -->
 
       <h5>Filter op wedstrijden</h5>
+      <!-- <div @click="gotoTest()">Test link</div> -->
+
       <p>
         Om de lengte van de lijst gevonden wedstrijden in te perken kunt u filters gebruiken.
       </p>
@@ -63,7 +65,7 @@
           <b-form-input
             v-model="filterOwner"
             id="filterOwner"
-            placeholder="Geef (deel van) eigenaar wedstrijd"
+            placeholder="Geef (deel van) gebruikersnaam eigenaar"
           ></b-form-input>
 
           <b-form-select
@@ -83,8 +85,9 @@
 
 
       <hr>
-      <h4>Gevonden wedstrijden</h4>
+      <h4>Getoonde wedstrijden ({{filterMatches.length }}/{{count}})</h4>
       <br>
+  
 
       <div v-for="item in filterMatches" v-bind:key="item.matchID">
     
@@ -111,6 +114,7 @@ export default {
   data () {
     return {
       title: 'Match list page',
+      count: 0,   // Count the number of match results
       test: {},
       match_list: [],
       result_test: {},
@@ -145,6 +149,7 @@ export default {
           
           this.user.show_header = true
           this.$store.dispatch('updateUser', this.user)
+          this.count = 0
           this.getMatchList()
       }//END if
   },//END mounted
@@ -152,6 +157,11 @@ export default {
     gotoHome: function () {
         this.$router.push({ name: 'Home' })
     },  //END gotoLogin
+    // gotoTest: function () {
+    //   //  /Info#ref_wedstrijden
+    //   this.$router.push('/Info#ref_wedstrijden/')
+    // },
+
     gotoMatches: function () {
       this.$router.push({ name: 'Matches' })
     },  //END gotoMatches
@@ -180,6 +190,7 @@ export default {
             // Store the matches in localStore
             this.match_list = response.data
             // // console.log('***', this.match_list)
+            this.count = this.match_list.length
 
 
             localStorage.setItem('match_list', response.data)
