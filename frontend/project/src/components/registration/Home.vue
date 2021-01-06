@@ -4,11 +4,13 @@
     <!-- Only show button when user is not logged in -->
      <div v-if="user.user_is_logged_in === false">
         <b-container>
-          <br><br>
+          <br>
+          <hr>
           <div class="container col-xl-4 col-lg-6" >
               <button  v-on:click="gotoLogin()" class="btn btn-primary"> Ga naar Login pagina  </button>
           </div>
-          <br><br>
+          <hr>
+          <br>
           <h3>Welkom bij Klaverjasfun.nl</h3>
           <p>
             Deze website is ontwikkeld om gedurende de Corona 
@@ -30,11 +32,7 @@
             Pas zodra 4 spelers bij een potje zijn aangemeld kan het potje gestart worden. 
             Het spelen van een potje kan alleen als alle 4 de spelers zich bevinden in het speelscherm van het potje 
           </p>
-          <p>
-            Deze site betreft een persoonlijk project zonder commerciele doelstelling en wordt best-effort ontwikkeld.
-            Het spel heeft op dit moment een fase bereikt waarbij het goed gespeeld kan worden.
-
-          </p>
+          
           <p>
             Op de hoofdpagina van het spel bevindt zich de knop 'Toelichting'. 
             Hier is een gedetailleerde uitleg te vinden en een aantal tips om het spel goed te laten verlopen.
@@ -43,10 +41,13 @@
 
           <h5>Disclaimer</h5>
           <p>
-            
+            Deze site betreft een persoonlijk project zonder commerciele doelstelling en wordt best-effort ontwikkeld.
+            Het spel heeft op dit moment een fase bereikt waarbij het redelijk goed gespeeld kan worden.
+          </p>
+          <p>
             Iedereen is vrij om zich te registreren en het klaverjasspel te spelen. 
             Echter, ieder doet dit geheel op eigen risico en er kunnen geen rechten aan het gebruik
-            van dit spel worden ontleend. De beheerder kan iedere moment besluiten deze website te stoppen. 
+            van dit spel worden ontleend. De beheerder kan ieder moment besluiten deze website te stoppen. 
           </p>
           <p>
             Wees ervan bewust dat de beheerder zicht heeft op alle gespeelde slagen. 
@@ -168,14 +169,26 @@
         <b-button v-on:click="gotoInfo" block variant="info">Toelichting</b-button>
       </div>
 
+      <!-- <br><br>
+      <b-row>
+          <b-col><b-button v-on:click="gotoRemarks()" block variant="danger">Uitloggen</b-button></b-col>
+          <b-col> </b-col> 
+      </b-row> -->
+
     <br>
     <hr>
     
       <!-- <button  v-on:click="getWindowSize()" class="btn btn-primary"> Get window size  </button> -->
       <!-- <p>Current windowsize is {{ window_size.width }}, {{ window_size.height }} </p> -->
 
-      <br>
-      <p>versie: {{ appSettings.x_version}} </p>
+      <p>
+        Tip: lees eerst de 'Speeltips' onder het blok 'Toelichting'
+      </p>
+      <hr>
+
+      <p>
+        versie: {{ appSettings.x_version}} 
+      </p>
 
     </b-container>
     </div>

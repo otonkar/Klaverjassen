@@ -6,6 +6,11 @@
       <br>
       <h2>Wedstrijden</h2>
 
+      <hr>
+      <button  v-on:click="gotoHome()" class="btn btn-secondary"> Terug naar start pagina  </button>
+      <hr>
+
+
       <div>
         <b-button v-on:click="gotoMatchList()" block variant="info">Overzicht wedstrijden</b-button>
         <b-button v-on:click="gotoMatchCreate()" block variant="info">Nieuwe wedstrijd maken</b-button>
@@ -13,7 +18,7 @@
 
       <br>
       <hr>
-      <button  v-on:click="gotoHome()" class="btn btn-secondary"> Ga naar start pagina  </button>
+      
       <!-- <button  v-on:click="$router.go(-1)" class="btn btn-primary"> Ga naar home pagina  </button> -->
 
     </b-container>

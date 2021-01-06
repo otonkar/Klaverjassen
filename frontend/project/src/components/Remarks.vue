@@ -6,12 +6,10 @@
         <br>
         <h2> Berichten </h2>
 
-        <b-row>
-            <b-col><b-button block v-on:click="gotoHome()"  class="btn btn-secondary"> Terug  </b-button></b-col>
-            <b-col></b-col>
-        </b-row>
+        <hr>
+        <b-col><b-button v-on:click="gotoHome()"  class="btn btn-secondary"> Terug naar start pagina  </b-button></b-col>
+        <hr>
 
-        <br>
         <p>
           Op deze pagina kan de beheerder berichten plaatsen. 
           Ook kunnen gebruikers van dit spel opmerkingen plaatsen of feedback geven, zoals:

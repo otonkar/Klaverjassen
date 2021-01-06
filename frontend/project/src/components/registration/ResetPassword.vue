@@ -133,6 +133,10 @@
                         <button type="submit" v-on:click="doResetPassword()" class="btn btn-primary btn-block"> Instellen nieuw wachtwoord  </button>
                     </div> <!-- form-group// -->
 
+                    <hr>
+                    <button  v-on:click="gotoLogin()" class="btn btn-secondary"> Terug naar Login  </button>
+                    <hr>
+
 
 
 
@@ -140,7 +144,7 @@
 
             </article>
         </div> <!-- card.// -->
-              <p class="small text-muted">Coronaright, 2020</p>
+              <p class="small text-muted">Coronaright 2021</p>
 
       </div>
     

@@ -6,15 +6,21 @@
         <br>
         <h2>Details wedstrijd </h2>
         <hr>
-            {{ match_status }}, {{ register_status }}
+            <b-button v-on:click="gotoGamesOverview()" class="btn btn-secondary"> Terug naar potjes  </b-button>
         <hr>
+
+        <p>
+            {{ match_status }}, {{ register_status }}
+        </p>
+        <hr>
+
+
         <!-- <button  v-on:click="gotoMatchesList()" class="btn btn-secondary"> Terug  </button> -->
 
-          <b-row>
-            <b-col><b-button block v-on:click="gotoMatchesList()"  class="btn btn-secondary"> Naar wedstrijden  </b-button></b-col>
-            <b-col><b-button block v-on:click="gotoGamesOverview()" class="btn btn-success"> Naar potjes  </b-button></b-col>
-        </b-row>
-        <br>
+        <!-- <b-row>
+            <b-col><b-button block v-on:click="gotoGamesOverview()" class="btn btn-secondary"> Terug naar potjes  </b-button></b-col>
+            <b-col><b-button block v-on:click="gotoMatchesList()"  class="btn btn-secondary"> Terug naar wedstrijden  </b-button></b-col>
+        </b-row> -->
 
         <div>
 
@@ -269,23 +275,23 @@ export default {
 
 
             if (currentdate < match_start) {
-                this.match_status = 'wedstrijd nog niet gestart'
+                this.match_status = 'Wedstrijd nog niet gestart'
             } 
             
             if (currentdate >= match_start && currentdate < match_stop) {
-                this.match_status = 'wedstrijd is bezig'
+                this.match_status = 'Wedstrijd is gestart'
             } 
             
             if (currentdate >= match_stop) {
-                this.match_status = 'wedstrijd is gesloten'
+                this.match_status = 'Wedstrijd is gesloten'
             }
 
             //Determine the status of registering
             const register_stop = new Date(this.match_details.date_register_stop)
             if (currentdate < register_stop) {
-                this.register_status = 'inschrijving is open'
+                this.register_status = 'inschrijving is open.'
             } else {
-                this.register_status = 'inschrijving is gesloten'
+                this.register_status = 'inschrijving is gesloten.'
             }
 
             // If wedstrijd is closed than disable update

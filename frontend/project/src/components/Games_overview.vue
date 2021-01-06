@@ -5,41 +5,32 @@
 
         <br>
         <h2> Overzicht potjes </h2>
+
+        <hr>
+        <b-button v-on:click="gotoMatchesList()"  class="btn btn-secondary"> Terug naar wedstrijdoverzicht  </b-button></b-col>
+        <hr>
+
         <b>Wedstrijdnaam:</b> <span style="color:purple;font-weight:bold;font-size:1.4em"> {{ matchID }} </span>
         <p>
           <b>Status: </b> {{ status_text}}
         </p>
+        
         <hr>
-
-        <b-row>
-            <b-col><b-button block v-on:click="gotoMatchesList()"  class="btn btn-secondary"> Terug  </b-button></b-col>
-            <b-col></b-col>
-            <!-- <b-col><b-button block v-on:click="doLoad()"  class="btn btn-warning"> Refresh  </b-button></b-col> -->
-            <!-- <b-col><b-button block v-on:click="gotoMatchesList()" class="btn btn-success"> Naar potjes  </b-button></b-col> -->
-        </b-row>
-        <br>
-
         <b-row>
             <b-col><b-button block v-on:click="doCreateGame()" v-if="allow_game_create" class="btn btn-success"> Nieuw potje maken  </b-button></b-col>
-            <b-col><b-button block v-on:click="gotoMatchDetails(matchID)" class="btn btn-success"> Wedstrijd details  </b-button></b-col>
+            <b-col><b-button block v-on:click="gotoMatchDetails(matchID)" class="btn btn-success"> Bekijk wedstrijddetails  </b-button></b-col>
         </b-row>
-        <br>
+        <hr>
 
-
-        <!-- <div class="col text-center">
-            <b-button  v-on:click="doCreateGame()" v-if="allow_game_create" class="btn btn-success"> Nieuw potje maken  </b-button>
-        </div> -->
-
-        <br>
         <p> 
           Een nieuw potje kan worden aangemaakt als de registratieperiode nog niet verlopen is.
           Bij een bestaand potje, kan op een spelerpositie worden geklikt om je aan te melden. 
           Druk op de gele knop bij het potje om je weer af te melden.
-          Pas als 4 spelers bij een potje zijn aangemeld kan het potje gestart worden.
+          Pas als 4 spelers bij een potje zijn aangemeld kan het potje gestart worden. Klik op de balk van 
+          een potje om de score en gespeelde slagen te zien.
         </p>
 
         <hr>
-        <!-- <button  v-on:click="gotoMatchesList()" class="btn btn-secondary"> Terug  </button> -->
 
         <div v-for="game in games" v-bind:key="game.gameID" >
             <b-button v-if="game.gameStatus === 'uitgespeeld'"  @click="gotoGameScore(game.gameID)" block class="btn btn-danger"> Potje met ID = {{ game.gameID }}  </b-button>
@@ -49,10 +40,6 @@
                 <b-col><strong>Rondes: </strong> {{ game.legs_completed }} / {{ game.matchID.n_legs }}</b-col>
                 <b-col> <span style="color:blue;font-weight:bold;font-size:1.0em"> {{  game.gameStatus }} </span></b-col> 
             </b-row>
-            <!-- <b-row>
-                <b-col> <strong>Afgeronde rondes: </strong> {{ game.legs_completed }} / {{ game.matchID.n_legs }}</b-col> 
-                <b-col> , slag: {{ game.rounds_completed }} /8  </b-col>
-            </b-row> -->
             <b-row>
                 <b-col><strong>Potje gestart: </strong> {{  game.date_game_start }} </b-col> 
             </b-row>
@@ -77,6 +64,10 @@
 
              <hr>
         </div>
+
+  
+        <b-button v-on:click="gotoMatchesList()"  class="btn btn-secondary"> Terug naar wedstrijdoverzicht  </b-button></b-col>
+        <hr>
 
     </b-container>
 

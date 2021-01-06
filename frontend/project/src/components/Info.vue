@@ -1,8 +1,7 @@
 <template>
   <div class="Appinfo">
 
-
-    <b-button block v-on:click="gotoHome()"  class="btn btn-secondary"> Terug naar Home  </b-button>
+    <b-button block v-on:click="gotoHome()"  class="btn btn-secondary"> Terug naar start pagina  </b-button>
 
     <div>
         <b-card no-body>
@@ -574,7 +573,7 @@
             <b-tab title="Speeltips">
                 <b-card-text>
                     <p>
-                        Dit is spel is ter vermaak ontwikkelt 
+                        Dit spel is ter vermaak ontwikkeld 
                         en heeft op dit moment een fase bereikt waarbij het redelijk goed gespeeld kan worden. 
                         Toch ontbreken nog een aantal gewenste functionaliteiten en loopt er soms iets niet geheel goed. 
                         Mocht u bugs tegenkomen of tips en suggesties voor verbetering hebben dan kunt u die plaatsen in
@@ -711,6 +710,9 @@
             </b-tabs>
         </b-card>
     </div>
+
+    <b-button block v-on:click="gotoHome()"  class="btn btn-secondary"> Terug naar start pagina </b-button>
+    <br>
 
 
 

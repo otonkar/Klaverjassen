@@ -135,19 +135,33 @@ class MatchCreateSerializer(serializers.ModelSerializer):
 
         return value
 
-
-    def validate_date_match_stop(self, value):
+    def validate_date_match_start(self, value):
         '''
-        Validate that Match stop date is after Match start date
+        Validate that Match start date is a valid date inut
         '''
 
-        match_start = self.initial_data['date_match_start']
-        match_stop  =  self.initial_data['date_match_stop']
-        # print(match_stop <= match_start)
-        if match_stop <= match_start:
-            raise serializers.ValidationError('De wedstrijd stop datum moet later zijn dan de start datum')
+        print(self.initial_data['date_match_start'])
+        # match_start = self.initial_data['date_match_start']
+        # match_stop  =  self.initial_data['date_match_stop']
+        # # print(match_stop <= match_start)
+        # if match_stop <= match_start:
+        #     raise serializers.ValidationError('De wedstrijd start datum ingevuld worden.')
 
         return value
+
+
+    # def validate_date_match_start(self, value):
+    #     '''
+    #     Validate that Match stop date is after Match start date
+    #     '''
+
+    #     match_start = self.initial_data['date_match_start']
+    #     match_stop  =  self.initial_data['date_match_stop']
+    #     # print(match_stop <= match_start)
+    #     if match_stop <= match_start:
+    #         raise serializers.ValidationError('De wedstrijd stop datum moet later zijn dan de start datum')
+
+    #     return value
 
 
     def validate_date_register_stop(self, value):

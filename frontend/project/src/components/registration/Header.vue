@@ -38,7 +38,7 @@
                     </b-nav-item-dropdown> -->
 
                     <!-- <b-nav-item @click="showLogoutModal()">Uitloggen</b-nav-item> -->
-                    <b-button @click="gotoHome()" size="sm" class="my-2 my-sm-0 btn-primary" type="submit">Ga naar Home</b-button>
+                    <b-button @click="gotoHome()" size="sm" class="my-2 my-sm-0 btn-primary" type="submit">Ga terug naar start pagina</b-button>
                     <b-button @click="$bvModal.show('logout-modal')" size="sm" class="my-2 my-sm-0 btn-danger" type="submit">Uitloggen</b-button>
 
                 </b-navbar-nav>

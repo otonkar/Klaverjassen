@@ -5,48 +5,21 @@
 
       <br>
       <h2>Overzicht wedstrijden</h2>
-      <!-- {{ filterStatus }}
-      {{ match_list}} -->
 
       <hr>
       <button  v-on:click="gotoMatches()" class="btn btn-secondary"> Terug naar wedstrijd pagina  </button>
       <hr>
-      <!-- <input type="text" v-model="filterName" placeholder="Filter By Name"/> -->
-      <!-- <button  v-on:click="$router.go(-1)" class="btn btn-primary"> Ga naar home pagina  </button> -->
+      <p>
+        Op deze pagina ziet u een overzicht van alle geregistreerde wedstrijden, met tussen haakjes de gebruikersnaam 
+        van de eigenaar. Door op een wedstrijd te klikken komt u in het overzicht van de potjes.
+      </p>
+      <hr>
 
       <h5>Filter op wedstrijden</h5>
-      <!-- <div @click="gotoTest()">Test link</div> -->
 
       <p>
-        Om de lengte van de lijst gevonden wedstrijden in te perken kunt u filters gebruiken.
+       U kunt de lijst gevonden wedstrijden in perken door filters te gebruiken.
       </p>
-      <!-- <div>
-        <b-form inline>
-          <label class="sr-only" for="inline-form-input-name">Name</label>
-          <b-form-input
-            v-model="filterName"
-            id="filterName"
-            class="mb-1 mr-sm-2 mb-sm-0"
-            placeholder="Wedstrijdnaam"
-          ></b-form-input>
-
-          <label class="sr-only" for="inline-form-input-name">Owner</label>
-          <b-form-input
-            v-model="filterOwner"
-            id="filterOwner"
-            class="mb-1 mr-sm-2 mb-sm-0"
-            placeholder="Eigenaar wedstrijd"
-          ></b-form-input>
-
-          <b-form-select
-            id="filterStatus"
-            v-model="filterStatus"
-            :options="match_statusses"
-            required
-        ></b-form-select>
-
-        </b-form>
-      </div> -->
 
       <div>
         <b-form>
@@ -80,17 +53,7 @@
 
       <br>
 
-      <!-- Show Explanation on match status  -->
-      <!-- <b-jumbotron class="jumbotron" v-bind="{hidden: !show_explanation_status}">
-        <h5>Uitleg wedstrijd status</h5>
-
-        <br>
-        <b-row>
-            <b-col><b-button block @click="show_explanation_status=!show_explanation_status"   class="btn btn-secondary"> Sluit  </b-button></b-col>
-            <b-col></b-button></b-col>
-        </b-row>
-      </b-jumbotron> -->
-
+      <!-- Pop up Explanation of status -->
       <div>
         <b-modal hide-footer v-model="show_explanation_status">
           <h5>Uitleg wedstrijd status</h5>
@@ -138,13 +101,19 @@
             </b-table-simple>
           </div>
 
+          <p>
+            De registatie stop datum moet liggen voor de wedstrijd stop datum. De status waarbij de wedstrijd is gestopped, 
+            maar waarbij de registratie nog toegestaan is, kan daarom niet voorkomen.
+          </p>
+
           <b-button class="mt-3" block @click="show_explanation_status=!show_explanation_status" variant="secondary">Sluiten</b-button>
           <br>
 
           <p>
             De eigenaar van een wedstrijd heeft de mogelijkheid de start/stop datums aan te passen. 
             Hierdoor kan de status van een wedstrijd gewijzigd worden. Dit kan inhouden dat al potjes in een 
-            wedstrijd zijn gestart, terwijl daarna de wedstrijd start datum wordt aangepast naar een later tijdstip.
+            wedstrijd zijn gestart, terwijl daarna de wedstrijd start datum wordt aangepast naar tijdstip zodat nog 
+            geen potjes gestart mogen worden.
             
           </p>
           <p>
@@ -213,7 +182,9 @@
 
       </div>
 
-      
+      <hr>
+      <button  v-on:click="gotoMatches()" class="btn btn-secondary"> Terug naar wedstrijd pagina  </button>
+      <hr>
 
     </b-container>
 
@@ -240,7 +211,7 @@ export default {
       filterDescription: '',
       show_explanation_status: false,     // Show jumbotron with explanation
       match_statusses: [
-        {'text': 'Geen filter op status', 'value': ''},
+        {'text': 'Selecteer filter op status', 'value': ''},
         {'text': 'Status blauw', 'value': 'primary'},
         {'text': 'Status geel', 'value': 'warning'},
         {'text': 'Status grijs', 'value': 'secondary'},

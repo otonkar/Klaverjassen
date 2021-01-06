@@ -141,7 +141,7 @@
 
             </article>
         </div> <!-- card.// -->
-              <p class="small text-muted">Coronaright, 2020</p>
+              <p class="small text-muted">Coronaright, 2021</p>
 
       </div>
     
@@ -177,7 +177,7 @@
                 matchID             : 'De wedstrijd naam moet ingevuld zijn',
                 description         : '',
                 n_legs              : 'Het aantal rondes in een wedstrijd moet tussen de 1 en 100 liggen',
-                date_match_start    : false,
+                date_match_start    : 'De start datum moet ingevuld worden.',
                 date_match_stop     : 'De stop datum moet liggen na de start datum van de wedstrijd',
                 date_register_stop  : 'Het stoppen van registeren moet liggen voor de stop datum van de wedstrijd'
             },
