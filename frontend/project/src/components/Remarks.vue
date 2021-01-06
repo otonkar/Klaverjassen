@@ -53,7 +53,7 @@
 
         <b-row>
             <b-col><b-button block @click="doStartRemark()" variant="primary"  class="btn"> Plaats bericht </b-button></b-col>
-            <b-col><b-button block @click="doStopRemark()"  class="btn btn-warning"> Opschonen bericht  </b-button></b-col>
+            <b-col><b-button block @click="doStopRemark()"  class="btn btn-warning"> Verwijder tekst  </b-button></b-col>
         </b-row>
         <hr>
 
@@ -61,7 +61,7 @@
 
         <div v-for="remark in remarks" v-bind:key="remark.remarkID">
           <p>
-            ID: {{remark.remarkID }} <br>
+            Bericht: {{remark.remarkID }} <br>
             gemaakt door: <b>{{ remark.user.username }}</b>, 
             {{remark.date_created}}
           </p>

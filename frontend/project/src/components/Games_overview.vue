@@ -32,8 +32,8 @@
 
         <br>
         <p> 
-          Er kan een nieuw potje worden aangemaakt als de registratieperiode nog niet verlopen is. <br> 
-          Bij een bestaand potje, kan op een spelerpositie worden geklikt. Je meldt je daarmee aan op die positie. 
+          Een nieuw potje kan worden aangemaakt als de registratieperiode nog niet verlopen is.
+          Bij een bestaand potje, kan op een spelerpositie worden geklikt om je aan te melden. 
           Druk op de gele knop bij het potje om je weer af te melden.
           Pas als 4 spelers bij een potje zijn aangemeld kan het potje gestart worden.
         </p>
@@ -147,7 +147,7 @@ export default {
           if (this.$route.params.status_color) {
             this.status_color = this.$route.params.status_color;
             if (this.status_color === 'success') {
-              this.status_text = 'Groen - wedstrijd is gestart, maar nog niet gestopt en registratie mag nog plaatsvinden. \
+              this.status_text = 'Groen - wedstrijd is gestart en nog niet gestopt. Registratie mag nog plaatsvinden. \
                                 Spelers mogen potjes aanmaken, potjes starten en zich aan/af melden bij potjes.'
             }
             if (this.status_color === 'danger') {
@@ -168,7 +168,7 @@ export default {
                                 Wel mag een reeds gestart potje worden uitgespeeld.'
             }
             if (this.status_color === 'warning') {
-              this.status_text = 'Geel -  wedstrijd is gestart, maar nog niet gestopt en registratie mag niet meer plaatsvinden. \
+              this.status_text = 'Geel -  wedstrijd is gestart en nog niet gestopt. Registratie mag niet meer plaatsvinden. \
                                 Spelers mogen potjes aanmaken en zich niet meer aan- en afmelden bij een potje. \
                                 Wel mag een potje gestart worden om te spelen.      '
             }
@@ -427,3 +427,5 @@ export default {
   }
 }
 </script>
+
+

@@ -271,7 +271,8 @@
                     <p>
                         Via de knop 'Overzicht wedstrijden' krijgt u een overzicht te zien van alle wedstrijden die 
                         zijn aangemaakt door alle spelers. De wedstrijd wordt getoond in een bepaalde kleur afhankelijk van de 
-                        status waarin de wedstrijd zich bevindt.
+                        status waarin de wedstrijd zich bevindt. in de balk staat de naam van de wedstrijd en tussen haakjes
+                        de gebruikersnaam van de eigenaar van deze wedstrijd.
                     </p>
                     <p>
                         <ul>

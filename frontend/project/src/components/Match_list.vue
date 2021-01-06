@@ -80,21 +80,130 @@
 
       <br>
 
-       <!-- <button  v-on:click="clearFilters()" class="btn btn-secondary"> Verwijder filters  </button> -->
-       <b-button v-on:click="clearFilters()" variant="primary" class="btn"> Verwijder filters  </b-button>
+      <!-- Show Explanation on match status  -->
+      <!-- <b-jumbotron class="jumbotron" v-bind="{hidden: !show_explanation_status}">
+        <h5>Uitleg wedstrijd status</h5>
+
+        <br>
+        <b-row>
+            <b-col><b-button block @click="show_explanation_status=!show_explanation_status"   class="btn btn-secondary"> Sluit  </b-button></b-col>
+            <b-col></b-button></b-col>
+        </b-row>
+      </b-jumbotron> -->
+
+      <div>
+        <b-modal hide-footer v-model="show_explanation_status">
+          <h5>Uitleg wedstrijd status</h5>
+          <p>
+              Wedstrijden hebben een status, aangegeven door een kleur.
+              De status is afhankelijk van de combinatie van start/stop datum van de wedstrijd en of de registratie stop 
+              datum gepasseerd is (regisration periode is Open/Gesloten). Onderstaande tabel geeft een overzicht.
+          </p>
+
+          <div class="Table">
+            <b-table-simple small caption-top responsive>
+                
+                <colgroup><col></colgroup>
+                <colgroup><col><col></colgroup>
+                <b-thead head-variant="light">
+                <b-tr >
+                    <b-th colspan="1" ></b-th>
+                    <b-th class="text-center" colspan="2" variant="">Registratie</b-th>
+                </b-tr>
+                <b-tr >
+                    <b-th class="text-right"></b-th>
+                    <b-th class="text-center" variant="">Open</b-th>
+                    <b-th class="text-center" variant="">Gesloten</b-th>
+
+                </b-tr>
+                </b-thead>
+                <b-tbody >
+                    <b-tr>
+                      <b-th variant="light" class="text-right"> Niet gestart </b-th>
+                      <b-th variant="light" class="text-center"> Blauw </b-th>
+                      <b-th variant="light" class="text-center"> Grijs </b-th>
+                    </b-tr>
+                    <b-tr>
+                      <b-th variant="light" class="text-right"> Gestart </b-th>
+                      <b-th variant="light" class="text-center"> Groen </b-th>
+                      <b-th variant="light" class="text-center"> Geel </b-th>
+                    </b-tr>
+                    <b-tr>
+                      <b-th variant="light" class="text-right"> Gestopt </b-th>
+                      <b-th variant="light" class="text-center">  -  </b-th>
+                      <b-th variant="light" class="text-center"> Rood </b-th>
+                    </b-tr>
+                </b-tbody>
+
+            </b-table-simple>
+          </div>
+
+          <b-button class="mt-3" block @click="show_explanation_status=!show_explanation_status" variant="secondary">Sluiten</b-button>
+          <br>
+
+          <p>
+            Hieronder volgt een nadere uitleg.
+            <ul>
+              <li>
+                  <b>Blauw:</b> <br>
+                  Wedstrijd is nog niet gestart, registratie bij een potje mag nog plaatsvinden. <br>
+                  Spelers mogen potjes aanmaken, zich aan- en afmelden bij een potje.
+                  Nieuwe potjes mogen niet gestart worden om te spelen. 
+                  Wel mag een reeds gestart potje worden uitgespeeld.
+              </li>
+              <li>
+                  <b>Grijs:</b> <br>
+                  Wedstrijd is nog niet gestart, registratie mag niet meer plaatsvinden. <br>
+                  Spelers mogen geen potjes aanmaken, zich aan- en afmelden bij een potje of een potje starten om te spelen.
+                  Wel mag een reeds gestart potje worden uitgespeeld.
+                  
+              </li>
+              <li>
+                  <b>Groen: </b> <br> 
+                  Wedstrijd is gestart, maar nog niet gestopt en registratie mag nog plaatsvinden. <br>
+                  Spelers mogen potjes aanmaken, potjes starten en zich aan/af melden bij potjes.
+              </li>
+              <li>
+                  <b>Geel:</b> <br>
+                  Wedstrijd is gestart, maar nog niet gestopt en registratie mag niet meer plaatsvinden. <br>
+                  Spelers mogen potjes aanmaken en zich niet meer aan- en afmelden bij een potje.
+                  Wel mag een potje gestart worden om te spelen.                               
+              </li>
+              <li>
+                  <b>Rood:</b> <br>
+                  Wedstrijd is gestopt. <br>
+                  Spelers mogen geen potjes meer aanmaken of zich aanmelden bij potje.
+                  Potjes mogen niet meer gestart worden. Reeds gestarte potjes mogen wel afgespeeld worden.
+                  Spelers van buiten dit potje mogen de gespeelde slagen inzien.
+              </li>
+            </ul>
+          </p>
+
+          <b-button class="mt-3" block @click="show_explanation_status=!show_explanation_status" variant="secondary">Sluiten</b-button>
+        </b-modal>
+        
+      </div>
+
+       <!-- <b-button v-on:click="clearFilters()" variant="primary" class="btn"> Verwijder filters  </b-button>  -->
+
+       <b-row>
+            <b-col><b-button v-on:click="clearFilters()" block variant="primary" class="btn"> Verwijder filters  </b-button></b-col>
+            <b-col><b-button @click="show_explanation_status=!show_explanation_status"  block variant="secondary" class="btn"> Uitleg status  </b-button></b-col>
+      </b-row>
 
 
       <hr>
       <h4>Getoonde wedstrijden ({{filterMatches.length }}/{{count}})</h4>
       <br>
-  
 
       <div v-for="item in filterMatches" v-bind:key="item.matchID">
     
         <!-- <b-button v-on:click="gotoMatchDetails(item.matchID)" block v-bind:variant="item.status_color">{{ item.matchID }} ({{ item.owner.username }})</b-button> -->
         <b-button v-on:click=" gotoGamesOverview(item.matchID, item.status_color)" block v-bind:variant="item.status_color">{{ item.matchID }} ({{ item.owner.username }})</b-button>
-        <b>Omschrijving: </b> {{item.description | shorten(600)}}
-        <br><br>
+        <div class="comment">
+          <b>Omschrijving: </b> {{item.description | shorten(600)}}
+        </div>
+        <br>
 
       </div>
 
@@ -123,6 +232,7 @@ export default {
       filterOwner: '',          // used to filter on owner of match
       filterStatus: '',
       filterDescription: '',
+      show_explanation_status: false,     // Show jumbotron with explanation
       match_statusses: [
         {'text': 'Geen filter op status', 'value': ''},
         {'text': 'Status blauw', 'value': 'primary'},
@@ -251,3 +361,16 @@ export default {
   }
 }
 </script>
+
+<style scoped lang='scss'>
+
+.comment {
+  margin: 2px 10px 0px 10px;
+  font-size: 0.9em;
+  color: #555555;
+  font-family: sans-serif;
+  line-height: 1.2;
+  // font-weight: bold;
+}
+
+</style>

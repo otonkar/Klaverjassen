@@ -78,6 +78,7 @@
                 </div> <!-- form-group// -->
 
                 <!-- ***** date_match_start ***** -->
+                <h6>Wedstrijd start datum</h6>
                 <div class="form-group">
                     <div class="input-group">
                         <!-- <input ref="date_match_start" v-model="input.date_match_start" class="form-control" placeholder="Het aantal rondes per wedstrijd" type="text"> -->
@@ -91,12 +92,12 @@
                         </b-tooltip> -->
                     </div> <!-- input-group.// -->
                     <small id="passwordHelpBlock" class="form-text text-muted">
-                        Start datum wedstrijd. <br>
-                        Dit is de datum vanaf wanneer de potjes van deze wedstrijd gespeeld mogen worden.           
+                        Wedstrijd start datum is de datum vanaf wanneer de potjes van deze wedstrijd gestart mogen worden.           
                     </small>
                 </div> <!-- form-group// -->
 
                 <!-- ***** date_match_stop ***** -->
+                 <h6>Wedstrijd stop datum</h6>
                 <div class="form-group">
                     <div class="input-group">
                         <!-- <input ref="date_match_stop" v-model="input.date_match_stop" class="form-control" placeholder="Het aantal rondes per wedstrijd" type="text"> -->
@@ -107,11 +108,12 @@
                         <div ref="f-date_match_stop" class="invalid-feedback "> {{ error_message["date_match_stop"] }} </div>
                     </div> <!-- input-group.// -->
                     <small id="passwordHelpBlock" class="form-text text-muted">
-                        Stop datum wedstrijd is de datum vanaf wanneer geen potjes van deze wedstrijd gespeeld mogen worden.            
+                        Wedstrijd stop datum is de datum vanaf wanneer geen potjes van deze wedstrijd gespeeld mogen worden.            
                     </small>
                 </div> <!-- form-group// -->
 
                 <!-- ***** date_register_stop ***** -->
+                 <h6>Registreer stop datum</h6>
                 <div class="form-group">
                     <div class="input-group">
                         <!-- <input ref="date_register_stop" v-model="input.date_register_stop" class="form-control" placeholder="Het aantal rondes per wedstrijd" type="text"> -->
@@ -122,7 +124,8 @@
                         <div ref="f-date_register_stop" class="invalid-feedback "> {{ error_message["date_register_stop"] }} </div>
                     </div> <!-- input-group.// -->
                     <small id="passwordHelpBlock" class="form-text text-muted">
-                        Stop registeer datum is de datum vanaf wanneer de inschrijving op deze wedstrijd stopt.            
+                        Registreer stop datum is de datum vanaf wanneer geen nieuwe potjes mogen worden aangemaakt en 
+                        spelers zich niet meer mogen aan- of afmelden bij een potje.           
                     </small>
                 </div> <!-- form-group// -->
 
