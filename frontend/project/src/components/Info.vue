@@ -53,8 +53,14 @@
                         
                     </p>
 
-                    <h5>Rotterdamse spelvariant</h5>
+                    <h5>Spelvariant</h5>
                     <p>
+                        Het is aan de spelers zelf om te bepalen of ze een Rotterdamse speelvariant of andere variant willen 
+                        spelen. Het spel kent de slag toe aan de speler die de hoogste kaart heeft gespeeld (rekening 
+                        houdend met wie is uitgekomen en wat de troefkleur is). Als spelers zich niet aan de regels van 
+                        de gewenste spelvariant houden, dan moeten spelers die zelf melden via 'Melden Verzaken'.
+                    </p>
+                    <!-- <p>
                         De Rotterdamse variant van het klaverjasspel wordt gespeeld met de volgende regels
                         <ul>
                             <li>Dezelfde speelkleur moet worden gespeeld</li>
@@ -63,7 +69,7 @@
                                 Kan dat niet, dan mag je een lagere troefkaart neerleggen.
                             </li>
                         </ul> 
-                    </p>
+                    </p> -->
 
                     <h5>Verplicht aannemen</h5>
                     <p>

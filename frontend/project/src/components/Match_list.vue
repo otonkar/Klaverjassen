@@ -97,7 +97,7 @@
           <p>
               Wedstrijden hebben een status, aangegeven door een kleur.
               De status is afhankelijk van de combinatie van start/stop datum van de wedstrijd en of de registratie stop 
-              datum gepasseerd is (regisration periode is Open/Gesloten). Onderstaande tabel geeft een overzicht.
+              datum gepasseerd is (registratie periode is Open/Gesloten). Onderstaande tabel geeft een overzicht.
           </p>
 
           <div class="Table">

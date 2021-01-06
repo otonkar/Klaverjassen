@@ -19,13 +19,14 @@
 
           <h5>Het klaverjas spel</h5>
           <p>
-            Met dit spel kan op afstand (on-line) met elkaar worden geklaverjast in de Rotterdamse variant.
+            Met dit spel kan op afstand (on-line) met elkaar worden geklaverjast.
             Er kan een wedstrijd worden aangemaakt, waarbinnen vervolgens 1 of meerdere tafels/potjes kunnen worden gespeeld.
             Kenmerk is dat <b>alle potjes binnen dezelfde wedstrijd met exact dezelfde set aan gedeelde kaarten 
             wordt gespeeld</b>. Hierdoor kunnen de verschillende potjes binnen een wedstrijd op een 'eerlijke' manier met elkaar worden vergeleken.
           </p>
           <p>
-            Spelers kunnen zich registeren bij deze website en na inloggen zich aanmelden bij een potje. 
+            Spelers kunnen zich registeren bij deze website en na inloggen een wedstrijd of potje aanmaken en 
+            zich aanmelden bij een potje. 
             Pas zodra 4 spelers bij een potje zijn aangemeld kan het potje gestart worden. 
             Het spelen van een potje kan alleen als alle 4 de spelers zich bevinden in het speelscherm van het potje 
           </p>

@@ -54,10 +54,10 @@
                 <b-col> , slag: {{ game.rounds_completed }} /8  </b-col>
             </b-row> -->
             <b-row>
-                <b-col><strong>Datum potje gestart: </strong> {{  game.date_game_start }} </b-col> 
+                <b-col><strong>Potje gestart: </strong> {{  game.date_game_start }} </b-col> 
             </b-row>
             <b-row>
-                <b-col><strong>Datum potje gestopt: </strong> {{ game.date_game_end }} </b-col>
+                <b-col><strong>Potje gestopt: </strong> {{ game.date_game_end }} </b-col>
             </b-row>
             <div v-if="game.gameStatus === 'uitgespeeld'">
               <b-row>
