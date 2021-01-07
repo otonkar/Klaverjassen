@@ -85,7 +85,9 @@
                 </b-tr> -->
                 </b-tfoot>
             </b-table-simple>
+            <div class="comment">De groen gekleurde speler speelde de eerste kaart.</div>
         </div>
+        
 
          <b-button variant="primary" @click="doCloseSlagen()" >Sluiten</b-button>
 
@@ -358,6 +360,15 @@ export default {
 
 .Table {
     background-color: white;
+}
+
+.comment {
+  margin: 2px 10px 7px 10px;
+  font-size: 0.9em;
+  color: #555555;
+  font-family: sans-serif;
+  line-height: 1.2;
+  // font-weight: bold;
 }
 
 
