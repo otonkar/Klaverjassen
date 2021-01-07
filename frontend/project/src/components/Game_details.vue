@@ -480,7 +480,7 @@ export default {
         // First get the ID of the user, as registered in django
         await api_request({
             method: 'get',
-            url: this.appSettings.url_user_details + this.user.username 
+            url: this.appSettings.url_user_details + this.user.username + '/'
             // data: this.input
         })
         .then(response => {
@@ -530,15 +530,22 @@ export default {
 
         // // console.log(this.game.gameID, this.user.id )
 
+        var data = {
+                "position": position,
+                "gameID": this.game.gameID,
+                "player": this.user.id
+            }
+
 
         await api_request({
             method: 'post',
             url: this.appSettings.url_game_players_create,
-            data: {
-                position: position,
-                gameID: this.game.gameID,
-                player: this.user.id
-            }
+            data: data
+            // data: {
+            //     position: position,
+            //     gameID: this.game.gameID,
+            //     player: this.user.id
+            // }
         })
         .then(response => {
             // console.log('Status create player: ',response.status)
