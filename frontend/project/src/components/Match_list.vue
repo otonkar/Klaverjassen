@@ -142,7 +142,7 @@
                   <b>Geel:</b> <br>
                   Wedstrijd is gestart, maar nog niet gestopt en registratie mag niet meer plaatsvinden. <br>
                   Spelers mogen potjes aanmaken en zich niet meer aan- en afmelden bij een potje.
-                  Wel mag een potje gestart worden om te spelen.                               
+                  Wel mag een potje gestart worden om te spelen.                                
               </li>
               <li>
                   <b>Rood:</b> <br>
@@ -200,6 +200,7 @@ export default {
   data () {
     return {
       title: 'Match list page',
+      test: '', 
       count: 0,   // Count the number of match results
       test: {},
       match_list: [],
@@ -228,12 +229,14 @@ export default {
           this.$router.push({ name: 'Home' })
       } else {
           // make full screen on mobile/tablet
-          var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+          var isMobile = /Android/i.test(navigator.userAgent);
           if (isMobile) {
-            // document.body.requestFullscreen()
             document.documentElement.requestFullscreen()
           }
-          
+          // console.log('Navigator:', navigator.appCodeName)
+          // console.log('Navigator:', navigator.userAgent)
+          // this.test = navigator.userAgent
+
           this.user.show_header = true
           this.$store.dispatch('updateUser', this.user)
           this.count = 0

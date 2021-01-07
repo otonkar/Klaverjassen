@@ -510,7 +510,7 @@ export default {
 
         } else {
             //Check that screen is mobile. If so, set full screen
-            var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            var isMobile = /Android/i.test(navigator.userAgent);
             if (isMobile) {
               // document.body.requestFullscreen()
               document.documentElement.requestFullscreen()
@@ -640,10 +640,7 @@ export default {
 
     deactivated: function () { 
       // Exit the full screen
-      // var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      //       if (isMobile) {
-      //          document.exitFullscreen()
-      //       }
+
 
       // Destroy the websocket connection when leaving this page.  
       this.disconnectWS()      
@@ -778,7 +775,7 @@ export default {
         doCloseTroefAlert: function () {
           this.modalShow = false
           //Check that screen is mobile. If so, set full screen
-          var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+          var isMobile = /Android/i.test(navigator.userAgent);
           if (isMobile) {
             // document.body.requestFullscreen()
             document.documentElement.requestFullscreen()
@@ -913,11 +910,7 @@ export default {
         doGoBack: function () {
             // Disconnect from websocket and Go back to the games overview
             // this.disconnectWS()
-            // var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            // if (isMobile) {
-            //   document.exitFullscreen()
-            // }
-            
+
             this.$router.push({ name: 'Games_overview' })
         },
 
@@ -969,20 +962,12 @@ export default {
             } else {
                 // if (alert('Troef mag alleen aangepast worden door speler die aan de beurt is. Ook als het spel begonnen is mag de troef niet aangepast worden.')) { 
                 //   // console.log('ja')
-                // } else {
-                //   var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-                //   if (isMobile) {
-                //     document.body.requestFullscreen()
-                //   }
-                // }
+                // } 
 
                 this.modalShow = true
                 // alert('Troef mag alleen aangepast worden door speler die aan de beurt is. Ook als het spel begonnen is mag de troef niet aangepast worden.')
                 // //Check that screen is mobile. If so, set full screen
-                // var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-                // if (isMobile) {
-                //   document.body.requestFullscreen()
-                // }
+
             }//END if/else
         },
 

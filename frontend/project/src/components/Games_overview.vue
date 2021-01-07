@@ -125,7 +125,7 @@ export default {
       } else {
 
           //Check that screen is mobile. If so, set full screen
-          var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+          var isMobile = /Android/i.test(navigator.userAgent);
           if (isMobile) {
             // document.body.requestFullscreen()
             document.documentElement.requestFullscreen()

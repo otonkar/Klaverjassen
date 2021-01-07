@@ -141,7 +141,7 @@
 
             </article>
         </div> <!-- card.// -->
-              <p class="small text-muted">Coronaright, 2021</p>
+              <p class="small text-muted">Coronaright 2021</p>
 
       </div>
     

@@ -10,6 +10,11 @@
               <button  v-on:click="gotoLogin()" class="btn btn-primary"> Ga naar Login pagina  </button>
           </div>
           <hr>
+          <p>
+            <b>Op dit moment werkt het spel niet goed met Safari browsers op iPhone/iPad. Gebruik Android of laptop met 
+              Chrome/Firefox.
+            </b>
+          </p>
           <br>
           <h3>Welkom bij Klaverjasfun.nl</h3>
           <p>
@@ -220,7 +225,7 @@ export default {
 
     } else {
       //Check that screen is mobile. If so, set full screen
-      var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      var isMobile = /Android/i.test(navigator.userAgent);
       if (isMobile) {
         // document.body.requestFullscreen()
         document.documentElement.requestFullscreen()
