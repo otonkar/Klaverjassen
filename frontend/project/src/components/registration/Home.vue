@@ -10,11 +10,6 @@
               <button  v-on:click="gotoLogin()" class="btn btn-primary"> Ga naar Login pagina  </button>
           </div>
           <hr>
-          <p>
-            <b>Op dit moment werkt het spel niet goed met Safari browsers op iPhone/iPad. Gebruik Android of laptop met 
-              Chrome/Firefox.
-            </b>
-          </p>
           <br>
           <h3>Welkom bij Klaverjasfun.nl</h3>
           <p>
