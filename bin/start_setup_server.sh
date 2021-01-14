@@ -26,6 +26,7 @@ ssh-keygen -t rsa
 ### Copy the public key to the remote host for root
 # -o IdentitiesOnly for avoiding "Too many authentication failures"
 ssh-copy-id -i $HOME/.ssh/id_rsa.pub -o IdentitiesOnly=yes  root@$SERVER
+# ssh-copy-id -p 44933 -i $HOME/.ssh/id_ed25519 -o IdentitiesOnly=yes  ole@$SERVER
 #ssh-copy-id -i ~/.ssh/id_rsa.pub 78.47.123.131    # This is for the current user on local machine (like ole)
 
 

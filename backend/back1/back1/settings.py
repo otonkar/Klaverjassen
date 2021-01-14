@@ -64,6 +64,9 @@ if ENV == 'development':
     }
     MIN_LOG_LEVEL = 'DEBUG'
 
+    # @ole: to support CORS
+    CORS_ORIGIN_ALLOW_ALL = True
+
 #####################################################################################
 # load the settings that are specific for production.
 if ENV == 'production':
@@ -81,6 +84,12 @@ if ENV == 'production':
         }
     }
     MIN_LOG_LEVEL = 'INFO'
+
+    # @ole: to support CORS
+    CORS_ALLOWED_ORIGINS = [
+        "https://klaverjasfun.nl",
+        "http://localhost:80"
+    ]
 
 
 # Application definition
@@ -176,8 +185,6 @@ STATIC_URL = '/static/'
 #######################################################################################
 ########### Additional settings #######################################################
 
-# @ole: to support CORS
-CORS_ORIGIN_ALLOW_ALL = True
 
 # @ole: rest-framework settings
 REST_FRAMEWORK = {

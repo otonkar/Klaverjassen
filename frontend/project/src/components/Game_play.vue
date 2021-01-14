@@ -1151,7 +1151,7 @@ export default {
 
         doUpdatePlayedCard: async function (data) {
             // This function is executed when a 'play_card' message is received over the websocket.
-            // Who is next to play is update, along with the count of cards that have been played in this round
+            // Who is next to play is updated, along with the count of cards that have been played in this round
 
             // Store these updated values in the global variables.
             this.count_cards_played = data.count_cards_played
