@@ -86,10 +86,11 @@ if ENV == 'production':
     MIN_LOG_LEVEL = 'INFO'
 
     # @ole: to support CORS
-    CORS_ALLOWED_ORIGINS = [
-        "https://klaverjasfun.nl",
-        "http://localhost:80"
-    ]
+    # CORS_ALLOWED_ORIGINS = [
+    #     "https://klaverjasfun.nl",
+    #     "http://localhost:80"
+    # ]
+    CORS_ORIGIN_ALLOW_ALL = True
 
 
 # Application definition
