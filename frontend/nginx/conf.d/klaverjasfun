@@ -1,5 +1,6 @@
 ##
-#  ----- FOR DOCKER setup -----
+#  ----- Not for docker setup -----
+# put this file in /etc/nginx/sites-available
 # 
 # You should look at the following URL's in order to grasp a solid understanding
 # of Nginx configuration files in order to fully unleash the power of Nginx.
@@ -23,7 +24,8 @@
 server {
 
 	server_name klaverjasfun.nl;
-	root /app/dist;
+	# root /app/dist;
+  root /var/www/klaverjasfun/dist;
 
 		location / {
 						# First attempt to serve request as file, then
@@ -56,11 +58,11 @@ server {
     server_name  klaverjasfun.nl;
 
     location / {
-        proxy_pass http://daphne:6000;
+        proxy_pass http://localhost:6000;
     }
 
 	location /ws/game {
-        proxy_pass http://daphne:6000;
+        proxy_pass http://localhost:6000;
         proxy_http_version 1.1;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
