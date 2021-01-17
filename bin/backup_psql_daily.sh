@@ -15,8 +15,12 @@
 ###
 
 ### Set variables
-BACKUP_DIR="/tmp"
+# folder where the backups are created
+# BACKUP_DIR="/tmp"       #for in docker images
+BACKUP_DIR="/var/backups/psql"
+# the number of backups that must be kept before overwriting
 N_BACKUP=1
+# the name of the backup.
 BASE_NAME="_D_backup.dump"
 
 GREP_STRING="grep $BASE_NAME"
@@ -25,7 +29,9 @@ GREP_STRING="grep $BASE_NAME"
 ### Create a new backup in the backup folder
 cd $BACKUP_DIR
 now=$(date +"%Y_%m_%d_%H-%M-%S")
-pg_dump -U postgres db_klaverjas > $now$BASE_NAME
+sudo -u postgres pg_dump db_klaverjas > $now$BASE_NAME
+# sudo pg_dump -U postgres db_klaverjas > $now$BASE_NAME
+
 
 ### Check the number of backup files in the folder
 

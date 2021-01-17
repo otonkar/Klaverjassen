@@ -122,39 +122,9 @@ echo "  "
 ssh -t root@$SERVER "cd /mybin && chmod +x *.sh && ./$INSTALL_PACKAGES"
 
 
-echo "  "
-echo "**** Install Redis ****"
-echo "  "
-sudo apt install redis-server
-## in /etc/redis/redis.conf   set 'supervised no' to 'supervised systemd'
-sudo sed -i '/supervised no/c\supervised systemd' /etc/redis/redis.conf
-
-
-echo "  "
-echo "**** Install Nodejs and NPM  ****"
-echo "  "
-sudo apt install nodejs
-sudo apt install npm
-## check version
-echo "nodejs version: "
-nodejs -v
-echo "npm version :"
-npm --version
-
-
-echo "  "
-echo "**** Build Vue frontend  ****"
-echo "  "
-cd /code/Klaverjassen/frontend/project
-npm install
-npm audit fix
-# Create dist folder with production frontend.
-npm run build
-## Make sure that when Nginx is installed that the dist folder is move to the correct location
-sudo mkdir -p /var/www/klaverjasfun
-sudo cp -R /code/Klaverjassen/frontend/project/dist /var/www/klaverjasfun
-
-
-
+################################
+###############################
 rsync -rvz test.sh root@$SERVER:/mybin/
 ssh -t root@$SERVER "cd /mybin && chmod +x *.sh && ./test.sh"
+
+

@@ -7,6 +7,7 @@
 
 echo "****** Start of test script *****"
 
-echo "  "
-echo "**** Install Nginx  ****"
-echo "  "
+
+
+
+

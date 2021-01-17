@@ -1,0 +1,29 @@
+##
+ # Settings to be used temporarily when Certbot needs to be run.
+ # this will later be replaced by the actual settings file
+##
+
+
+server {
+
+	server_name klaverjasfun.nl;
+  root /var/www/klaverjasfun/dist;
+
+		location / {
+						# First attempt to serve request as file, then
+						# as directory, then fall back to displaying a 404.
+						try_files $uri $uri/ /index.html =404;
+		}
+
+		location /nginx_status {
+						# Turn on stats
+						stub_status on;
+						access_log   off;
+						# only allow access from 145.53.40.4 #
+						allow 145.53.40.4;
+						deny all;
+		}
+
+
+}
+
