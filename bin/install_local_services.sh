@@ -159,10 +159,12 @@ echo "**** Install supervisor  ****"
 echo "  "
 sudo apt install supervisor
 ### copy the settings to the supervisor folder
-cp /code/Klaverjassen/bin/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+cp /code/Klaverjassen/bin/daphne.conf /etc/supervisor/conf.d/daphne.conf
+### update the conf files
+supervisorctl update
+supervisorctl reload
+supervisorctl start daphne
 
-
-##@@@@@  Add supervisor start
 
 
 #################################################################################
