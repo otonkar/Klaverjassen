@@ -50,8 +50,8 @@
         <br>
 
         <b-row>
-            <b-col><b-button block @click="doStartRemark()" variant="primary"  class="btn"> Plaats bericht </b-button></b-col>
             <b-col><b-button block @click="doStopRemark()"  class="btn btn-warning"> Verwijder tekst  </b-button></b-col>
+            <b-col><b-button block @click="doStartRemark()" variant="primary"  class="btn"> Plaats bericht </b-button></b-col>
         </b-row>
         <hr>
 
