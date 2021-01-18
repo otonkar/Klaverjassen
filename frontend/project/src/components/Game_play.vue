@@ -2,7 +2,7 @@
     <div class="Appgameplay o_fullscreen">
 
         <div class="gameID">
-          Game: {{ game.gameID}}
+          Potje: {{ game.gameID}}
         </div>
 
         <div class="leg">

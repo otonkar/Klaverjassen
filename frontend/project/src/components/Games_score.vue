@@ -4,7 +4,7 @@
     <b-container v-if="isLoaded" >
 
         <br>
-        <h2>Score game {{ gameID }} </h2>
+        <h2>Score potje {{ gameID }} </h2>
         <hr>
 
         <b-row>
