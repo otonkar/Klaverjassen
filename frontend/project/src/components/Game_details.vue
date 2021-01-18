@@ -28,7 +28,7 @@
 
         <b-row>
             <b-col><b-button block @click="doStopMail()"  class="btn btn-danger"> Stoppen  </b-button></b-col>
-            <b-col><b-button block v-on:click="doSendMail()"  class="btn btn-success"> Verstuur mail  </b-button></b-col>
+            <b-col><b-button block v-on:click="doSendMail()" variant="primary" class="btn"> Verstuur mail  </b-button></b-col>
         </b-row>
     </b-jumbotron>
 

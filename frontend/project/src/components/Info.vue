@@ -597,7 +597,8 @@
                         Dit kan vanaf een PC, laptop, tablet of mobiele telefoon. 
                         Ervaring dusverre geeft aan dat het spel goed werkt met Google Chrome, 
                         Firefox Opera en Vivaldi browsers. <br>
-                        Bekend is dat de huidige versie niet goed samenwerkt met Apple apparatuur en Internet Explorer. 
+                        Het spel in niet uitgebreid getest met Apple apparatuur, zodat hier nog issue naar voren kunnen komen.
+                        Internet Explorer wordt niet ondersteund. 
                     </p>
 
                     <h5>Gebruik de buttons</h5>
