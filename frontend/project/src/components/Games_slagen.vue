@@ -303,7 +303,7 @@ export default {
 
     doCloseSlagen: function () {
         this.variables.show_slagen = false
-        this.game_slagen = []
+        // this.game_slagen = []
         this.$store.dispatch('updateVariables', this.variables)
 
     }, //END doCloseSlagen
