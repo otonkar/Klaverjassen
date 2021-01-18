@@ -155,7 +155,7 @@ export default {
 
         // On mount make sure that the original data is loaded.
         // In next steps  the data is updated by the event
-        await this.doGetSlagen(this.gameID, this.leg)
+        // await this.doGetSlagen(this.gameID, this.leg)
   },
 
   // Do not use mounted, otherwise no new game will be loaded
