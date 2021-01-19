@@ -43,17 +43,18 @@
           <p>
             Deze site betreft een persoonlijk project zonder commerciele doelstelling en wordt best-effort ontwikkeld.
             Het spel heeft op dit moment een fase bereikt waarbij het redelijk goed gespeeld kan worden.
+            Er worden af en toe verbeteringen aangebracht in het spel, waardoor deze website soms niet goed te bereiken is.
           </p>
           <p>
             Iedereen is vrij om zich te registreren en het klaverjasspel te spelen. 
             Echter, ieder doet dit geheel op eigen risico en er kunnen geen rechten aan het gebruik
-            van dit spel worden ontleend. De beheerder kan ieder moment besluiten deze website te stoppen. 
+            van dit spel worden ontleend. 
           </p>
-          <p>
+          <!-- <p>
             Wees ervan bewust dat de beheerder zicht heeft op alle gespeelde slagen. 
             Het is volledig aan de beheerder om <b>stomme speelfouten</b> bekend te maken met naam en toenaam 
             op <b>alle sociale media</b> naar wens.
-          </p> 
+          </p>  -->
 
             
 
