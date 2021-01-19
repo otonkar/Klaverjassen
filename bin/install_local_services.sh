@@ -83,6 +83,9 @@ sudo -u postgres psql -U postgres db_klaverjas < backup.dump
 echo "  "
 echo "**** Install Redis ****"
 echo "  "
+echo 'vm.overcommit_memory=1' >> /etc/sysctl.conf
+## make sure for now this is directly activated
+sysctl vm.overcommit_memory=1
 sudo apt install redis-server
 ## in /etc/redis/redis.conf   set 'supervised no' to 'supervised systemd'
 sudo sed -i '/supervised no/c\supervised systemd' /etc/redis/redis.conf

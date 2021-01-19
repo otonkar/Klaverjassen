@@ -29,6 +29,7 @@ class OleTokenObtainPairSerializer(TokenObtainSerializer):
 
     def validate(self, attrs):
         data = super().validate(attrs)
+        print('XXXXX ', self.context['request'].META)
 
         refresh = self.get_token(self.user)
 

@@ -128,6 +128,21 @@ class ResetCode(APIView):
     """
     permission_classes = ( )                # Everybody is allowed use the forgotten password function
 
+
+    def get_client_ip(self, request):
+        # https://stackoverflow.com/questions/4581789/how-do-i-get-user-ip-address-in-django
+        try: 
+            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+            if x_forwarded_for:
+                ip = x_forwarded_for.split(',')[-1].strip()
+            else:
+                ip = request.META.get('REMOTE_ADDR')
+            return ip
+        except:
+            ip = request.META.get('REMOTE_ADDR')
+            return ip
+
+
     def post(self, request):
         """
         Receive username and/or email address.
@@ -140,7 +155,8 @@ class ResetCode(APIView):
         try:
             username    = request.data['username']
             email       = request.data['email']
-            ip_address  = request.META.get("REMOTE_ADDR")
+            # ip_address  = request.META.get("HTTP_X_FORWARDED_FOR")
+            ip_address = self.get_client_ip(request)
 
             if username != '':
                 # When username is given, only use username to check the existence of this user
