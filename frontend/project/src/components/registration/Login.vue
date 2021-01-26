@@ -118,13 +118,19 @@
 
                     if (error.response.status === 401) {
                         alert("Incorrecte gebruikersnaam of wachtwoord")
+                        let message = 'Login - Incorrecte gebruikersnaam of wachtwoord: ' + this.user.username  // + ' / ' + this.user.password
+                        this.logButton(message)
                     } else {
-                       alert("inlog poging is niet gelukt. Vul zowel de gebruikersnaam als wachtwoord in") 
+                        alert("Inlog poging is niet gelukt. Vul zowel de gebruikersnaam als wachtwoord in") 
+                        let message = 'Login - Inlog poging is niet gelukt: '  + this.user.username // + ' / ' + this.user.password
+                        this.logButton(message)
                     }
 
                 })
 
                 if (this.login_success) {
+                    let message = 'Login - Login gelukt: ' + this.user.username
+                    this.logButton(message)
                     await this.gotoHome()
                     // await this.doReloadPage()
                     
@@ -144,9 +150,13 @@
 
             gotoRegistration: function () {
                 this.$router.push({ name: 'Registration' })
+                let message = 'Registration'
+                this.logButton(message)
             },  //END gotoRegistration
 
             gotoPasswordReset: function () {
+                let message = 'Password reset'
+                this.logButton(message)
                 this.$router.push({ name: 'ResetPassword' })
             },//END gotoPasswordReset
 

@@ -137,10 +137,13 @@ export default {
 
   methods: {
 
-      goBack: function () {
+    goBack: function () {
         this.variables.show_slagen = false
         this.$store.dispatch('updateVariables', this.variables)
         this.$router.go(-1)
+
+        let message = 'BackTo Potjes'
+        this.logButton(message)
     },  //END goBack
 
     doGetScores: async function (gameID) {

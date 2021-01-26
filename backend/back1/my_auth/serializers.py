@@ -15,6 +15,7 @@ from rest_framework_simplejwt.serializers import TokenObtainSerializer
 from my_auth.models import User, LogUser
 
 from base.logging.my_logging import logger
+from base.lib.my_lib import get_client_ip
 
 
 class OleTokenObtainPairSerializer(TokenObtainSerializer):
@@ -29,7 +30,8 @@ class OleTokenObtainPairSerializer(TokenObtainSerializer):
 
     def validate(self, attrs):
         data = super().validate(attrs)
-        print('XXXXX ', self.context['request'].META)
+        ip_address = get_client_ip(self.context['request'])
+        # print('XXXXX', ip_address)
 
         refresh = self.get_token(self.user)
 
@@ -52,7 +54,7 @@ class OleTokenObtainPairSerializer(TokenObtainSerializer):
         log.save()
 
         #Log the login
-        logger('authentication').info(f'[{str(self.user)}] has logged in')
+        logger('authentication').info(f'[{str(self.user)}] has logged in from IP [{ip_address}]')
         # logger('debug').debug('This is a debug test')
 
         return data
@@ -81,6 +83,8 @@ class UserSignUpSerializer(serializers.ModelSerializer):
     def save(self):
         # Define what needs to be saved
         # use validated_data as the input from the API
+
+        ip_address = get_client_ip(self.context['request'])
 
         # Create a User with the variable from validated data
         user = User(
@@ -130,7 +134,7 @@ class UserSignUpSerializer(serializers.ModelSerializer):
         # log the registration 
         logger_text = 'Username: ' + self.validated_data['username'] \
                     + ', Naam: ' + self.validated_data['first_name'] + ' ' + self.validated_data['last_name'] \
-                    + ', Email: ' + self.validated_data['email']  
+                    + ', Email: ' + self.validated_data['email'] + f' from IP [{ip_address}]'  
         logger('registration').info(f'{logger_text}')
 
         try:

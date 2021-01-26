@@ -14,8 +14,8 @@ log_dir = os.path.join(path_up, "log")
 
 # Log settings
 min_level 	= settings.MIN_LOG_LEVEL
-maxSize 	= 10000000
-backupCount = 20
+maxSize 	= 50000000
+backupCount = 5
 
 # Define the loggger and the handlers
 # Everything should be propagated to root, so root logs everything
@@ -46,7 +46,7 @@ LOG_CONFIG = {
 			'formatter': 'enhanced', 
 			'stream': 'ext://sys.stdout'
 		},
-    	'registration_file': {
+    'registration_file': {
 			'class': 'logging.FileHandler', 
 			'level': 'INFO', 
 			'formatter': 'simple', 
@@ -89,6 +89,24 @@ LOG_CONFIG = {
 			'backupCount': 1,
 			'encoding': 'utf8'
 		},
+		'trace_file': {
+			'class': 'logging.handlers.RotatingFileHandler', 
+			'level': min_level, 
+			'formatter': 'simple', 
+			'filename': os.path.join(log_dir, "trace.log"),
+			'maxBytes': maxSize,
+			'backupCount': 1,
+			'encoding': 'utf8'
+		},
+		'action_file': {
+			'class': 'logging.handlers.RotatingFileHandler', 
+			'level': min_level, 
+			'formatter': 'simple', 
+			'filename': os.path.join(log_dir, "action.log"),
+			'maxBytes': maxSize,
+			'backupCount': 1,
+			'encoding': 'utf8'
+		},
 		'root_file': {
 			'class': 'logging.handlers.RotatingFileHandler',
 			'level': min_level,
@@ -108,6 +126,16 @@ LOG_CONFIG = {
 		'default': {
 			'level': min_level, 
 			'handlers': ['default_file'], 
+			'propagate': True
+		},
+		'trace': {
+			'level': min_level, 
+			'handlers': ['trace_file'], 
+			'propagate': True
+		},
+		'action': {
+			'level': min_level, 
+			'handlers': ['action_file'], 
 			'propagate': True
 		},
     'registration': {

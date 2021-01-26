@@ -165,6 +165,8 @@
         methods: {
             gotoLogin: function () {
                 this.$router.push({ name: 'Login' })
+                let message = 'BackTo Login'
+                this.logButton(message)
             },  //END gotoLogin
             
             doRegistration: async function () {
@@ -230,12 +232,14 @@
                     if (response.status === 201) {
                         alert("Registratie is gelukt")
                         this.registration_success = true
+                        let message = 'Registratie gelukt ' + this.input.username
+                        this.logButton(message)
                         this.$router.push({ name: 'Login' }) 
                     }
                 })
                 .catch(error => {
                     // console.log('Registratie niet gelukt')
-                    // // console.log(error.response)
+                    // console.log(error.response)
                     this.errors = error
                 })
             }
@@ -260,9 +264,13 @@
                     for (var item in this.errors.response.data[key2] ) {
                             total_message = total_message  + this.errors.response.data[key2][item] + ', '
                             this.error_message[key2] = total_message
-                        }
+                    }
+
+                let message = 'Registratie NIET gelukt : ' + this.input.username + ' ' + total_message
+                this.logButton(message)
+
                 }//END for 
-            }//END if check errors
+            } //END if check errors
             
             
             },  //END doRegistration

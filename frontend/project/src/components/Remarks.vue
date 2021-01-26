@@ -182,7 +182,12 @@ export default {
         })
         .then(response => {
           if (response.status === 201) {
+              // console.log(response.data)
               alert('Opmerking is opgeslagen');
+              let message = "Created Remark: " + response.data.remarkID +  "\n" + this.remarkText
+              this.logAction(message)
+              message = "Created Remark " + response.data.remarkID
+              this.logButton(message)
               this.remarkText = '';
               this.doGetRemarks();
           }

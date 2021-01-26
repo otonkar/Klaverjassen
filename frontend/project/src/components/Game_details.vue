@@ -199,6 +199,11 @@ export default {
     },  //END gotoLogin
     playGame: function (game, players) {
         this.$router.push({ name: 'Game_play', params: { 'game': game, 'players': players} })
+
+        let message = 'Speel potje ' + this.matchID + '/' + game.gameID
+        this.logButton(message)
+        message = 'Play game: ' + this.matchID + '/' + game.gameID
+        this.logAction(message)
     },
     doHideElement: function (id) {
         var x = document.getElementById(id);
@@ -240,6 +245,10 @@ export default {
             .then(response => {
                 if (response.status === 200) {
                     alert(response.data[1])
+                    let message = 'Send mail to players, potje: ' + this.game.gameID 
+                    this.logButton(message)
+                    message = 'Send mail to players, potje: ' + this.game.gameID + "\n" + this.mailText
+                    this.logAction(message)
                     this.show_send_mail = false
                     this.mailText = ''
                 }
@@ -551,6 +560,10 @@ export default {
             // console.log('Status create player: ',response.status)
             if (response.status === 201) {
                 // console.log(response)
+                let message = 'Potje aanmelden: ' + this.game.matchID.matchID + '/' + this.game.gameID +  '/' + position
+                this.logButton(message) 
+                message = 'Register to Game: ' + this.game.matchID.matchID + '/' + this.game.gameID +  '/' + position
+                this.logAction(message) 
             }
         })
         .catch(() => {
@@ -563,7 +576,7 @@ export default {
     },//END doRegister
 
     doUnRegister: async function () {
-        // Register a player to a game
+        // UnRegister a player to a game
 
         // Do  use 'api_request' or axios, so that this call WILL use the interceptors
         const api_request = require('axios')
@@ -583,7 +596,12 @@ export default {
             // data: this.input
         })
         .then(response => {
-            if (response.status === 200) {
+            if (response.status === 204) {
+                console.log(response.status)
+                let message = 'Potje afmelden: ' + this.game.matchID.matchID + '/' + this.game.gameID +  '/'
+                this.logButton(message)
+                message = 'Unregister to Game: ' + this.game.matchID.matchID + '/' + this.game.gameID +  '/'
+                this.logAction(message) 
             }
         })
         .catch(() => {

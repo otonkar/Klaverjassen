@@ -16,6 +16,7 @@ from klaverjas.models import Match, Game, GamePlayer, Leg, Slag, Remark
 from my_auth.models import User
 
 from base.logging.my_logging import logger
+from base.lib.my_lib import get_client_ip
 
 class MatchCreate(generics.CreateAPIView):
     '''
@@ -547,4 +548,51 @@ class RemarkList(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class LogClickView(APIView):
+    '''
+    When a button is pressed in Vue this needs to be registered.
+    This View supports posting a message to be logged in a logger
 
+    post : ['logmessage': 'this is a message']
+    '''
+    permission_classes = []
+
+    def post(self, request, *args, **kwargs):
+
+        ip_address  = get_client_ip(request)
+        try: 
+            username    = request.user
+        except:
+            usename     = 'Unknown'
+
+        
+        logmessage = request.data['logmessage']
+
+        logger('trace').info(f'{username} - {ip_address} - Clicked - {logmessage}')
+
+        return Response(status=status.HTTP_201_CREATED)
+
+
+class LogActionView(APIView):
+    '''
+    Log actions
+    This View supports posting a message to be logged in a logger
+
+    post : ['logmessage': 'this is a message']
+    '''
+    # permission_classes = []
+
+    def post(self, request, *args, **kwargs):
+
+        ip_address  = get_client_ip(request)
+        try: 
+            username    = request.user
+        except:
+            usename     = 'Unknown'
+
+        
+        logmessage = request.data['logmessage']
+
+        logger('action').info(f'{username} - {ip_address} - {logmessage}')
+
+        return Response(status=status.HTTP_201_CREATED)

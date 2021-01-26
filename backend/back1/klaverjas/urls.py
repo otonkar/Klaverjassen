@@ -8,6 +8,8 @@ from rest_framework_simplejwt import views as jwt_views
 from klaverjas import views
 
 urlpatterns = [
+    path('log/click/', views.LogClickView.as_view(), name='log_click'),
+    path('log/action/', views.LogActionView.as_view(), name='log_action'),
     path('matches/create/', views.MatchCreate.as_view(), name='match_create'),
     path('matches/list', views.MatchList.as_view(), name='match_list'),
     path('matches/<str:matchID>/', views.MatchRetrieveUpdate.as_view(), name='match_retreive_update'),

@@ -82,6 +82,9 @@ export default {
     methods: {
         gotoHome: function () {
             this.$router.push({ name: 'Home' })
+
+            let message = 'BackTo Start'
+            this.logButton(message)
         },  //END gotoHome
         doLogout: async function () {
             const api_request = require('axios')

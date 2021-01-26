@@ -12,6 +12,9 @@ from klaverjas.klaverjas_lib import klaverjas
 
 from klaverjas.models import Match, Game, GamePlayer, Leg, Slag, Remark
 
+from base.logging.my_logging import logger
+from base.lib.my_lib import get_client_ip
+
 
 class UserSerializer(serializers.ModelSerializer):
     '''

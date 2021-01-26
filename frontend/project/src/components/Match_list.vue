@@ -173,7 +173,6 @@
 
       <div v-for="item in filterMatches" v-bind:key="item.matchID">
     
-        <!-- <b-button v-on:click="gotoMatchDetails(item.matchID)" block v-bind:variant="item.status_color">{{ item.matchID }} ({{ item.owner.username }})</b-button> -->
         <b-button v-on:click=" gotoGamesOverview(item.matchID, item.status_color)" block v-bind:variant="item.status_color">{{ item.matchID }} ({{ item.owner.username }})</b-button>
         <div class="comment">
           <b>Omschrijving: </b> {{item.description | shorten(600)}}
@@ -244,23 +243,20 @@ export default {
       }//END if
   },//END mounted
   methods: {
-    gotoHome: function () {
-        this.$router.push({ name: 'Home' })
-    },  //END gotoLogin
-    // gotoTest: function () {
-    //   //  /Info#ref_wedstrijden
-    //   this.$router.push('/Info#ref_wedstrijden/')
-    // },
 
     gotoMatches: function () {
       this.$router.push({ name: 'Matches' })
+
+      let message = 'BackTo Wedstrijden'
+      this.logButton(message)
     },  //END gotoMatches
-    gotoMatchDetails: function (id) {
-      this.$router.push({ name: 'Match_details', params: {id} })
-    },
+
     gotoGamesOverview: function (matchID, status_color) {
       // goto to new page and send 1 or more parameters in a params object
         this.$router.push({ name: 'Games_overview', params: { matchID: matchID, status_color:status_color } })
+
+        let message = 'Start/Wedstrijden/MatchList/Potjes: ' + matchID
+        this.logButton(message)
     }, //END gotoGamesOverview 
     getMatchList: function () {
       // make sure the request  WILL use the interceptors

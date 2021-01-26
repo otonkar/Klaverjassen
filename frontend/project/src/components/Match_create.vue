@@ -183,7 +183,11 @@
             },
             form_success: false,                // Indicator that all form fields are ok or not
             match_create_success   : false ,    // Incidator that match was created
-            errors: {},                         // to store the errors from the API call
+            errors: {
+                response: {
+                    data: {}
+                }
+            },                         // to store the errors from the API call
             data: {}
         }
         },
@@ -200,6 +204,9 @@
         methods: {
             gotoMatches: function () {
                 this.$router.push({ name: 'Matches' })
+
+                let message = 'BackTo Wedstrijden'
+                this.logButton(message)
             },  //END gotoLogin
             doCreateMatch: async function () {
             
@@ -281,7 +288,7 @@
             }
 
             // Do the API call
-            this.errors = {}
+            this.errors = {response: {data: {} } }
             if (total_ok === true) {
 
                 await api_request({
@@ -293,6 +300,9 @@
                     // console.log('Status match create: ',response.status)
                     if (response.status === 201) {
                         alert("Wedstrijd is aangemaakt")
+                        let message = 'Created Match: ' + this.input.matchID
+                        this.logButton(message)
+                        this.logAction(message)
                         this.match_create_success = true
                         this.$router.push({ name: 'Matches' }) 
                     }
@@ -324,7 +334,10 @@
                     for (var item in this.errors.response.data[key2] ) {
                             total_message = total_message  + this.errors.response.data[key2][item] + ', '
                             this.error_message[key2] = total_message
-                        }
+                    }
+
+                    let message = 'Create Match failed : ' + this.input.matchID + ' , ' + total_message
+                    this.logButton(message)
                 }//END for 
             }//END if check errors
             

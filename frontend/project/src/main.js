@@ -6,6 +6,11 @@ import './plugins/bootstrap-vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import myMixin from './mixins/myMixins'
+
+// my functions
+Vue.mixin(myMixin);
+
 
 Vue.config.productionTip = false
 

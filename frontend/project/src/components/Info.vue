@@ -98,7 +98,7 @@
                 </b-card-text>
             </b-tab>
 
-            <b-tab title="Toelichting">
+            <b-tab title="Toelichting" @click='gotoToelichting()'>
                 <b-card-text>
 
                     <h5 id="inhoudsopgave">Inhoudsopgave</h5>
@@ -761,6 +761,11 @@ export default {
     gotoRemarks: function () {
       this.$router.push({ name: 'Remarks' })
     },  //END gotoRemarks
+
+    gotoToelichting: function () {
+        let message = 'Toelichting/toelichting'
+        this.logButton(message) 
+    },
 
   },  //END methods
   computed: {

@@ -35,6 +35,8 @@ export default new Vuex.Store({
       // url_Websocket           : 'ws:145.53.40.4:8000/ws/game/',
       url_get_token           : 'registration/token/',
       url_refresh_token       : 'registration/token/refresh/',
+      url_log_click           : 'klaverjas/log/click/',
+      url_log_action          : 'klaverjas/log/action/',
       url_logout              : 'registration/logout/',
       url_registration        : 'registration/signup/',
       url_resetcode           : 'registration/resetcode/',

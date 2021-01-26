@@ -232,12 +232,21 @@ export default {
     },  //END gotoLogin
     gotoMatchesList: function () {
       this.$router.push({ name: 'Match_list' })
+
+      let message = 'BackTo MatchList'
+      this.logButton(message)
     },  //END gotoMatches
     gotoMatchDetails: function (id) {
       this.$router.push({ name: 'Match_details', params: {id} })
+
+      let message = 'Start/Wedstrijden/MatchList/Potjes/matchDetails: ' + id
+      this.logButton(message)
     },
     gotoGameScore: function (gameID) {
       this.$router.push({ name: 'Game_score', params: {gameID: gameID} })
+
+      let message = 'Start/Wedstrijden/MatchList/Potjes/Score: potje ' + gameID
+      this.logButton(message)
     },
     doHideElement: function (id) {
         var x = document.getElementById(id);
@@ -395,6 +404,10 @@ export default {
             // // console.log('Game created: ',response.status)
             if (response.status === 201) {
               // alert('new game is created')
+              let message = 'Created Potje: ' + this.match_details.matchID + '/' + response.data.gameID
+              this.logButton(message) 
+              this.logAction(message) 
+              // console.log(response.data.gameID)
               this.getGames()
             }
         })

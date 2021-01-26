@@ -213,6 +213,8 @@
         methods: {
             gotoLogin: function () {
                 this.$router.push({ name: 'Login' })
+                let message = 'BackTo Login'
+                this.logButton(message)
             },  //END gotoLogin
 
             doRequestResetCode: async function () {

@@ -27,6 +27,7 @@ from my_auth import serializers
 from my_auth.models import User
 
 from base.logging.my_logging import logger
+from base.lib.my_lib import get_client_ip
 
 
 def createResetCode(N):
@@ -89,6 +90,8 @@ class Logout(APIView):
         """
 
         try: 
+            ip_address = get_client_ip(request)
+
             user_id = JWTAuthenticationBlacklist().authenticate(request)[0]
             access_token = JWTAuthenticationBlacklist().authenticate(request)[1]
 
@@ -101,14 +104,14 @@ class Logout(APIView):
             item.save()
 
             #Log the logout
-            logger('authentication').info(f'[{user_id}] has logged out')
+            logger('authentication').info(f'[{user_id}] has logged out from IP [{ip_address}]')
 
             # see: https://www.django-rest-framework.org/api-guide/status-codes/
             content = {'logout': 'success'}
             return Response(content, status=status.HTTP_200_OK)
         
         except:
-            logger('errors').error(f'User {user_id} failed to logout')
+            logger('errors').error(f'User {user_id} failed to logout from IP [{ip_address}]')
             content = {'logout': 'not succeeded'}
             return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
@@ -128,21 +131,6 @@ class ResetCode(APIView):
     """
     permission_classes = ( )                # Everybody is allowed use the forgotten password function
 
-
-    def get_client_ip(self, request):
-        # https://stackoverflow.com/questions/4581789/how-do-i-get-user-ip-address-in-django
-        try: 
-            x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-            if x_forwarded_for:
-                ip = x_forwarded_for.split(',')[-1].strip()
-            else:
-                ip = request.META.get('REMOTE_ADDR')
-            return ip
-        except:
-            ip = request.META.get('REMOTE_ADDR')
-            return ip
-
-
     def post(self, request):
         """
         Receive username and/or email address.
@@ -155,8 +143,8 @@ class ResetCode(APIView):
         try:
             username    = request.data['username']
             email       = request.data['email']
-            # ip_address  = request.META.get("HTTP_X_FORWARDED_FOR")
-            ip_address = self.get_client_ip(request)
+
+            ip_address  = get_client_ip(request)
 
             if username != '':
                 # When username is given, only use username to check the existence of this user
@@ -275,6 +263,7 @@ class ResetPassword(APIView):
         """
 
         try:
+            ip_address  = get_client_ip(request)
             username    = request.data['username']
             reset_code  = request.data['reset_code']
             password    = request.data['password']
@@ -288,12 +277,12 @@ class ResetPassword(APIView):
 
                 # validate that user is active
                 if user_obj.is_active == False:
-                    content = {'message': 'Wachtwoord reset niet gelukt','username': ['Opgegeven gebruikersnaaam is niet meer actief.']}
-                    logger('authentication').warning(f'Reset password failed. User [{username}] is not active anymore')
+                    content = {'message': 'Wachtwoord reset niet gelukt','username': ['Opgegeven gebruikersnaaam is niet meer actief.'] }
+                    logger('authentication').warning(f'Reset password failed. User [{username}] is not active anymore on IP [{ip_address}]')
                     return Response(content, status=status.HTTP_404_NOT_FOUND)
 
             except:
-                logger('authentication').warning(f'Reset password failed. Used incorrect username [{username}]')
+                logger('authentication').warning(f'Reset password failed. Used incorrect username [{username}] on IP [{ip_address}]')
                 content = {'message': 'Wachtwoord reset niet gelukt','username': ['Incorrecte gebruikersnaam opgegeven.']}
                 return Response(content, status=status.HTTP_404_NOT_FOUND)
 
@@ -303,13 +292,13 @@ class ResetPassword(APIView):
             # print(user_obj.reset_code_valid_until.strftime('%Y-%m-%d %H:%M:%S') < timezone.now().strftime('%Y-%m-%d %H:%M:%S'))
 
             if reset_code != user_obj.reset_code:
-                logger('authentication').warning(f'Reset password failed. User [{username}] used incorrect reset code')
+                logger('authentication').warning(f'Reset password failed. User [{username}] used incorrect reset code on IP [{ip_address}]')
                 content = {'message': 'Wachtwoord reset niet gelukt','reset_code': ['Opgegeven resetcode is niet correct.']}
                 return Response(content, status=status.HTTP_404_NOT_FOUND)
             else:
                 # code is correct, now validate the expiration of code
                 if user_obj.reset_code_valid_until.strftime('%Y-%m-%d %H:%M:%S') < timezone.now().strftime('%Y-%m-%d %H:%M:%S'):
-                    logger('authentication').warning(f'Reset password failed. User [{username}] used expired reset code')
+                    logger('authentication').warning(f'Reset password failed. User [{username}] used expired reset code on IP [{ip_address}]')
                     logger('authentication').warning(f"{user_obj.reset_code_valid_until.strftime('%Y-%m-%d %H:%M:%S')} versus {timezone.now().strftime('%Y-%m-%d %H:%M:%S')}")
                     content = {'message': 'Wachtwoord reset niet gelukt','reset_code': ['De reset_code is niet meer geldig']}
                     return Response(content, status=status.HTTP_404_NOT_FOUND)
@@ -322,6 +311,7 @@ class ResetPassword(APIView):
 
             # the exception raised here is different than serializers.ValidationError
             except exceptions.ValidationError as e:
+                logger('authentication').warning(f'Reset password failed on IP [{ip_address}]')
                 content = {'message': 'Wachtwoord reset niet gelukt','password': list(e.messages)}
                 return Response(content, status=status.HTTP_400_BAD_REQUEST)
 
@@ -333,13 +323,13 @@ class ResetPassword(APIView):
             # Save the user object
             user_obj.save()
 
-            logger('authentication').info(f'Reset password completed for user [{username}]')
+            logger('authentication').info(f'Reset password completed for user [{username}] on IP [{ip_address}]')
             content = {'message': 'Wachtwoord van gebruiker is aangepast'}
             return Response(content, status=status.HTTP_201_CREATED)
 
 
         except:
-            logger('authentication').error(f'Reset password for user [{username}] failed due to internal error.')
+            logger('authentication').error(f'Reset password for user [{username}] failed due to internal error on IP [{ip_address}] .')
             content = {'message': 'Interne fout opgetreden bij het afhandelen van dit verzoek'}
             return Response(content, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

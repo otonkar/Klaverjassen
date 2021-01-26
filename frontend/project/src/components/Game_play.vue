@@ -911,6 +911,11 @@ export default {
             // Disconnect from websocket and Go back to the games overview
             // this.disconnectWS()
 
+            let message = 'Stop spelen: ' + this.game.matchID.matchID + '/' + this.game.gameID +  '/'
+            this.logButton(message) 
+            message = 'Stop playing game: ' + this.game.matchID.matchID + '/' + this.game.gameID +  '/'
+            this.logAction(message) 
+
             this.$router.push({ name: 'Games_overview' })
         },
 

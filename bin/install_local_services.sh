@@ -19,6 +19,10 @@ echo "  "
 cd /code/Klaverjassen
 source ./production.env
 
+## Copy production.env to /etc/environement (NOT overwrite , but append)
+## so that the production variables are loaded by default in the terminal
+cat /code/Klaverjassen/production.env >> /etc/environment 
+
 
 #################################################################################
 ###### Install Update and Upgrade
@@ -190,7 +194,7 @@ sudo crontab -l | { cat; echo '25 2 * * 3 rsync -rvz /var/backups/psql/$(ls -t /
 sudo crontab -l | { cat; echo '25 2 * * 4 rsync -rvz /var/backups/psql/$(ls -t /var/backups/psql |grep D_backup.dump | head -1) admin@'"$NAS_HOST:/volume1/Backup_remote/klaverjas_day_4.dump"; } | crontab -
 sudo crontab -l | { cat; echo '25 2 * * 5 rsync -rvz /var/backups/psql/$(ls -t /var/backups/psql |grep D_backup.dump | head -1) admin@'"$NAS_HOST:/volume1/Backup_remote/klaverjas_day_5.dump"; } | crontab -
 sudo crontab -l | { cat; echo '25 2 * * 6 rsync -rvz /var/backups/psql/$(ls -t /var/backups/psql |grep D_backup.dump | head -1) admin@'"$NAS_HOST:/volume1/Backup_remote/klaverjas_day_6.dump"; } | crontab -
-
+sudo crontab -l | { cat; echo '00 * * * * > /var/log/daphne.log'; } | crontab -
 
 
 
@@ -205,6 +209,8 @@ sudo touch /code/Klaverjassen/backend/log/default.log
 sudo touch /code/Klaverjassen/backend/log/errors.log
 sudo touch /code/Klaverjassen/backend/log/registration.log
 sudo touch /code/Klaverjassen/backend/log/root.log
+sudo touch /code/Klaverjassen/backend/log/trace.log
+sudo touch /var/log/daphne.log
 
 
 

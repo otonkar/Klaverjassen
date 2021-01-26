@@ -12,9 +12,12 @@
           <hr>
           <br>
           <h3>Welkom bij Klaverjasfun.nl</h3>
+          <!-- <br> 
+          <h3> Deze site is op dit moment in onderhoud. Probeer het later nog een keer. </h3>
+          <br> -->
           <p>
             Deze website is ontwikkeld om gedurende de Corona 
-            lockdown periode met mijn vriendengroep  on-line te kunen klaverjassen 
+            lockdown periode met mijn vriendengroep  on-line te kunen klaverjassen. 
             Na veel positieve reacties en het doorvoeren van een aantal verbeteringen heb ik besloten dit spel 
             ook voor personen buiten mijn directe vriendengroep beschikbaar te stellen.
           </p>
@@ -199,7 +202,7 @@
 
 <script>
 // @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
+// import myMixin from '../../mixins/myMixins'
 
 export default {
   name: 'Apphome',
@@ -245,18 +248,29 @@ export default {
     },  //END doToggleLogout
     gotoLogin: function () {
       this.$router.push({ name: 'Login' })
+
     },  //END gotoLogin
-    gotoRemarks: function () {
+    gotoRemarks: async function () {
       this.$router.push({ name: 'Remarks' })
+
+      let message = 'Start/Berichten'
+      this.logButton(message)
+
     },  //END gotoRemarks
     gotoChat: function () {
       this.$router.push({ name: 'Chat' })
     },  //END gotoChat
     gotoMatches: function () {
       this.$router.push({ name: 'Matches' })
+
+      let message = 'Start/Wedstrijden'
+      this.logButton(message)
     },  //END gotoMatches
     gotoInfo: function () {
       this.$router.push({ name: 'Info' })
+
+      let message = 'Start/Toelichting'
+      this.logButton(message)
     },  //END gotoInfo
     gotoViezePlaatjes: function () {
       // alert("Dacht ik wel...  teller + 1 is doorgestuurd")
@@ -346,6 +360,7 @@ export default {
     window_size () {
       return this.$store.state.window_size
     }
-  }
+  },
+  // mixins: [myMixin]
 }
 </script>

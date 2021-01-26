@@ -28,7 +28,6 @@
 
 <script>
 // @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
 
 export default {
   name: 'Appmatches',
@@ -62,12 +61,20 @@ export default {
   methods: {
     gotoHome: function () {
         this.$router.push({ name: 'Home' })
+
+        let message = 'BackTo Start'
+        this.logButton(message)
     },  //END gotoLogin
     gotoMatchCreate: function () {
       this.$router.push({ name: 'Match_create' })
+      let message = 'MatchCreate'
+      this.logButton(message)
     },  //END gotoMatchCreate
     gotoMatchList: function () {
       this.$router.push({ name: 'Match_list' })
+
+      let message = 'MatchList'
+      this.logButton(message)
     },  //END gotoMatchList
   },  //END methods
   computed: {

@@ -229,6 +229,9 @@ export default {
     gotoGamesOverview: function () {
         // goto to new page and send 1 or more parameters in a params object
         this.$router.push({ name: 'Games_overview', params: { match_details: this.match_details } })
+
+        let message = 'BackTo Potjes '
+        this.logButton(message)
     },  //END gotoGamesOverview
     doHideElement: function (id) {
         var x = document.getElementById(id);
@@ -338,6 +341,8 @@ export default {
             if (response.status === 200) {
                 this.match_details = response.data
                 this.match_update_success = true
+                let message = 'Match update gelukt : ' + this.match_details.matchID
+                this.logButton(message)
                 alert('Update succesvol')
             }
         })
@@ -368,7 +373,11 @@ export default {
                         this.error_message[key2] = total_message
                         // console.log(this.error_message)
                         // console.log('DUMMY3')
-                    }
+                }
+
+                let message = 'Match update NIET gelukt : ' + this.match_details.matchID + ' ' + total_message
+                this.logButton(message)
+
             }//END for 
         }//END if check errors
         // console.log('DUMMY4')
