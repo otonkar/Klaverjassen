@@ -1580,8 +1580,12 @@ export default {
 
 // Define variables
 $height_header: 0px;
-$width_card: 63px;
-$height_card: $width_card * 1.4;
+// $width_card: 63px;
+// $height_card: $width_card * 1.4;
+
+$height_card: 100vh / 8;
+$width_card: $height_card * 0.714;
+
 $v_offset: 10px;                   // Vertical offset 
 
 .o_fullscreen {
@@ -2315,11 +2319,6 @@ $margin: calc((100vw - 2 * #{$side_margin} - 8 * #{$width_card}) / 7);
 .red_back {
   background-image: url('../assets/Cards/red_back.png');
 }
-
-
-
-
-
 
 </style>
   

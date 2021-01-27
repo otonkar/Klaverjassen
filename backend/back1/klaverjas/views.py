@@ -67,6 +67,15 @@ class GameCreate(generics.CreateAPIView):
     serializer_class = serializers.GameCreateSerializer
 
 
+class GameRetrieveUpdate(generics.RetrieveUpdateAPIView):
+    '''
+    Update a new Game
+    '''
+    queryset = Game.objects.all()
+    serializer_class = serializers.GameCreateSerializer
+
+
+
 class PlayerCreate(generics.CreateAPIView):
     '''
     Create a new Player

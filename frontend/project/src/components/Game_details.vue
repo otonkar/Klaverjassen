@@ -37,20 +37,29 @@
 
         <b-row v-if="allow_play_game">
             <!-- <b-col ><b-button block class="btn btn-warning"> Accepteer partner </b-button> </b-col>  -->
-            <b-col></b-col>
+            <b-col>
+                <b-form-checkbox
+                    id="lock_game"
+                    v-model="game.locked"
+                    @change="lockGame(game.locked)"
+                >
+                Overschijven spelers verbieden 
+                </b-form-checkbox>
+            </b-col>
             <b-col ><b-button @click="playGame(game, players)"  class="btn btn-success"> speel dit potje  </b-button> </b-col> 
         </b-row>
+        
 
         <br>
         <b-card  class="bg-secondary text-center">
         <b-row>
-            <b-col ><b-button @click="doRegister(0)"  v-bind:disabled="!allow_register" block class="btn btn-light"> A1: {{  sorted_players[0].player.username }} </b-button> </b-col> 
-            <b-col ><b-button @click="doRegister(1)" v-bind:disabled="!allow_register" block class="btn btn-dark"> B2: {{  sorted_players[1].player.username }} </b-button> </b-col> 
+            <b-col ><b-button @click="doRegister(0)"  v-bind:disabled="!allow_register || game.locked" block class="btn btn-light"> A1: {{  sorted_players[0].player.username }} </b-button> </b-col> 
+            <b-col ><b-button @click="doRegister(1)" v-bind:disabled="!allow_register || game.locked" block class="btn btn-dark"> B2: {{  sorted_players[1].player.username }} </b-button> </b-col> 
         </b-row>
         <br>
         <b-row>
-            <b-col ><b-button @click="doRegister(3)" v-bind:disabled="!allow_register" block class="btn btn-dark"> B4: {{  sorted_players[3].player.username }} </b-button> </b-col> 
-            <b-col ><b-button @click="doRegister(2)" v-bind:disabled="!allow_register" block class="btn btn-light"> A3: {{  sorted_players[2].player.username }} </b-button> </b-col> 
+            <b-col ><b-button @click="doRegister(3)" v-bind:disabled="!allow_register || game.locked" block class="btn btn-dark"> B4: {{  sorted_players[3].player.username }} </b-button> </b-col> 
+            <b-col ><b-button @click="doRegister(2)" v-bind:disabled="!allow_register || game.locked" block class="btn btn-light"> A3: {{  sorted_players[2].player.username }} </b-button> </b-col> 
         </b-row>
         </b-card>
 
@@ -81,6 +90,7 @@ export default {
         title: 'Game details page',
         polling: null,            // Needed to auto refresh this page
         isLoaded: false,
+        lock_game: false,           // lock game for registering overwriting a position
         mailText: '',               // Input mail text
         players: [ 
             {
@@ -147,6 +157,7 @@ export default {
         allow_unregister: false,            // For butoon to un-register a player from a game
         allow_play_game: false,             // For button to play the game
         allow_send_mail: false,             // For button to let the form start for sending mails
+        player_is_registered: false,        // indicator that player is registered to the game
         show_send_mail: false,              // For showing the send mail form
         errors: {}, 
     }
@@ -224,6 +235,43 @@ export default {
     doStopMail: function () {
         this.mailText = ''
         this.show_send_mail = false
+
+    },
+    lockGame: async function (value) {
+        // lock_game value is changed by the checkbox using the v-model
+
+        // Do  use 'api_request' or axios, so that this call WILL use the interceptors
+        const api_request = require('axios')
+
+        // Update the lock status to the game
+        await api_request({
+            method: 'put',
+            url: this.appSettings.url_games_update + this.game.gameID + '/',
+            data: {
+                gameID: this.game.gameID,
+                locked: value,
+            }
+        })
+        .then(response => {
+            if (response.status === 200) {
+                // console.log(response.status)
+                if (value === true) {
+                    let message = 'Locked Game: ' + this.matchID + '/' + this.game.gameID
+                    this.logButton(message)
+                    this.logAction(message)
+                } else {
+                    let message = 'Unlocked Game: ' + this.matchID + '/' + this.game.gameID
+                    this.logButton(message)
+                    this.logAction(message)
+
+                }
+            }
+        })
+        .catch(error => {
+            // console.log(error.response.data)
+            alert(error.response.data[1])
+
+        })
 
     },
     doSendMail: async function () {
@@ -333,6 +381,7 @@ export default {
         this.allow_unregister       = false
         this.allow_play_game        = false
         this.allow_send_mail        = false
+        this.player_is_registered   = false
 
         // initialize parameters
         var check_match_start_passed            = false
@@ -379,6 +428,7 @@ export default {
         for (obj in this.sorted_players) {
             if (this.sorted_players[obj].player.username === this.user.username) {
                 check_player_is_registered = true
+                this.player_is_registered = true
             }
         }
         // console.log('check_player_is_registered', check_player_is_registered)
@@ -602,6 +652,14 @@ export default {
                 this.logButton(message)
                 message = 'Unregister to Game: ' + this.game.matchID.matchID + '/' + this.game.gameID +  '/'
                 this.logAction(message) 
+
+                // Remove the lock on the game when it is present
+                // And store the false value in the database
+                if (this.game.locked === true) {
+                    this.game.locked = false;
+                    this.lockGame(false);
+                }
+
             }
         })
         .catch(() => {

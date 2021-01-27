@@ -131,22 +131,22 @@ LOG_CONFIG = {
 		'trace': {
 			'level': min_level, 
 			'handlers': ['trace_file'], 
-			'propagate': True
+			'propagate': False
 		},
 		'action': {
 			'level': min_level, 
 			'handlers': ['action_file'], 
-			'propagate': True
+			'propagate': False
 		},
     'registration': {
 			'level': 'INFO', 
 			'handlers': ['registration_file'], 
-			'propagate': True
+			'propagate': False
 		},
 		'authentication': {
 			'level': 'INFO', 
 			'handlers': ['authentication_file'], 
-			'propagate': True
+			'propagate': False
 		},
 		'errors': {
 			'level': 'ERROR', 

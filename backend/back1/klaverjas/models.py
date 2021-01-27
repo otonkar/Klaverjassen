@@ -99,6 +99,7 @@ class Game(models.Model):
     roemA               = models.PositiveSmallIntegerField(null=True, blank=True)
     scoreB              = models.PositiveSmallIntegerField(null=True, blank=True)
     roemB               = models.PositiveSmallIntegerField(null=True, blank=True)
+    locked              = models.BooleanField(null=False, blank=False, default=False)
 
 
 class Leg(models.Model):

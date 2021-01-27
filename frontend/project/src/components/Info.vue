@@ -388,6 +388,15 @@
                        Ook als een potje eenmaal begonnen is kan nog van speler worden gewisseld.
                     </p>
 
+                    <h5>Overschijven spelers verbieden</h5>
+                    <p>
+                        Zodra 4 spelers bij een potje zijn aangemeld kan het potje gespeeld worden. Door de checkbox 'Overschrijven 
+                        spelers verbieden' aan te vinken wordt het verboden voor andere gebruikers om zich te registeren op een positie
+                        die al bezet is. Het potje zit als het ware 'op slot'. 
+                        Zodra 1 van de aangemelde spelers zich afmeldt wordt het aanmelden door 
+                        andere spelers bij dit potje weer toegestaan.
+                    </p>
+
                     <h5>Mail versturen naar spelers</h5>
                     <p>
                         Zodra u bent aangemeld bij een potje heeft u de mogelijkheid een anonieme mail te sturen naar de andere 
