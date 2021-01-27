@@ -203,6 +203,7 @@ echo "  "
 echo "**** Create log file  ****"
 echo "  "
 mkdir -p /code/Klaverjassen/backend/log
+sudo touch /code/Klaverjassen/backend/log/action.log
 sudo touch /code/Klaverjassen/backend/log/auth.log
 sudo touch /code/Klaverjassen/backend/log/debug.log
 sudo touch /code/Klaverjassen/backend/log/default.log
