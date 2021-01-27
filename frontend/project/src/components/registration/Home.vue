@@ -186,7 +186,10 @@
       <!-- <p>Current windowsize is {{ window_size.width }}, {{ window_size.height }} </p> -->
 
       <p>
-        Tip: lees eerst de 'Speeltips' onder het blok 'Toelichting'
+        <b>Opmerking:</b> <br>  
+        Het spel heeft issues met het gebruik van Microsoft gebaseerde browsers, zoals Internet Explorer of Edge. 
+        Gebruik bij voorkeur Chrome of Firefox. <br> 
+        Zie verdere 'Speeltips' onder het blok 'Toelichting'.
       </p>
       <hr>
 

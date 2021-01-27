@@ -605,7 +605,7 @@
                         Het spel is geen aparte app, maar wordt gespeeld vanuit de browser. 
                         Dit kan vanaf een PC, laptop, tablet of mobiele telefoon. 
                         Ervaring dusverre geeft aan dat het spel goed werkt met Google Chrome, 
-                        Firefox Opera en Vivaldi browsers. <br>
+                        Firefox, Opera en Vivaldi browsers. <br>
                         Het spel in niet uitgebreid getest met Apple apparatuur (Safari).
                         Internet Explorer wordt niet ondersteund. 
                     </p>
