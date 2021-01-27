@@ -14,6 +14,11 @@
         <b-button class="btn-primary show_scores" variant="primary" @click="doGetScores()" size="sm">Stand</b-button>
         <b-button class="btn-primary show_slagen" variant="primary" @click="doShowSlagen()" size="sm">Slagen</b-button> -->
 
+        <!-- Wait for all players to be in the gameplay  -->
+        <div class="wait_message" v-if="(count_connected !== 4)">
+          Wacht tot alle spelers in het spel zitten.
+        </div>
+
         <div class="action_menu">
           <b-dropdown variant="primary" text="acties" class="m-md-2">
             <b-dropdown-item @click="doStartRound(true)" >Reset Slag</b-dropdown-item>
@@ -2019,6 +2024,23 @@ $margin: calc((100vw - 2 * #{$side_margin} - 8 * #{$width_card}) / 7);
     transform:translate(-50%, -50%);
     background-image: '../assets/Cards/hearts.png';
     
+}
+
+.wait_message {
+    width:2.8 * $width_card;
+    display: block;
+    position: fixed;
+    left: calc( 100vw/2 + 2px);
+    top: calc(  #{$v_offset} + (100vh - #{$height_header}) / 2  + #{$height_header} - 0*#{$height_card} );
+    transform:translate(-50%, -50%);
+    z-index: 10;
+    padding: 10px 15px 10px 15px;
+    font-size: 1.3em;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+    background-color: #0069D9;
+    border-radius: 25px;
 }
 
 .card-holder{
