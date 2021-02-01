@@ -38,6 +38,20 @@ export default {
       result_test: {}
     }
   },
+  // mounted() {
+  //   // if back button is pressed
+  //   window.onpopstate = function(event) {
+  //     alert("Test1");
+  //     //Check that screen is mobile. If so, set full screen
+  //     var isMobile = /Android/i.test(navigator.userAgent);
+  //     if (isMobile) {
+  //       // document.body.requestFullscreen()
+  //       document.documentElement.requestFullscreen()
+  //     }
+  //     this.gotoHome();
+  //   };
+  // },
+
   activated: function () {
       // console.log(this.$route.name)
       // Do not show full screen on login page

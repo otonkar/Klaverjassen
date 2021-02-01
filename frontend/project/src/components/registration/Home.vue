@@ -216,9 +216,13 @@ export default {
       result_test: {}
     }
   },
+
   activated: function () {
     document.title = 'Klaverjasfun'
     // console.log(this.$route.name)
+
+    let message = 'Homepage activated'
+    this.logButton(message)
 
     if (this.user.user_is_logged_in === false) {
       // there may be a valid refresh token stored in localStore
@@ -232,6 +236,7 @@ export default {
         // document.body.requestFullscreen()
         document.documentElement.requestFullscreen()
       }
+      // alert('Test')
       
       this.user.show_header = true
       this.$store.dispatch('updateUser', this.user)
@@ -251,6 +256,9 @@ export default {
     },  //END doToggleLogout
     gotoLogin: function () {
       this.$router.push({ name: 'Login' })
+
+      let message = 'Goto Login'
+      this.logButton(message)
 
     },  //END gotoLogin
     gotoRemarks: async function () {

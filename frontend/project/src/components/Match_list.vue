@@ -220,6 +220,18 @@ export default {
       ]
     }
   },
+  // mounted() {
+  //   // if back button is pressed
+  //   window.onpopstate = function(event) {
+  //     alert("Test2");
+  //     this.gotoMatches();
+  //     var isMobile = /Android/i.test(navigator.userAgent);
+  //     if (isMobile) {
+  //       // document.body.requestFullscreen()
+  //       document.documentElement.requestFullscreen()
+  //     }
+  //   };
+  // },
   activated: function () {
       // console.log(this.$route.name)
       // Do not show full screen on login page

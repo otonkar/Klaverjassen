@@ -1163,6 +1163,10 @@ export default {
             // This function is executed when a 'play_card' message is received over the websocket.
             // Who is next to play is updated, along with the count of cards that have been played in this round
 
+            // Add waiting time to avoid overlap in actions
+            // maybe this helps to solve the cards getting stuck
+            await this.doSleep(700);
+
             // Store these updated values in the global variables.
             this.count_cards_played = data.count_cards_played
             this.next_to_play = data.next_to_play
