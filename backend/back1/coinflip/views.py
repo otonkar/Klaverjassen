@@ -226,7 +226,7 @@ class CoinFlipResultsView(APIView):
 			if action == actionTypes[2]:
 				
 				## get all experiments that are closed
-				qs = CoinFlipResults.objects.filter(in_play = False).order_by('chance')
+				qs = CoinFlipResults.objects.filter(in_play = False).order_by('chance')[:50]
 				# qs = CoinFlipResults.objects.filter(user__username = user, in_play = False)
 
 				serializer = serializers.CoinFlipResultsSerializer(qs, many=True)

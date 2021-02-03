@@ -26,7 +26,7 @@
       <p>
         Druk op de groene knop om de munt te tossen. 
         Je kan opnieuw beginnen door op de knop 'Start opnieuw' te drukken. 
-        Hiermee wordt de score opgeslagen en alle teller weer op nul gezet.
+        Hiermee wordt de score opgeslagen en de tellers weer op nul gezet.
       </p>
       <hr>
 
@@ -114,7 +114,7 @@
       <br>
 
 
-      <div class="Table" v-if="show_score">
+      <div class="Table" id="scoreTable" v-if="show_score">
         De table toont de scores van de verschillende gebruikers. 
         <b-table-simple small caption-top responsive>
           <b-thead head-variant="light">
@@ -145,6 +145,8 @@
           </b-tfoot> -->
         </b-table-simple>
       </div>
+
+      <div id="jumpTo"></div>
 
       <hr>
         <button  v-on:click="gotoHome()" class="btn btn-secondary"> Terug naar start pagina  </button>
@@ -226,6 +228,10 @@ export default {
         this.input_data.action = 'List'
         await this.postData();
         this.show_score = !this.show_score
+
+        // jump the the end of page
+        // window.location.href = "#jumpTo"
+        document.getElementById("jumpTo").scrollIntoView({behavior: 'smooth'});
     },
 
     postData: async function () {
