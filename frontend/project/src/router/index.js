@@ -15,6 +15,7 @@ import Appgamescore from '../components/Games_score.vue'
 import Appremarks from '../components/Remarks.vue'
 import Appinfo from '../components/Info.vue'
 import Appchat from '../components/Chat.vue'
+import Apptestluck from '../components/TestLuck.vue'
 
 Vue.use(VueRouter)
 
@@ -33,7 +34,8 @@ const routes = [
   // { path: '/Matches/Games/score/slagen', name: 'Game_slagen', component: Appgameslagen },
   { path: '/Remarks', name: 'Remarks', component: Appremarks },
   { path: '/Info', name: 'Info', component: Appinfo },
-  { path: '/Chat', name: 'Chat', component: Appchat }
+  { path: '/Chat', name: 'Chat', component: Appchat },
+  { path: '/Testluck', name: 'TestLuck', component: Apptestluck },
 ]
 
 const router = new VueRouter({

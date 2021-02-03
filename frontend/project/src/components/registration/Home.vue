@@ -168,27 +168,23 @@
       <div>
         <b-button v-on:click="gotoMatches" block variant="info">Ga naar wedstrijden</b-button>
         <b-button v-on:click="gotoRemarks()" block variant="info">Berichten</b-button>
-        <!-- <b-button v-on:click="gotoChat" block variant="info">test chat</b-button> -->
-        <!-- <b-button v-on:click="gotoViezePlaatjes" block variant="info">hele vieze plaatjes</b-button> -->
         <b-button v-on:click="gotoInfo" block variant="info">Toelichting</b-button>
       </div>
+      <br> 
+      <br>
 
-      <!-- <br><br>
-      <b-row>
-          <b-col><b-button v-on:click="gotoRemarks()" block variant="danger">Uitloggen</b-button></b-col>
-          <b-col> </b-col> 
-      </b-row> -->
+      <!-- <div v-if="user.username=='ole'"> -->
+      <div>
+        <b-button v-on:click="gotoTestLuck()" block variant="warning">Test jouw geluk</b-button>
+      </div>
 
-    <br>
-    <hr>
-    
-      <!-- <button  v-on:click="getWindowSize()" class="btn btn-primary"> Get window size  </button> -->
-      <!-- <p>Current windowsize is {{ window_size.width }}, {{ window_size.height }} </p> -->
+      <br>
+      <hr>
 
       <p>
         <b>Opmerking:</b> <br>  
         Het spel heeft issues met het gebruik van Microsoft gebaseerde browsers, zoals Internet Explorer of Edge. 
-        Gebruik bij voorkeur Chrome of Firefox. <br> 
+        Gebruik bij voorkeur Chrome of Firefox.
         Zie verdere 'Speeltips' onder het blok 'Toelichting'.
       </p>
       <hr>
@@ -283,6 +279,12 @@ export default {
       let message = 'Start/Toelichting'
       this.logButton(message)
     },  //END gotoInfo
+    gotoTestLuck: function () {
+      this.$router.push({ name: 'TestLuck' })
+
+      let message = 'TestLuck'
+      this.logButton(message)
+    },  //END gotoMatches
     gotoViezePlaatjes: function () {
       // alert("Dacht ik wel...  teller + 1 is doorgestuurd")
       alert("Deze dienst kost EUR 50,00 per maand. U bent aangemeld.")

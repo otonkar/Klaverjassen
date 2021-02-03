@@ -22,7 +22,7 @@
 
 ### Variables
 SERVER='95.216.159.105'
-BRANCH='dev_005'
+BRANCH='dev_006'
 NAS='145.53.40.4'
 INSTALL_GIT='install_local_git.sh'
 INSTALL_PACKAGES='install_local_services.sh'

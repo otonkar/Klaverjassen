@@ -9,5 +9,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('registration/', include('my_auth.urls')),
     path('klaverjas/', include('klaverjas.urls')),
+    path('coinflip/', include('coinflip.urls')),
     path('test/', views.Test.as_view(), name='test'),
 ]

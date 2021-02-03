@@ -96,6 +96,7 @@ if ENV == 'production':
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -112,6 +113,7 @@ INSTALLED_APPS = [
     'klaverjas',                        #@ole: contains the klaverjas data and views
     'channels',                         #@ole: to support Django channels
     'appwebsocket',                     #@ole: the app to handle the channel communications
+    'coinflip',                         #@ole: app for flipping the coins
 ]
 
 MIDDLEWARE = [
