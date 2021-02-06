@@ -178,10 +178,10 @@ export default {
 
         // Set dice to new position
         for (var i = 1; i <= this.nDice; i++) {
-          document.getElementById('dice' + i.toString()).style.transition = "transform 3s";
-          var nTurnsx = 3;
-          var nTurnsy = 4;
-          var nTurnsz = 5;
+          document.getElementById('dice' + i.toString()).style.transition = "transform 2s";
+          var nTurnsx = 2;
+          var nTurnsy = 3;
+          var nTurnsz = 2;
 
           if (random[i-1] === 1) {
             document.getElementById('dice' + i.toString()).style.transform = 
@@ -227,7 +227,7 @@ export default {
           // document.getElementById('dice' + i.toString()).style.transform = "rotateX(170deg) rotateY(-10deg) rotateZ(0deg)"
         }
 
-        await this.doSleep(3000)
+        await this.doSleep(2000)
 
         this.activeThrowbutton = true;
 
