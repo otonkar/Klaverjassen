@@ -176,6 +176,7 @@
       <!-- <div v-if="user.username=='ole'"> -->
       <div>
         <b-button v-on:click="gotoTestLuck()" block variant="warning">Test jouw geluk</b-button>
+        <b-button v-on:click="gotoPlayDices()" block variant="warning">Gooi dobbelstenen</b-button>
       </div>
 
       <br>
@@ -279,12 +280,21 @@ export default {
       let message = 'Start/Toelichting'
       this.logButton(message)
     },  //END gotoInfo
+
     gotoTestLuck: function () {
       this.$router.push({ name: 'TestLuck' })
 
       let message = 'TestLuck'
       this.logButton(message)
-    },  //END gotoMatches
+    },  //END gotoTestLuck
+
+    gotoPlayDices: function () {
+      this.$router.push({ name: 'PlayDices' })
+
+      let message = 'PlayDices'
+      this.logButton(message)
+    }, 
+
     gotoViezePlaatjes: function () {
       // alert("Dacht ik wel...  teller + 1 is doorgestuurd")
       alert("Deze dienst kost EUR 50,00 per maand. U bent aangemeld.")

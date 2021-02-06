@@ -115,7 +115,7 @@
 
 
       <div class="Table" id="scoreTable" v-if="show_score">
-        De table toont de scores van de verschillende gebruikers. 
+        Deze tabel toont de scores van de verschillende gebruikers. 
         <b-table-simple small caption-top responsive>
           <b-thead head-variant="light">
           <b-tr >
