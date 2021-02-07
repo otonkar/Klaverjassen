@@ -24,7 +24,7 @@
         tot de top 5% behoort?
       </p>
       <p>
-        Druk op de groene knop om de munt te tossen. 
+        Druk op de groene knop of op de munt om de munt te tossen. 
         Je kan opnieuw beginnen door op de knop 'Start opnieuw' te drukken. 
         Hiermee wordt de score opgeslagen en de tellers weer op nul gezet.
       </p>
@@ -80,7 +80,7 @@
         <p>{{ result }}</p> 
       </div>
 
-      <div class="flip-card">
+      <div class="flip-card" v-on:click="doCoinFlip()" >
         <div class="flip-card-inner">
           <div  class="flip-card-front">
             <img id="image_heads" src="../assets/Coins/coin_american_heads.png" alt="Heads">
