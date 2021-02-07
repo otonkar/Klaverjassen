@@ -85,7 +85,7 @@ class CoinFlipResultsView(APIView):
 			##############################################################################
 			### Log action
 			### Log to an open experiment or else create a new experiment
-			### INPUT:  {"action": "Log", "nToss": 7, "nHeads": 6}
+			### INPUT:  {"action": "Log", "nToss": 1580, "nHeads": 790}
 
 			if action == actionTypes[0]:
 
@@ -147,6 +147,29 @@ class CoinFlipResultsView(APIView):
 
 				else: 
 					# Need to update the existing experiment
+
+					# Validate that nToss is allowed to be increased by only 1
+					if (qs[0].nToss + 1 != nToss ):
+						content = {
+							'success': False, 
+							'message': f'nToss {qs[0].nToss} only allowed to be increased by 1',
+							'data': {},
+							'errors': {} }
+
+						return Response(content, status=status.HTTP_400_BAD_REQUEST )
+
+					# Validate that nHeads is allowed to be increased only by 0 or 1:
+					if not ( (qs[0].nHeads == nHeads ) or (qs[0].nHeads + 1 == nHeads )  ):
+						content = {
+							'success': False, 
+							'message': f'nHeads {qs[0].nHeads} only allowed to be increased by 0 or 1',
+							'data': {},
+							'errors': {} }
+
+						return Response(content, status=status.HTTP_400_BAD_REQUEST )
+
+
+
 					serializer = serializers.CoinFlipResultsSerializerUpdate(qs[0], data = data)
 					if serializer.is_valid():
 						serializer.save()
