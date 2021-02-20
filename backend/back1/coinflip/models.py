@@ -20,3 +20,4 @@ class CoinFlipResults(models.Model):
     chance              = models.DecimalField(max_digits = 11, decimal_places = 8)
     in_play             = models.BooleanField(null=False, blank=False, default=False)
     date_updated        = models.DateTimeField(default=timezone.now, blank=False, null=False)
+    
