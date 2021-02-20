@@ -1,4 +1,4 @@
-# wheel/admin.py
+# wheel1/admin.py
 
 from django.contrib import admin
 

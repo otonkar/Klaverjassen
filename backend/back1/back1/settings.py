@@ -114,7 +114,7 @@ INSTALLED_APPS = [
     'channels',                         #@ole: to support Django channels
     'appwebsocket',                     #@ole: the app to handle the channel communications
     'coinflip',                         #@ole: app for flipping the coins
-    'wheel',                            #@ole: app for spinning wheel 
+    'wheel1',                           #@ole: app for spinning wheel !!! name wheel will confict with python wheel module
 ]
 
 MIDDLEWARE = [

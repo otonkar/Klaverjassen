@@ -5,7 +5,7 @@ from django.conf.urls import url
 
 from rest_framework_simplejwt import views as jwt_views
 
-from wheel import views
+from wheel1 import views
 
 urlpatterns = [
     path('settings/', views.WheelSettingsListCreateView.as_view(), name='wheels_list_create_'),

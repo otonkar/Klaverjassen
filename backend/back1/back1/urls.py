@@ -10,6 +10,6 @@ urlpatterns = [
     path('registration/', include('my_auth.urls')),
     path('klaverjas/', include('klaverjas.urls')),
     path('coinflip/', include('coinflip.urls')),
-    path('wheel/', include('wheel.urls')),
+    path('wheel/', include('wheel1.urls')),
     path('test/', views.Test.as_view(), name='test'),
 ]

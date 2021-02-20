@@ -8,8 +8,8 @@ from rest_framework import filters, generics, status        # to use the generic
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from wheel import serializers
-from wheel.models import WheelSettings
+from wheel1 import serializers
+from wheel1.models import WheelSettings
 from my_auth.models import User
 
 from base.logging.my_logging import logger

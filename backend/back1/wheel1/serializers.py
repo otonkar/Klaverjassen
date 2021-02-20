@@ -1,4 +1,4 @@
-# wheel/serializers.py
+# wheel1/serializers.py
 
 
 from django.core import exceptions
@@ -6,7 +6,7 @@ from rest_framework import serializers
 
 from django.contrib.auth.password_validation import validate_password
 
-from wheel.models import WheelSettings
+from wheel1.models import WheelSettings
 
 from base.logging.my_logging import logger
 from base.lib.my_lib import get_client_ip
