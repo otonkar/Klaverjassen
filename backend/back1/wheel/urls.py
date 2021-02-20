@@ -9,5 +9,5 @@ from wheel import views
 
 urlpatterns = [
     path('settings/', views.WheelSettingsListCreateView.as_view(), name='wheels_list_create_'),
-    path('settings/<int:ID>/', views.WheelSettingsRetreiveUpdateDeleteView.as_view(), name='wheels_RU'),
+    path('settings/<int:ID>/', views.WheelSettingsRetreiveUpdateDeleteView.as_view(), name='wheels_RUD'),
 ]
