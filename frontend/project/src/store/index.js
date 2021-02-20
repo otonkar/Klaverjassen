@@ -59,6 +59,7 @@ export default new Vuex.Store({
       // url_remarks_retreive_update : 'klaverjas/remarks/retreive',            // Retreive, Update
       url_user_details        : 'klaverjas/users/',
       url_coinflip            : 'coinflip/postdata/', 
+      url_wheel               : 'wheel/settings/',
       url_test                : 'test/',
     },
     variables: {                                                        // To store variables like show block on screen

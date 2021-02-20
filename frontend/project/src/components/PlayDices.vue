@@ -165,8 +165,10 @@ export default {
           random[i-1] = Math.floor((Math.random() * 6) + 1);
         }
 
-        // Sort the dices
+        // Sort the dices in reverse order
+        // console.log(random)
         random.sort()
+        random.reverse()
 
         // Set dice to original position quickly before rthrowing
         for (var i = 1; i <= this.nDice; i++) {
@@ -213,24 +215,11 @@ export default {
               "rotateX(" +  (nTurnsz*360+170).toString() + "deg) rotateY(" +  (nTurnsx*360-10).toString() + "deg) rotateZ(" +  (nTurnsy*360).toString() + "deg)"
           }
 
-          // Set to side 1
-          // document.getElementById('dice' + i.toString()).style.transform = "rotateX(350deg) rotateY(370deg) rotateZ(360deg)"
-          //2
-          // document.getElementById('dice' + i.toString()).style.transform = "rotateX(-100deg) rotateY(0deg) rotateZ(10deg)"
-          //3
-          // document.getElementById('dice' + i.toString()).style.transform = "rotateX(0deg) rotateY(-80deg) rotateZ(10deg)"
-          //4
-          // document.getElementById('dice' + i.toString()).style.transform = "rotateX(0deg) rotateY(100deg) rotateZ(-10deg)"
-          //5
-          // document.getElementById('dice' + i.toString()).style.transform = "rotateX(80deg) rotateY(0deg) rotateZ(-10deg)"
-          // Set to side 6
-          // document.getElementById('dice' + i.toString()).style.transform = "rotateX(170deg) rotateY(-10deg) rotateZ(0deg)"
         }
 
         await this.doSleep(2000)
 
         this.activeThrowbutton = true;
-
 
 			},
 

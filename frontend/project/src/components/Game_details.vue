@@ -179,7 +179,7 @@ export default {
 
   activated: function () {
       // Refresh this component every x seconds
-      this.pollData()
+    //   this.pollData()
 
       if (this.user.user_is_logged_in === false) {
             this.$router.push({ name: 'Home' })
@@ -199,7 +199,7 @@ export default {
       // https://renatello.com/vue-js-polling-using-setinterval/
       this.polling = setInterval(() => {
         this.doRefresh()
-      }, 5000)
+      }, 1000)
     },
     doRefresh: function () {
         this.getPlayers()
@@ -647,7 +647,6 @@ export default {
         })
         .then(response => {
             if (response.status === 204) {
-                console.log(response.status)
                 let message = 'Potje afmelden: ' + this.game.matchID.matchID + '/' + this.game.gameID +  '/'
                 this.logButton(message)
                 message = 'Unregister to Game: ' + this.game.matchID.matchID + '/' + this.game.gameID +  '/'

@@ -53,7 +53,7 @@ def createResetCode(N):
 
 class OleTokenObtainPairView(jwt_views.TokenObtainPairView):
     '''
-    Change the standaard TokeObtainPairView so that it is logged
+    Change the standaard TokenObtainPairView so that it is logged
     when a user logs in
     '''
     serializer_class = serializers.OleTokenObtainPairSerializer

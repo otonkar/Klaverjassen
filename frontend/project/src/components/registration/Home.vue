@@ -177,6 +177,7 @@
       <div>
         <b-button v-on:click="gotoTestLuck()" block variant="warning">Test jouw geluk</b-button>
         <b-button v-on:click="gotoPlayDices()" block variant="warning">Gooi dobbelstenen</b-button>
+        <b-button v-on:click="gotoWheel()" block variant="warning">Rad van fortuin</b-button>
       </div>
 
       <br>
@@ -294,6 +295,13 @@ export default {
       let message = 'PlayDices'
       this.logButton(message)
     }, 
+
+    gotoWheel: function () {
+      this.$router.push({ name: 'Wheel' })
+
+      let message = 'Wheel'
+      this.logButton(message)
+    },
 
     gotoViezePlaatjes: function () {
       // alert("Dacht ik wel...  teller + 1 is doorgestuurd")

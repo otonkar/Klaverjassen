@@ -17,6 +17,7 @@ import Appinfo from '../components/Info.vue'
 import Appchat from '../components/Chat.vue'
 import Apptestluck from '../components/TestLuck.vue'
 import Appplaydices from '../components/PlayDices.vue'
+import Appwheel from '../components/Wheel.vue'
 
 Vue.use(VueRouter)
 
@@ -38,6 +39,7 @@ const routes = [
   { path: '/Chat', name: 'Chat', component: Appchat },
   { path: '/Testluck', name: 'TestLuck', component: Apptestluck },
   { path: '/PlayDices', name: 'PlayDices', component: Appplaydices },
+  { path: '/Wheel', name: 'Wheel', component: Appwheel },
 ]
 
 const router = new VueRouter({

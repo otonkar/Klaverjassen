@@ -23,7 +23,8 @@
         <hr>
 
         <p> 
-          Een nieuw potje kan worden aangemaakt als de registratieperiode nog niet verlopen is.
+          Een nieuw potje kan worden aangemaakt als de registratieperiode nog niet verlopen is en er geen
+          lege potjes zijn (geen personen aangemeld). 
           Bij een bestaand potje, kan op een spelerpositie worden geklikt om je aan te melden. 
           Druk op de gele knop bij het potje om je weer af te melden.
           Pas als 4 spelers bij een potje zijn aangemeld kan het potje gestart worden. Klik op de balk van 
@@ -95,6 +96,7 @@ export default {
         games: '',
         allow_game_create: false,
         test: '',
+        gamePlayers: '',          // get all games with players for this match
         errors: {},
         game_score: [
           [],
@@ -102,6 +104,7 @@ export default {
         ],           // Store the score data fo the game
         show_game_score: false,   // variable to show the game score
         gameID_to_show: 0,        // 
+        emptyGameExists : false   // check that an game with no players does exists for this match
     }
   },
   deactivated () {
@@ -171,57 +174,21 @@ export default {
           this.user.show_header = true
           this.$store.dispatch('updateUser', this.user)
 
-          //******************************************************************************
-          // Validate allow to make new game
-          //  * match-stop not passed
-          //  * register-stop not passed
-        
-          // initialize parameters
-          let check_match_stop_passed             = false
-          let check_match_registerstop_passed     = false
-
-          const currentdate       = new Date() 
-          const match_stop        = new Date(this.match_details.date_match_stop)
-          const register_stop     = new Date(this.match_details.date_register_stop)
-
-          if (currentdate >= match_stop) {
-            check_match_stop_passed = true
-          }
-
-          if (currentdate >= register_stop) {
-            check_match_registerstop_passed = true
-          }
-
-          if (check_match_stop_passed || check_match_registerstop_passed) {
-            this.allow_game_create = false
-          } else {
-            this.allow_game_create = true
-          }
-
-          // @Extra validation: do not allow to create a new game when there is already an empty game.
-          // Do not do this, because a game can get fully un-registered but already mails have been send.
-
-          //************************************************************************************ 
-
-          this.game_score = [
-            [],
-            [0,0,0,0]
-          ],
-          this.show_game_score = false
-          this.gameID_to_show = 0
-
           this.getGames()
-          // this.testgetPlayers()
-
+          this.validateGame()
+          
       }//END if
-  },//END mounted
+      
+  },//END activated
+
   methods: {
     pollData () {
       // To refresh the data every x seconds
       // https://renatello.com/vue-js-polling-using-setinterval/
       this.polling = setInterval(() => {
-        this.getGames()
-      }, 5000)
+        this.getGames();
+        this.validateGame();
+      }, 1000)
     },
     doLoad: function () {
       this.getGames()
@@ -340,11 +307,9 @@ export default {
         .then(response => {
             if (response.status === 200) {
                 this.game_score = response.data
-                // // console.log(this.test)
             }
         })
         .catch(() => {
-            // console.log('Get game score failed')
             // console.log(error.response)
         })
 
@@ -357,36 +322,103 @@ export default {
       return item.gameID.gameID === 3
     },
 
-    testgetPlayers: async function () {
-            
-        // Do  use 'api_request' or axios, so that this call WILL use the interceptors
-        const api_request = require('axios')
+    validateGame: async function () {
+      // Validate paramaters to allow functions
+
+      // Check that an empty game exists.
+      // Empty implies that there are no players registered to this game.
+      // When there is an empty game, then it is not allowed to create a new game for this match.
+          
+      // Do  use 'api_request' or axios, so that this call WILL use the interceptors
+      const api_request = require('axios')
 
 
-        // Get all the players of a match
-        await api_request({
-            method: 'get',
-            url: this.appSettings.url_game_players + 'matchID=' + this.match_details.matchID 
-            // data: this.input
-        })
-        .then(response => {
-            // // console.log('Status get game overview: ',response.status)
-            if (response.status === 200) {
-                this.test = response.data
-                // // console.log(this.test)
-            }
-        })
-        .catch(() => {
-            // console.log('Get match details failed')
-            // console.log(error.response)
-        })
-
-        // // console.log(this.test.filter(this.filterTest).length)
-
-        // test a filter on the result
+      // Get all the games and players of a match
+      await api_request({
+          method: 'get',
+          url: this.appSettings.url_game_players + 'matchID=' + this.match_details.matchID 
+          // data: this.input
+      })
+      .then(response => {
+          if (response.status === 200) {
+              this.gamePlayers = response.data
+          }
+      })
+      .catch(() => {
+          // console.log(error.response)
+      })
 
 
-    },  //END getPlayers
+      // Create a list of all gameID's, for games that have not been started
+      // Note: if a game has been started, but all players have left the game then still
+      // it must be possible to create a new game
+      var allGames = [];
+      for (var game in this.games) {
+        if (this.games[game].date_game_start === null) {
+          allGames.push(this.games[game].gameID)
+        }
+        
+      }
+
+      // Next step trough the players list.
+      // When a game is present in that list, then remove it from allGames
+      // All items in allGames that are not removed imply that the game exists,
+      // but no players have been assigned to that game.
+
+      for (var item in this.gamePlayers) {
+        if (allGames.includes(this.gamePlayers[item].gameID.gameID)) {
+          allGames.pop(this.gamePlayers[item].gameID.gameID)
+        }
+      } //END for
+
+      this.emptyGameExists = allGames.length != 0
+
+      //******************************************************************************
+      // Validate allow to make new game
+      //  * match-stop not passed
+      //  * register-stop not passed
+    
+      // initialize parameters
+      let check_match_stop_passed             = false
+      let check_match_registerstop_passed     = false
+
+      const currentdate       = new Date() 
+      const match_stop        = new Date(this.match_details.date_match_stop)
+      const register_stop     = new Date(this.match_details.date_register_stop)
+
+      if (currentdate >= match_stop) {
+        check_match_stop_passed = true
+      }
+
+      if (currentdate >= register_stop) {
+        check_match_registerstop_passed = true
+      }
+
+      if (check_match_stop_passed || check_match_registerstop_passed) {
+        this.allow_game_create = false
+      } else {
+        this.allow_game_create = true
+      }
+      // Extra validation: only allow to create game when there are no empty games
+      if (this.emptyGameExists) {
+          this.allow_game_create = false
+      }
+
+      // @Extra validation: do not allow to create a new game when there is already an empty game.
+      // Do not do this, because a game can get fully un-registered but already mails have been send.
+
+      //************************************************************************************ 
+
+      this.game_score = [
+        [],
+        [0,0,0,0]
+      ],
+      this.show_game_score = false
+      this.gameID_to_show = 0
+
+
+    },  //END validateGame
+
     doCreateGame: async function () {
         // Create a new game
             
