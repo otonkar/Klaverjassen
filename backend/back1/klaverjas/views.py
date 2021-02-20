@@ -564,7 +564,7 @@ class LogClickView(APIView):
 
     post : ['logmessage': 'this is a message']
     '''
-    permission_classes = []
+    permission_classes = ( )
 
     def post(self, request, *args, **kwargs):
 
