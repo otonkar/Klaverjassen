@@ -223,7 +223,7 @@ export default {
         data: {},
       },                            // Get list of all stored settings
       newName             : '',     // Set the name of the Settings to be stored
-      isLoadedDisplay     : 'selecteer ...',     // Deplay name of the loaded settings
+      isLoadedDisplay     : 'selecteer instellingen ...',     // Deplay name of the loaded settings
       isLoadedID          : '',     // ID of the loaded settings
       mySettings    : {},           // Current settings that apply to the wheel
       myInput       : [],           // Person input for name, remarl and color
@@ -331,7 +331,7 @@ export default {
       this.mySettings = JSON.parse(JSON.stringify(this.defaultSettings));
       this.myInput = JSON.parse(JSON.stringify(this.defaultInput));
 
-      this.isLoadedDisplay  = 'selecteer ...'
+      this.isLoadedDisplay  = 'selecteer instellingen ...'
       this.isLoadedID       = ''
       this.newName          = ''
 
@@ -669,7 +669,7 @@ export default {
             alert('Instellingen verwijderd voor : ' + this.newName);
 
             // Reset display values
-            this.isLoadedDisplay  = 'selecteer ...'
+            this.isLoadedDisplay  = 'selecteer instellingen ...'
             this.isLoadedID       = ''
             this.newName          = ''
 

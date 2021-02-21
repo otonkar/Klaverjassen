@@ -305,63 +305,68 @@ export default {
       // Let a coin spin on the screen
       // Based om the outcome count the results.
 
-      var el_result = document.getElementsByClassName("result");
-      var element2 = document.getElementsByClassName("flip-card-inner");
+      // Do not allow to toss while a toss is ongoing
+      if (this.activeTossButton) {
+    
+        var el_result = document.getElementsByClassName("result");
+        var element2 = document.getElementsByClassName("flip-card-inner");
 
-      this.result = '????'
-      el_result[0].style.color = "black";
+        this.result = '????'
+        el_result[0].style.color = "black";
 
-      // Deactivate the toss button while the coin is being tossed
-      this.activeTossButton = false
+        // Deactivate the toss button while the coin is being tossed
+        this.activeTossButton = false
 
-      // Flip the coin. Outcome  is 1 or 2
-      var rand = Math.floor((Math.random() * 2) + 1);
+        // Flip the coin. Outcome  is 1 or 2
+        var rand = Math.floor((Math.random() * 2) + 1);
 
-      // First rotate the coin quickly back to the original position
-      element2[0].style.transition = "transform 0.01s"
-      element2[0].style.transform = 'rotateY(0deg)'
+        // First rotate the coin quickly back to the original position
+        element2[0].style.transition = "transform 0.01s"
+        element2[0].style.transform = 'rotateY(0deg)'
 
-      // Make sure tha the action of setting back to 0deg is finished
-      // before the next toss is done
-      await this.doSleep(500)
+        // Make sure tha the action of setting back to 0deg is finished
+        // before the next toss is done
+        await this.doSleep(500)
 
-      // Spin the coin
-      element2[0].style.transition = "transform 2.0s"
-      element2[0].style.transform = 'rotateY('+ (rand + 16) * 180 + 'deg)'
+        // Spin the coin
+        element2[0].style.transition = "transform 2.0s"
+        element2[0].style.transform = 'rotateY('+ (rand + 16) * 180 + 'deg)'
 
 
-      // Wait for the coin the be finished with spinning
-      await this.doSleep(2000)
+        // Wait for the coin the be finished with spinning
+        await this.doSleep(2000)
 
-      // Count the number of coin flips 
-      this.nToss = this.nToss + 1
+        // Count the number of coin flips 
+        this.nToss = this.nToss + 1
 
-      // show the result of the flip
-      if (rand === 1) {
-        this.result = 'MUNT'
-        el_result[0].style.color = "red";
+        // show the result of the flip
+        if (rand === 1) {
+          this.result = 'MUNT'
+          el_result[0].style.color = "red";
 
-      } else {
-        this.result = 'KOP'
-        el_result[0].style.color = "green";
-        this.nHeads = this.nHeads + 1
+        } else {
+          this.result = 'KOP'
+          el_result[0].style.color = "green";
+          this.nHeads = this.nHeads + 1
+
+        }
+
+        //Get the calculated chance
+        this.input_data = {
+          'action' : 'Log',
+          'nToss': this.nToss, 
+          'nHeads': this.nHeads,
+        }
+        this.postData()
+
+        // Convert the counts to a string with 4 number that can be shown in the counter block.
+        this.strnHeads = this.nHeads.toString().padStart(4,0)
+        this.strnToss = this.nToss.toString().padStart(4,0)
+
+        // Activate the button for the next coin flip.
+        this.activeTossButton = true
 
       }
-
-      //Get the calculated chance
-      this.input_data = {
-        'action' : 'Log',
-        'nToss': this.nToss, 
-        'nHeads': this.nHeads,
-      }
-      this.postData()
-
-      // Convert the counts to a string with 4 number that can be shown in the counter block.
-      this.strnHeads = this.nHeads.toString().padStart(4,0)
-      this.strnToss = this.nToss.toString().padStart(4,0)
-
-      // Activate the button for the next coin flip.
-      this.activeTossButton = true
     
     }, // END coin_flip
 
