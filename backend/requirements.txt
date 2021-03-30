@@ -10,7 +10,7 @@ channels-redis==2.4.2
 constantly==15.1.0
 cryptography==2.9
 daphne==2.5.0
-Django==3.0.4
+Django==3.0.12
 django-computed-property==0.3.0
 django-cors-headers==3.2.1
 django-extensions==2.2.9
