@@ -179,7 +179,7 @@ export default {
 
   activated: function () {
       // Refresh this component every x seconds
-    //   this.pollData()
+      this.pollData()
 
       if (this.user.user_is_logged_in === false) {
             this.$router.push({ name: 'Home' })
@@ -199,9 +199,10 @@ export default {
       // https://renatello.com/vue-js-polling-using-setinterval/
       this.polling = setInterval(() => {
         this.doRefresh()
-      }, 1000)
+      }, 2000)
     },
     doRefresh: function () {
+        console.log("---- refresh ----")
         this.getPlayers()
     }, //END doRefresh
 
