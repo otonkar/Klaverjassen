@@ -17,7 +17,7 @@
           <br> -->
           <p>
             Deze website is ontwikkeld om gedurende de Corona 
-            lockdown periode met mijn vriendengroep  on-line te kunen klaverjassen. 
+            lockdown periode met mijn vriendengroep  on-line te kunnen klaverjassen. 
             Na veel positieve reacties en het doorvoeren van een aantal verbeteringen heb ik besloten dit spel 
             ook voor personen buiten mijn directe vriendengroep beschikbaar te stellen.
           </p>

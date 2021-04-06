@@ -102,7 +102,7 @@
           </div>
 
           <p>
-            De registatie stop datum moet liggen voor de wedstrijd stop datum. De status waarbij de wedstrijd is gestopped, 
+            De registatie stop datum moet liggen voor de wedstrijd stop datum. De status waarbij de wedstrijd is gestopt, 
             maar waarbij de registratie nog toegestaan is, kan daarom niet voorkomen.
           </p>
 

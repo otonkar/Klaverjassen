@@ -66,7 +66,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                         </div>
-                        <input ref="n_legs" id="n_legs"  v-model="input.n_legs" class="form-control" placeholder="Het aantal rondes per wedstrijd" type="text">
+                        <input ref="n_legs" id="n_legs"  v-model="input.n_legs" class="form-control" placeholder="Het aantal rondes per potje" type="text">
                         <div ref="f-n_legs" class="invalid-feedback "> {{ error_message["n_legs"] }} </div>
                         <b-tooltip target="n_legs" triggers='hover focus'>
                             Aantal rondes:  hoeveel rondes gespeeld moeten worden per potje in deze wedstrijd.
